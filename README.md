@@ -7,44 +7,60 @@
 1. Install Node.js accordingly
 
 2. Install react globally :
-    npm install -g react-native-cli
+    ```
+        npm install -g react-native-cli
+    ```
 
 3. To install Expo CLI :
-    npm install -g expo-cli
+    ```
+        npm install -g expo-cli
+    ```
 
 4. Go to a designated location in your pc (make sure you have access to the repository):
-    sudo git clone https://github.com/xshafqx/Carpool-World.git
-    *input your laptop password
+    ```
+        sudo git clone https://github.com/xshafqx/Carpool-World.git
+        *input your laptop password
+    ```
 
 5. Go to your terminal :
-    cd Carpool-World/Carpool-World/Carpool-World
-    npm start
-    w
+    ```
+        cd Carpool-World/Carpool-World/Carpool-World
+        npm start
+        w
+    ```
 
 
 
 **On your preferred editor, open the Carpool folder**
 
 To create and push your new branch to github :
-    git pull origin
-    git checkout -b [name_of_your_new_branch]
-    git push origin [name_of_your_new_branch]
+```
+git pull origin
+git checkout -b [name_of_your_new_branch]
+git push origin [name_of_your_new_branch]
+```
 
 
 To see all the branches :
-    git branch -a
+```
+git branch -a
+```
 
 
 To commit changes to remote branch :
-    git status
-    git add .
-    git checkout
-    git commit -m "[your_message]"
-    git push origin [name_of_your_branch]
+```
+git status
+git add .
+git checkout
+git commit -m "[your_message]"
+git push origin [name_of_your_branch]
+```
 
 
 To switch branch :
-    git checkout [branch_name]
+```
+git checkout [branch_name]
+```
 
 
 **Work progress**
