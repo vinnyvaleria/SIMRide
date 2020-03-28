@@ -1,7 +1,6 @@
 import React from 'react';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 
-//
 import Start from './navigation/Start';
 import Signup from './navigation/Signup';
 import Login from './navigation/Login';
