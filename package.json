@@ -9,7 +9,12 @@
   },
   "dependencies": {
     "bootstrap": "^4.4.1",
+    "ejs": "^3.0.1",
+    "email-validator": "^2.0.4",
     "expo": "~36.0.0",
+    "express": "^4.17.1",
+    "firebase": "^7.13.1",
+    "firebase-admin": "^8.10.0",
     "react": "~16.9.0",
     "react-bootstrap": "^1.0.0",
     "react-dom": "~16.9.0",

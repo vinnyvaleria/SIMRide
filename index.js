@@ -1,7 +1,11 @@
 import React from 'react';
+import ReactDOM from 'react-dom';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
+import registerServiceWorker from './util/registerServiceWorker';
+import 'bootstrap/dist/css/bootstrap.css';
 
 //
+import App from './App';
 import Start from './navigation/Start';
 import Signup from './navigation/Signup';
 import Login from './navigation/Login';
@@ -17,6 +21,7 @@ ReactDOM.render((
     </BrowserRouter>
     ), document.getElementById('root')
 );
+registerServiceWorker();
 
 const Main = () => {
   return (
