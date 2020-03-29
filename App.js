@@ -1,20 +1,10 @@
 import React from 'react';
 import { StyleSheet, Text, View, Image, Button, Alert } from 'react-native';
 import { Link } from 'react-router-dom';
-import logo from './assets/logo.png';
 import fire from './firebase/base';
 import Login from './navigation/Login';
-import Home from './navigation/Home';
-
-var express = require('express');
-var app = express();
-app.set('view engine', 'js');
-app.listen(3000);
-
-app.get('/Home', function(req, res) {  
-
-  res.render('Home');
-});
+import Start from './navigation/Start';
+// import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
 class App extends React.Component {
   constructor() {
@@ -47,14 +37,10 @@ class App extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-      <Text style={{ color: '#fff', fontSize: 30, fontFamily: 'Helvetica', fontWeight: '600'}} >Welcome to SIMRide</Text>
-      <Image source={logo} /> 
-      
-      <View style={styles.fixToText}>
-          <Button title="Right button" onPress={() => Alert.alert('Right button pressed')} />
+        <View style={styles.fixToText}>
+        </View>
+        <View>{this.state.user ? (<Start />) : (<Login />)}</View>
       </View>
-      <View>{this.state.user ? (<Home />) : (<Login />)}</View>
-    </View>
     );
   }
 }

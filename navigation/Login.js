@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
-import { Link } from 'react-router-dom';
+import { Text, View, Image, Button } from 'react-native';
+import logo from '../assets/logo.png';
 import firebase from '../firebase/base';
 import { validate } from 'email-validator';
 
@@ -205,6 +205,9 @@ class Login extends React.Component {
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+        <Text style={{ color: '#fff', fontSize: 30, fontFamily: 'Helvetica', fontWeight: '600'}} >Welcome to SIMRide</Text>
+        <Image source={logo} /> 
+        <br/>
         <div>
           <form>
             <div id="signinblock">
@@ -212,8 +215,10 @@ class Login extends React.Component {
               <input value={this.state.password} onChange={this.handleChange} onFocus={this.checkEmail} type="password" name="password" placeholder="Password (shafiq)" style={{marginLeft: '15px'}}/>
               <br/>
               <br/>
-              <button type="submit" onClick={this.login}>Sign In</button>
+              <div style={{textAlign: 'center'}}>
+                <button type="submit" onClick={this.login}>Sign In</button>
               <button onClick={this.extendsignup} style={{marginLeft: '25px'}}>Sign Up</button>
+              </div>
             </div>
 
             <div id="signupblock" style={{display: 'none'}}>
@@ -244,8 +249,10 @@ class Login extends React.Component {
                 </tr>
               </table>
               <br/>
-              <button onClick={this.signup}>Submit</button>
-              <button onClick={this.cancel} style={{marginLeft: '25px'}}>Cancel</button>
+              <div style={{textAlign: 'center'}}>
+                <button onClick={this.signup}>Submit</button>
+                <button onClick={this.cancel} style={{marginLeft: '25px'}}>Cancel</button>
+              </div>
             </div>
           </form>
         </div>

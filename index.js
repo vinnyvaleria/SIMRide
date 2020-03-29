@@ -3,6 +3,7 @@ import ReactDOM from 'react-dom';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
 import registerServiceWorker from './util/registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
+// import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
 //
 import App from './App';
