@@ -18,6 +18,7 @@ constructor(props) {
     this.sendMessage = this.sendMessage.bind(this);
     this.searchUsername = this.searchUsername.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.openChat = this.openChat.bind(this);
     this.state = {
       firstName: '',
       lastName: '',
@@ -193,7 +194,7 @@ constructor(props) {
 
   // new msg button
   newMsgButton = () => {
-    document.getElementById('chatsStarted').style.display = "none";
+    document.getElementById('inbox').style.display = "none";
     document.getElementById('searchUser').style.display = "block";
     document.getElementById('sendNewMessage').style.display = "none";
     this.state.to = '';
@@ -203,19 +204,23 @@ constructor(props) {
   inboxMsgButton = () => {
     document.getElementById("chatsStarted").innerHTML = "";
     document.getElementById('searchUser').style.display = "none";
-    document.getElementById('chatsStarted').style.display = "block";
+    document.getElementById('inbox').style.display = "block";
 
     for (var c = 0; c < chats.length; c++) {
-      var html = "";
-      html += "<button id='" + c + "' onClick={this.openChat}>" + chats[c].toString().replace(user[2], '').replace('-', '') + "</button>";
-      document.getElementById("chatsStarted").innerHTML += html;
+      // var html = "";
+      // html += "<button id='" + c + "'>" + chats[c].toString().replace(user[2], '').replace('-', '') + "</button>";
+      // document.getElementById("chatsStarted").innerHTML += html;
 
-      console.log(html);
+      var btn = document.createElement('input');
+      btn.setAttribute('type', 'button')
+      btn.setAttribute('value', chats[c].toString().replace(user[2], '').replace('-', ''));
+      btn.setAttribute('id', c);
+      btn.onclick = this.openChat;
+      document.getElementById('chatsStarted').appendChild(btn);
     }
   }
 
-  openChat(e) {
-    console.log(e.target.id);
+  openChat = e => {
     var chatname = chats[e.target.id];
     console.log(chatname);
     firebase.firestore().collection("chat/" + chatname + "/messages").onSnapshot((querySnapshot) => {
@@ -223,9 +228,11 @@ constructor(props) {
             var message = doc.doc.data();
             var html = "";
             // give each message a unique ID
-            html += "<li id='message-" + snapshot.key + "'>";
+            html += "<li id='message-" + querySnapshot.key + "'>";
             html += message.from + ": " + message.text;
             html += "</li>";
+
+            console.log(html);
 
             document.getElementById("messages").innerHTML += html;
       });
@@ -248,7 +255,11 @@ constructor(props) {
                     <button id='newMsgButton' title="newMessage" onClick={ this.newMsgButton }>New Message</button>
                 </div>
                 <br/>
-                <div id='chatsStarted' style={{display: 'none'}}></div>
+                <div id='inbox' style={{display: 'none'}} >
+                  <div id='chatsStarted' ></div>
+                  <div><ul id="messages"></ul></div>
+                </div>
+                
                 
                 <br/>
                 <div id='searchUser' style={{display: 'none'}}>
@@ -259,7 +270,7 @@ constructor(props) {
                 <div id="sendNewMessage" style={{display: 'none'}}>
                 <button id='chattingTo' onClick={ this.viewUserProfile }></button>
                     <div class="messages-content">
-                    <ul id="messages"></ul>
+                      
                     </div>
                     <div class="message-box">
                     <input id="message" placeholder="Enter message" autocomplete="off" value={this.state.message} onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
