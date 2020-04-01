@@ -221,19 +221,22 @@ constructor(props) {
   }
 
   openChat = e => {
-    var chatname = chats[e.target.id];
-    console.log(chatname);
-    firebase.firestore().collection("chat/" + chatname + "/messages").onSnapshot((querySnapshot) => {
+    document.getElementById("messages").innerHTML = "";
+
+    chatName = chats[e.target.id];
+    console.log(chatName);
+    firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
           querySnapshot.docChanges().forEach((doc) => {
             var message = doc.doc.data();
             var html = "";
             // give each message a unique ID
-            html += "<li id='message-" + querySnapshot.key + "'>";
+            html += "<li id='message-" + message.timestamp + "'>";
             html += message.from + ": " + message.text;
             html += "</li>";
 
             console.log(html);
 
+            document.getElementById('submitInboxMessage').style.display = "block";
             document.getElementById("messages").innerHTML += html;
       });
     });
@@ -258,6 +261,10 @@ constructor(props) {
                 <div id='inbox' style={{display: 'none'}} >
                   <div id='chatsStarted' ></div>
                   <div><ul id="messages"></ul></div>
+                  <div id="submitInboxMessage"  style={{display: 'none'}} >
+                    <input id="message" placeholder="Enter message" autocomplete="off" value={this.state.message} onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
+                    <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
+                  </div>
                 </div>
                 
                 
