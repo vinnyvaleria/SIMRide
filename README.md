@@ -73,13 +73,13 @@ Choose the driver and rider | Synced database to Firebase
 Cancel confirmed ride | Logging in of SIMRide 
 Reject request/offer for ride | Logging out of SIMRide 
 Transaction/booking history | Send data to Firebase 
-Display ist of available rides | Made multiple tabs to act as pages 
+Display list of available rides | Made multiple tabs to act as pages 
 Sorting - by area/time | Retrieve data from Firebase 
 Report user | Edit Profile - Account management 
 Ban user (blacklist user) | View Profile - Account management 
 Weekly pickup scheduler | Live chat, store chat, select user to chat with 
 Automatic route planning (fastest) | View other profiles 
-*Balance low reminder | Update password - Account management
+Balance low reminder | Update password - Account management
 Audit/log | Stored chat history 
 Connect APIs | Retrieving chats
 Stripe API | -
