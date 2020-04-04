@@ -86,4 +86,3 @@ Stripe API | Create a Booking
 eNETS Open API | -
 MapQuest Directions API | -
 MapQuest Traffic API | -
-- | -
