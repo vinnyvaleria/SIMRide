@@ -175,6 +175,7 @@ class Login extends React.Component {
             isBanned: ''
           };
 
+          // writing
           firebase.database().ref('admin/counter')
                              .once('value')
                              .then(function(snapshot) {

@@ -207,10 +207,6 @@ constructor(props) {
     document.getElementById('inbox').style.display = "block";
 
     for (var c = 0; c < chats.length; c++) {
-      // var html = "";
-      // html += "<button id='" + c + "'>" + chats[c].toString().replace(user[2], '').replace('-', '') + "</button>";
-      // document.getElementById("chatsStarted").innerHTML += html;
-
       var btn = document.createElement('input');
       btn.setAttribute('type', 'button')
       btn.setAttribute('value', chats[c].toString().replace(user[2], '').replace('-', ''));
@@ -246,10 +242,10 @@ constructor(props) {
       return (
         <View>
             <div id='msgsPage'>
-                <div>
+              <div>
                 <h1>This is the messages tab</h1>
-                </div>
-                <div class="chat">
+              </div>
+              <div class="chat">
                 <div class="chat-title">
                     <h1>SIMWorld Chat</h1>
                 </div>
@@ -267,7 +263,6 @@ constructor(props) {
                   </div>
                 </div>
                 
-                
                 <br/>
                 <div id='searchUser' style={{display: 'none'}}>
                     <input id="selectUser" placeholder="Search user" autocomplete="off" value={this.state.to} onChange={this.handleChange} type="text" name="to" style={{width:'350px'}} />
@@ -284,53 +279,53 @@ constructor(props) {
                     <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
                     </div>
                 </div>
-                </div>
+              </div>
 
-                <br />
-                <br />
+              <br />
+              <br />
             </div>
 
             <div id='otherAcctPage' style={{display: 'none'}}>
-                <div>
+              <div>
                 <h1 id="viewOtherAcctPageUser"></h1>
                 <br />
                 <table>
-                    <tr>
+                  <tr>
                     <td>First Name:</td>
                     <td>
                         <label id='lblotherfName' style={{display:'inline'}}></label>
                     </td>
-                    </tr>
-                    <tr>
+                  </tr>
+                  <tr>
                     <td>Last Name:</td>
                     <td>
                         <label id='lblotherlName' style={{display:'inline'}}></label>
                     </td>
-                    </tr>
-                    <tr>
+                  </tr>
+                  <tr>
                     <td>Email:</td>
                     <td>
                         <label id='lblotherEmail' style={{display:'inline'}} name='email'></label>
                     </td>
-                    </tr>
-                    <tr>
+                  </tr>
+                  <tr>
                     <td>isDriver:</td>
                     <td>
                         <label id='lblotherDriver' name='isDriver'></label>
                     </td>
-                    </tr>
-                    <tr>
+                  </tr>
+                  <tr>
                     <td>isAdmin:</td>
                     <td>
                         <label id='lblotherAdmin' name='isAdmin'></label>
                     </td>
-                    </tr>
+                  </tr>
                 </table>
                 <br />
                 <br />
                 <button onClick={this.logout}>Logout</button>
-                </div>
-                <br />
+              </div>
+              <br />
             </div>
         </View>
         );
