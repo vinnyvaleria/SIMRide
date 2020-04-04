@@ -67,13 +67,13 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-Display list of available rides [Shafiq doing now] | Connected to Firebase 
+**Display list of available rides [Shafiq doing now]** | Connected to Firebase 
 Rate the driver and rider | Registration authentication to Firebase 
 Choose the driver and rider | Synced database to Firebase 
 Cancel confirmed ride | Logging in of SIMRide 
 Reject request/offer for ride | Logging out of SIMRide 
 Transaction/booking history | Send data to Firebase 
-Design the app (UI/UX) [Vinny doing now] | Made multiple tabs to act as pages 
+**Design the app (UI/UX) [Vinny doing now]** | Made multiple tabs to act as pages 
 Sorting - by area/time | Retrieve data from Firebase 
 Report user | Edit Profile - Account management 
 Ban user (blacklist user) | View Profile - Account management 
