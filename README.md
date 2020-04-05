@@ -67,23 +67,22 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-Retrieving chats [Shafiq doing now] | Connected to Firebase 
+*apply to be driver/add driver details [Shafiq doing now]* | Connected to Firebase 
 Rate the driver and rider | Registration authentication to Firebase 
 Choose the driver and rider | Synced database to Firebase 
 Cancel confirmed ride | Logging in of SIMRide 
 Reject request/offer for ride | Logging out of SIMRide 
 Transaction/booking history | Send data to Firebase 
-Display ist of available rides | Made multiple tabs to act as pages 
+*Design the app (UI/UX) [Vinny doing now]* | Made multiple tabs to act as pages 
 Sorting - by area/time | Retrieve data from Firebase 
 Report user | Edit Profile - Account management 
 Ban user (blacklist user) | View Profile - Account management 
 Weekly pickup scheduler | Live chat, store chat, select user to chat with 
 Automatic route planning (fastest) | View other profiles 
-*Balance low reminder | Update password - Account management
+Balance low reminder | Update password - Account management
 Audit/log | Stored chat history 
-Connect APIs | -
-Stripe API | -
-eNETS Open API | -
+Connect APIs | Retrieving chats
+Stripe API | Display ist of available rides
+eNETS Open API | Create a ride
 MapQuest Directions API | -
 MapQuest Traffic API | -
-Design the app (UI/UX) [Vinny doing now] | -
