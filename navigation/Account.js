@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Text, View } from 'react-native';
 import firebase from '../firebase/base';
 import 'firebase/firestore';
+import "firebase/storage";
 import {user} from './Login';
 
 var clickedUser;
@@ -14,7 +15,9 @@ class Account extends React.Component {
     this.logout = this.logout.bind(this);
     this.submitEditProfile = this.submitEditProfile.bind(this);
     this.submitPassword = this.submitPassword.bind(this);
+    this.applyDriver = this.applyDriver.bind(this);
     this.handleChange = this.handleChange.bind(this);
+    this.handleImgChange = this.handleImgChange.bind(this);
     this.state = {
       firstName: '',
       lastName: '',
@@ -24,7 +27,11 @@ class Account extends React.Component {
       confirmPassword: '',
       isDriver: '',
       isAdmin: '',
-      id: ''
+      id: '',
+      image: null,
+      frontURL: '',
+      backURL: '',
+      progress: 0
     };
   }
 
@@ -32,10 +39,105 @@ class Account extends React.Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  handleImgChange = e => {
+    if (e.target.files[0]) {
+      const image = e.target.files[0];
+      this.setState(() => ({
+        image
+      }));
+    }
+  };
+
+  handleFrontUpload = () => {
+    const { image } = this.state;
+    if (image != null) {
+      const uploadTask = firebase.storage().ref().child(`license/${user[7]}/front`).put(image);
+      uploadTask.on(
+        "state_changed",
+        snapshot => {
+          // progress function ...
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          this.setState({
+            progress
+          });
+          console.log('Upload is ' + progress + '% done');
+        },
+        error => {
+          // Error function ...
+          alert('Error: ' + error)
+          console.log(error);
+        },
+        () => {
+          // complete function ...
+          alert('Image is uploaded!');
+          document.getElementById('btnImgFrontUpload').style.display = 'none';
+          document.getElementById('btnImgBackUpload').style.display = 'inline-block';
+          document.getElementById('td_license').innerHTML = 'License Back:';
+          document.getElementById('file').value = "";
+          firebase.storage()
+            .ref("license/" + user[7])
+            .child("front")
+            .getDownloadURL()
+            .then(frontURL => {
+              this.setState({
+                frontURL
+              });
+            });
+        }
+      );
+    }
+    else {
+      alert('Error: No file selected');
+    }
+  };
+
+  handleBackUpload = () => {
+    const { image } = this.state;
+    if (image != null) {
+      const uploadTask = firebase.storage().ref().child(`license/${user[7]}/back`).put(image);
+      uploadTask.on(
+        "state_changed",
+        snapshot => {
+          // progress function ...
+          const progress = Math.round((snapshot.bytesTransferred / snapshot.totalBytes) * 100);
+          this.setState({
+            progress
+          });
+          console.log('Upload is ' + progress + '% done');
+        },
+        error => {
+          // Error function ...
+          console.log(error);
+        },
+        () => {
+          // complete function ...
+          alert('Image is uploaded!')
+          firebase.storage()
+            .ref("license/" + user[7])
+            .child("back")
+            .getDownloadURL()
+            .then(backURL => {
+              this.setState({
+                backURL
+              });
+            });
+        }
+      );
+    }
+    else {
+      alert('Error: No file selected');
+    }
+  };
+
   // goes back to login page if stumble upon another page by accident without logging in
   componentDidMount() {
     if (typeof user[3] === 'undefined') {
       firebase.auth().signOut();
+    }
+    else {
+      if (user[4].toString().toLowerCase() === "no") {
+        document.getElementById('btnApplyDriver').style.display = "block";
+      }
     }
   }
 
@@ -103,8 +205,8 @@ class Account extends React.Component {
         .then(function (snapshot) {
           snapshot.ref.update({
             lname: user[1]
-          })
-        });
+        })
+      });
     }
 
     else {
@@ -129,6 +231,7 @@ class Account extends React.Component {
   changePassword() {
     document.getElementById('tblProfile').style.display = 'none';
     document.getElementById('tblPassword').style.display = 'block';
+    document.getElementById('tblApplyDriver').style.display = 'none';
 
     document.getElementById('lblfName').style.display = 'none';
     document.getElementById('lbllName').style.display = 'none';
@@ -176,28 +279,35 @@ class Account extends React.Component {
     document.getElementById('confirmNewPassword').value = "";
   }
 
+  applyDriver() {
+    document.getElementById('tblProfile').style.display = 'none';
+    document.getElementById('tblPassword').style.display = 'none';
+    document.getElementById('tblApplyDriver').style.display = 'block';
 
-  viewUserProfile() {
-    document.getElementById('otherAcctPage').style.display = "block";
-    document.getElementById('homePage').style.display = "none";
-    document.getElementById('bookPage').style.display = "none";
-    document.getElementById('msgsPage').style.display = "none";
-    document.getElementById('acctPage').style.display = "none";
+    document.getElementById('lblfName').style.display = 'none';
+    document.getElementById('lbllName').style.display = 'none';
 
-    const accountsRef = firebase.database().ref('accounts');
-    accountsRef.orderByChild('uname')
-      .equalTo(clickedUser)
-      .once('value')
-      .then(function (snapshot) {
-        snapshot.forEach(function(child) {
-          lblotherfName.innerHTML = child.val().fname;
-          lblotherlName.innerHTML = child.val().lname;
-          lblotherEmail.innerHTML = child.val().email;
-          lblotherDriver.innerHTML = child.val().isDriver;
-          lblotherAdmin.innerHTML = child.val().isAdmin;
-          console.log(child.val().fname, child.val().email);
-        });
-      })
+    document.getElementById('editfName').style.display = 'none';
+    document.getElementById('editlName').style.display = 'none';
+
+    document.getElementById('editButton').style.display = 'none';
+    document.getElementById('changePasswordButton').style.display = 'none';
+    document.getElementById('submitEditButton').style.display = 'none';
+    document.getElementById('cancelEditButton').style.display = 'none';
+    document.getElementById('submitPasswordButton').style.display = 'none';
+    document.getElementById('cancelPasswordButton').style.display = 'none';
+    document.getElementById('btnApplyDriver').style.display = 'none';
+    document.getElementById('cancelApplyDriverButton').style.display = 'inline-block';
+    document.getElementById('btnImgFrontUpload').style.display = 'inline-block';
+  }
+
+  cancelApplyDriver() {
+    Util.profilePageReset();
+    document.getElementById('tblApplyDriver').style.display = 'none';
+    document.getElementById('btnApplyDriver').style.display = 'block';
+    document.getElementById('cancelApplyDriverButton').style.display = 'none';
+    document.getElementById('btnImgFrontUpload').style.display = 'none';
+    document.getElementById('btnImgBackUpload').style.display = 'none';
   }
 
 render() {
@@ -250,19 +360,46 @@ render() {
               <td><input id='editConfirmPassword' value={this.state.confirmPassword} onChange={this.handleChange} type="password" name="confirmPassword" /></td>
             </tr>
           </table>
+
+          <div id="tblApplyDriver" style={{display: 'none'}}>
+            <div>
+              <div>
+                <table>
+                  <tr id='uploadedFront'>
+                    <td>
+                      {this.state.frontURL && <img src={this.state.frontURL} height='150' width='200' />}
+                    </td>
+                    <td>
+                      {this.state.backURL && <img src={this.state.backURL} height='150' width='200' />}   
+                    </td>
+                  </tr>
+                </table>
+                <table>
+                  <tr>
+                    <td id='td_license'>License Front:</td>
+                    <td><input type="file" id='file' accept="image/*" onChange={this.handleImgChange} /></td>
+                  </tr>
+                </table>
+              </div>
+            </div>
+          </div>
           <br />
           <br />
+          <button id='btnImgFrontUpload' onClick={this.handleFrontUpload} style={{display:'none'}}>Upload Front</button>
+          <button id='btnImgBackUpload' onClick={this.handleBackUpload} style={{display:'none'}}>Upload Back</button>
+          <button id='cancelApplyDriverButton' onClick={this.cancelApplyDriver} style={{display:'none'}}>Cancel</button>
           <button id='editButton' onClick={this.editProfile}>Edit Profile</button>
           <button id='changePasswordButton' onClick={this.changePassword}>Change Password</button>
           <button id='submitEditButton' onClick={this.submitEditProfile} style={{display:'none'}}>Update</button>
           <button id='cancelEditButton' onClick={this.cancelEditProfile} style={{display:'none'}}>Cancel</button>
           <button id='submitPasswordButton' onClick={this.submitPassword} style={{display:'none'}}>Update</button>
           <button id='cancelPasswordButton' onClick={this.cancelPassword} style={{display:'none'}}>Cancel</button>
-          <br />
-          <br />
+          <div>
+            <button id='btnApplyDriver' onClick={this.applyDriver} style={{display:'none'}}>Apply to be a driver</button>
+          </div>
+          <br/>
           <button onClick={this.logout}>Logout</button>
         </div>
-        <br />
       </div>
     </View>
     );

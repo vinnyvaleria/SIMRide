@@ -84,7 +84,7 @@ class Login extends React.Component {
   login(e) {
     e.preventDefault();
     var i = 1;
-    var email = this.state.email;
+    var email = this.state.email.toString().toLowerCase();
 
     if (!validate(email)) {
       alert("Email not valid bro");
@@ -140,7 +140,7 @@ class Login extends React.Component {
     else {
       console.log(unameCheck);
       if (unameCheck) {
-        firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then((u)=>{
+        firebase.auth().createUserWithEmailAndPassword(this.state.email.toString().toLowerCase(), this.state.password).then((u) => {
         }).then((u)=>{
           const accountsRef = firebase.database().ref('accounts');
           const account = {
