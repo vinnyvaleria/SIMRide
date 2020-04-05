@@ -32,18 +32,19 @@ class Login extends React.Component {
 
   componentDidMount() {
     // counts current total account registered
-    firebase.database().ref('admin')
-                       .orderByChild('acct')
-                       .once('value')
-                       .then(function(snapshot) {
-                         snapshot.forEach(function(child) {
-                           countArr[0] = child.val().acct;
-                           console.log(child.val().acct, countArr[0]);
-                      })
-                    });
+    firebase.database()
+    .ref('admin')
+    .orderByChild('acct')
+    .once('value')
+    .then(function(snapshot) {
+      snapshot.forEach(function(child) {
+        countArr[0] = child.val().acct;
+        console.log(child.val().acct, countArr[0]);
+      })
+    });
 
-  // loads accounts
-  firebase.database().ref('accounts')
+    // loads accounts
+    firebase.database().ref('accounts')
     .orderByChild('email')
     .once('value')
     .then(function (snapshot) {

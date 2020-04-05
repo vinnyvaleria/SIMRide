@@ -4,6 +4,8 @@ import firebase from '../firebase/base';
 import 'firebase/firestore';
 import {user} from './Login';
 
+var userDetails = [];
+
 class Booking extends React.Component {
   constructor(props) {
 
@@ -28,6 +30,19 @@ class Booking extends React.Component {
     if (typeof user[3] === 'undefined') {
       firebase.auth().signOut();
     }
+    else {
+      // load accounts
+      firebase.database().ref('accounts')
+      .orderByChild('email')
+      .once('value')
+      .then(function (snapshot) {
+        var i = 0;
+        snapshot.forEach(function (child) {
+          userDetails[i] = child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+          i++;
+        })
+      });
+    }
   }
 
   logout() {
@@ -46,30 +61,67 @@ class Booking extends React.Component {
 
   // view all available bookings
   viewAllBookings = () => {
-    // document.getElementById('div_availBookings').style.display = "block";
-    // document.getElementById('div_createBooking').style.display = "none";
-    // document.getElementById('div_yourBookings').style.display = "none";
+    document.getElementById('ddArea').innerHTML = '';
 
-    // var database = firebase.database().ref().child('bookings');
-    // database.once('value', function (snapshot) {
-    //   if (snapshot.exists()) {
-    //     var content = '';
+    document.getElementById('div_availBookings').style.display = "block";
+    document.getElementById('div_createBooking').style.display = "none";
+    document.getElementById('div_myBookings').style.display = "none";
 
-    //     snapshot.forEach(function (data) {
-    //       var driver = data.val().driver;
-    //       var id = data.key;
-    //       content += '<tr>';
-    //       content += '<td>' + driver + '</td>'; //column1
-    //       content += '<td>' + JobId + '</td>'; //column2
-    //       content += '</tr>';
-    //     });
+    // get all accounts
+    firebase.database().ref('accounts')
+      .orderByChild('email')
+      .once('value')
+      .then(function (snapshot) {
+        var i = 0;
+        snapshot.forEach(function (child) {
+          userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+          console.log(userDetails);
+          i++;
+        })
+      });
 
-    //     $('#ex-table').append(content);
-    //   }
-    // });
+    var database = firebase.database().ref('bookings').orderByChild('date');
+    database.once('value', function (snapshot) {
+      if (snapshot.exists()) {
+        var content = '';
+
+        snapshot.forEach(function (data) {
+          var area = data.val().area;
+          var date = data.val().date;
+          var time = data.val().time;
+          var ppl = [];
+
+          if (data.val().passengers != null) {
+            ppl = data.val().passengers.split(',')
+          }
+
+          var passengers = ppl.length + "/" + data.val().maxPassengers;
+          var id = data.val().driverID;
+          var driver = '';
+
+          for (let i = 0; i < userDetails.length; i++) {
+            var key = [];
+            key = userDetails[i].split(':');
+            if (key[0] === id) {
+              driver = key[1];
+            }
+          }
+
+          content += '<tr>';
+          content += '<td>' + area + '</td>'; //column1
+          content += '<td>' + date + '</td>'; //column2
+          content += '<td>' + time + '</td>';
+          content += '<td>' + driver + '</td>';
+          content += '<td>' + passengers + '</td>';
+          content += '</tr>';
+        });
+
+       document.getElementById('tb_AllBookings').innerHTML += content;
+      }
+    });
   }
 
-  // view all available bookings
+  // view my bookings
   viewMyBookings = () => {
     document.getElementById('div_availBookings').style.display = "none";
     document.getElementById('div_createBooking').style.display = "none";
@@ -96,8 +148,6 @@ class Booking extends React.Component {
           content += newarea[0];
           content += "\">" + newarea[0];
           content += "</option>";
-
-          console.log(newarea[0], content);
         });
          document.getElementById('ddArea').innerHTML +=  content;
       }
@@ -132,7 +182,8 @@ class Booking extends React.Component {
         time: document.getElementById('ddMeetTime').value,
         area: document.getElementById('ddArea').value,
         description: this.state.description,
-        passengers: document.getElementById('ddPassengers').value
+        maxPassengers: document.getElementById('ddPassengers').value,
+        curPassengers: null
       }
         // user[0] = account.fname;
         // user[7] = account.key;
@@ -152,8 +203,6 @@ class Booking extends React.Component {
       document.getElementById('div_createBooking').style.display = "none";
       document.getElementById('div_yourBookings').style.display = "none";
     }
-
-
   }
 
 render() {
@@ -175,20 +224,15 @@ render() {
           <table id="tbl_MyBookings">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Driver</th>
-                <th>Date</th>
                 <th>Area</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Driver</th>
                 <th>No. of Passengers</th>
               </tr>
             </thead>
             <tbody>
-              <tr id="tr">
-                <td id="td_MyID"></td>
-                <td id="td_MyDriver"></td>
-                <td id="td_MyDate"></td>
-                <td id="td_MyPassengers"></td>
-              </tr>
+              <tr id="tb_myBookings"></tr>
             </tbody>
           </table>
         </div>
@@ -197,21 +241,14 @@ render() {
           <table id="tbl_AllBookings">
             <thead>
               <tr>
-                <th>ID</th>
-                <th>Driver</th>
-                <th>Date</th>
                 <th>Area</th>
+                <th>Date</th>
+                <th>Time</th>
+                <th>Driver</th>
                 <th>No. of Passengers</th>
               </tr>
             </thead>
-            <tbody>
-              <tr id="tr">
-                <td id="td_AllID"></td>
-                <td id="td_AllDriver"></td>
-                <td id="td_AllDate"></td>
-                <td id="td_AllPassengers"></td>
-              </tr>
-            </tbody>
+            <tbody id="tb_AllBookings"></tbody>
           </table>
         </div>
         
@@ -229,42 +266,42 @@ render() {
               <td>Meet-Up Time</td>
               <td>
                 <select id="ddMeetTime" style={{width: '13em'}} required="true">
-                  <option value="0630">06:30</option>
-                  <option value="0700">07:00</option>
-                  <option value="0730">07:30</option>
-                  <option value="0800">08:00</option>
-                  <option value="0830">08:30</option>
-                  <option value="0900">09:00</option>
-                  <option value="0930">09:30</option>
-                  <option value="1000">10:00</option>
-                  <option value="1030">10:30</option>
-                  <option value="1100">11:00</option>
-                  <option value="1130">11:30</option>
-                  <option value="1200">12:00</option>
-                  <option value="1230">12:30</option>
-                  <option value="1300">13:00</option>
-                  <option value="1330">13:30</option>
-                  <option value="1400">14:00</option>
-                  <option value="1430">14:30</option>
-                  <option value="1500">15:00</option>
-                  <option value="1530">15:30</option>
-                  <option value="1600">16:00</option>
-                  <option value="1630">16:30</option>
-                  <option value="1700">17:00</option>
-                  <option value="1730">17:30</option>
-                  <option value="1800">18:00</option>
-                  <option value="1830">18:30</option>
-                  <option value="1900">19:00</option>
-                  <option value="1930">19:30</option>
-                  <option value="2000">20:00</option>
-                  <option value="2030">20:30</option>
-                  <option value="2100">21:00</option>
-                  <option value="2130">21:30</option>
-                  <option value="2200">22:00</option>
-                  <option value="2230">22:30</option>
-                  <option value="2300">23:00</option>
-                  <option value="2330">23:30</option>
-                  <option value="0000">00:00</option>
+                  <option value="06:30">06:30</option>
+                  <option value="07:00">07:00</option>
+                  <option value="07:30">07:30</option>
+                  <option value="08:00">08:00</option>
+                  <option value="08:30">08:30</option>
+                  <option value="09:00">09:00</option>
+                  <option value="09:30">09:30</option>
+                  <option value="10:00">10:00</option>
+                  <option value="10:30">10:30</option>
+                  <option value="11:00">11:00</option>
+                  <option value="11:30">11:30</option>
+                  <option value="12:00">12:00</option>
+                  <option value="12:30">12:30</option>
+                  <option value="13:00">13:00</option>
+                  <option value="13:30">13:30</option>
+                  <option value="14:00">14:00</option>
+                  <option value="14:30">14:30</option>
+                  <option value="15:00">15:00</option>
+                  <option value="15:30">15:30</option>
+                  <option value="16:00">16:00</option>
+                  <option value="16:30">16:30</option>
+                  <option value="17:00">17:00</option>
+                  <option value="17:30">17:30</option>
+                  <option value="18:00">18:00</option>
+                  <option value="18:30">18:30</option>
+                  <option value="19:00">19:00</option>
+                  <option value="19:30">19:30</option>
+                  <option value="20:00">20:00</option>
+                  <option value="20:30">20:30</option>
+                  <option value="21:00">21:00</option>
+                  <option value="21:30">21:30</option>
+                  <option value="22:00">22:00</option>
+                  <option value="22:30">22:30</option>
+                  <option value="23:00">23:00</option>
+                  <option value="23:30">23:30</option>
+                  <option value="00:00">00:00</option>
                 </select>
               </td>
             </tr>
