@@ -45,25 +45,26 @@ constructor(props) {
       firebase.auth().signOut();
     }
     else {
-    // loads accounts
-    firebase.database().ref('accounts')
-                       .orderByChild('email')
-                       .once('value')
-                       .then(function(snapshot) {
-                         var i = 0;
-                         snapshot.forEach(function(child) {
-                           unameArr[i] = child.val().uname;
-                           i++;
-                         })
-                      });
+      // loads accounts
+      firebase.database()
+      .ref('accounts')
+      .orderByChild('email')
+      .once('value')
+      .then(function(snapshot) {
+        var i = 0;
+        snapshot.forEach(function(child) {
+          unameArr[i] = child.val().uname;
+          i++;
+      })
+    });
 
-    firebase.firestore().collection("chat").get().then((querySnapshot) => {
-      querySnapshot.forEach((doc) => {
-        allchats.push(doc.id);
-        chats = Array.from(new Set(allchats))
-        console.log(chats);
-      });
-    });       
+      firebase.firestore().collection("chat").get().then((querySnapshot) => {
+        querySnapshot.forEach((doc) => {
+          allchats.push(doc.id);
+          chats = Array.from(new Set(allchats))
+          console.log(chats);
+        });
+      });       
     }
   }
 
