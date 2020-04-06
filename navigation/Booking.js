@@ -61,7 +61,7 @@ class Booking extends React.Component {
 
   // view all available bookings
   viewAllBookings = () => {
-    document.getElementById('ddArea').innerHTML = '';
+    document.getElementById('tb_AllBookings').innerHTML = '';
 
     document.getElementById('div_availBookings').style.display = "block";
     document.getElementById('div_createBooking').style.display = "none";
