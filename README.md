@@ -67,9 +67,9 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**Apply to be driver: add driver details [Shafiq doing now]** | Connected to Firebase 
+**Choose the driver [Shafiq doing now]** | Connected to Firebase 
 Rate the driver and rider | Registration authentication to Firebase 
-Choose the driver and rider | Synced database to Firebase 
+Admin: review driver application | Synced database to Firebase 
 Cancel confirmed ride | Logging in of SIMRide 
 Reject request/offer for ride | Logging out of SIMRide 
 Transaction/booking history | Send data to Firebase 
@@ -85,4 +85,4 @@ Connect APIs | Retrieving chats
 Stripe API | Create a Booking
 eNETS Open API | Display list of available rides
 MapQuest Directions API | Apply to be driver: upload license image
-MapQuest Traffic API | -
+MapQuest Traffic API | Apply to be driver: add driver details
