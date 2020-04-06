@@ -4,6 +4,7 @@ import firebase from '../firebase/base';
 import 'firebase/firestore';
 import "firebase/storage";
 import {user} from './Login';
+import { getPlaneDetection } from 'expo/build/AR';
 
 var clickedUser;
 var Util = require('../util/Util');
@@ -14,6 +15,7 @@ class Account extends React.Component {
     super(props);
     this.logout = this.logout.bind(this);
     this.submitEditProfile = this.submitEditProfile.bind(this);
+    this.submitDriverDetails = this.submitDriverDetails.bind(this);
     this.submitPassword = this.submitPassword.bind(this);
     this.applyDriver = this.applyDriver.bind(this);
     this.handleChange = this.handleChange.bind(this);
@@ -31,7 +33,9 @@ class Account extends React.Component {
       image: null,
       frontURL: '',
       backURL: '',
-      progress: 0
+      progress: 0,
+      license: '',
+      carplate: ''
     };
   }
 
@@ -121,6 +125,12 @@ class Account extends React.Component {
                 backURL
               });
             });
+
+          const driverDetails = {
+            completed: "yes"
+          }
+
+          accountsRef.update(driverDetails);
         }
       );
     }
@@ -136,10 +146,30 @@ class Account extends React.Component {
     }
     else {
       if (user[4].toString().toLowerCase() === "no") {
-        document.getElementById('btnApplyDriver').style.display = "block";
+        firebase.database().ref('driverDetails')
+          .once('value')
+          .then(function (snapshot) {
+            var i = 0;
+            snapshot.forEach(function (child) {
+              if (user[7] = child.key) {
+                if (child.val().completed === "yes")
+                {
+                  document.getElementById('btnApplyDriver').disabled = "true";
+                  document.getElementById('btnApplyDriver').style.display = "inline-block";
+                  document.getElementById('btnApplyDriver').innerHTML = "Application sent";
+                }
+                else{
+                  document.getElementById('btnApplyDriver').style.display = "inline-block";
+                }
+              }
+              else {
+                document.getElementById('btnApplyDriver').style.display = "inline-block";
+              }
+            })
+          });
+        }
       }
     }
-  }
 
   logout() {
     user[0] = '';
@@ -157,6 +187,13 @@ class Account extends React.Component {
 
   editProfile() {
     Util.editProfile();
+
+    document.getElementById('tblApplyDriver').style.display = 'none';
+    document.getElementById('btnApplyDriver').style.display = 'none';
+    document.getElementById('cancelApplyDriverButton').style.display = 'none';
+    document.getElementById('btnImgFrontUpload').style.display = 'none';
+    document.getElementById('btnImgBackUpload').style.display = 'none';
+    document.getElementById('submitDriverDetails').style.display = 'none';
   }
 
   submitEditProfile(e) {
@@ -224,6 +261,13 @@ class Account extends React.Component {
   cancelEditProfile() {
     Util.profilePageReset();
 
+    document.getElementById('tblApplyDriver').style.display = 'none';
+    document.getElementById('btnApplyDriver').style.display = 'block';
+    document.getElementById('cancelApplyDriverButton').style.display = 'none';
+    document.getElementById('btnImgFrontUpload').style.display = 'none';
+    document.getElementById('btnImgBackUpload').style.display = 'none';
+    document.getElementById('submitDriverDetails').style.display = 'none';
+
     document.getElementById('editfName').value = "";
     document.getElementById('editlName').value = "";
   }
@@ -245,6 +289,13 @@ class Account extends React.Component {
     document.getElementById('cancelEditButton').style.display = 'none';
     document.getElementById('submitPasswordButton').style.display = 'inline';
     document.getElementById('cancelPasswordButton').style.display = 'inline';
+
+    document.getElementById('tblApplyDriver').style.display = 'none';
+    document.getElementById('btnApplyDriver').style.display = 'none';
+    document.getElementById('cancelApplyDriverButton').style.display = 'none';
+    document.getElementById('btnImgFrontUpload').style.display = 'none';
+    document.getElementById('btnImgBackUpload').style.display = 'none';
+    document.getElementById('submitDriverDetails').style.display = 'none';
 
     document.getElementById('editfName').value = "";
     document.getElementById('editlName').value = "";
@@ -275,6 +326,13 @@ class Account extends React.Component {
   cancelPassword() {
     Util.profilePageReset();
 
+    document.getElementById('tblApplyDriver').style.display = 'none';
+    document.getElementById('btnApplyDriver').style.display = 'block';
+    document.getElementById('cancelApplyDriverButton').style.display = 'none';
+    document.getElementById('btnImgFrontUpload').style.display = 'none';
+    document.getElementById('btnImgBackUpload').style.display = 'none';
+    document.getElementById('submitDriverDetails').style.display = 'none';
+
     document.getElementById('editNewPassword').value = "";
     document.getElementById('confirmNewPassword').value = "";
   }
@@ -298,7 +356,9 @@ class Account extends React.Component {
     document.getElementById('cancelPasswordButton').style.display = 'none';
     document.getElementById('btnApplyDriver').style.display = 'none';
     document.getElementById('cancelApplyDriverButton').style.display = 'inline-block';
-    document.getElementById('btnImgFrontUpload').style.display = 'inline-block';
+    document.getElementById('btnImgFrontUpload').style.display = 'none';
+    document.getElementById('btnImgBackUpload').style.display = 'none';
+    document.getElementById('submitDriverDetails').style.display = 'inline-block';
   }
 
   cancelApplyDriver() {
@@ -308,6 +368,50 @@ class Account extends React.Component {
     document.getElementById('cancelApplyDriverButton').style.display = 'none';
     document.getElementById('btnImgFrontUpload').style.display = 'none';
     document.getElementById('btnImgBackUpload').style.display = 'none';
+    document.getElementById('submitDriverDetails').style.display = 'none';
+  }
+
+  submitDriverDetails() {
+    var date = new Date;
+    var m = date.getMonth();
+    var d = date.getDate();
+    var y = date.getFullYear() - 2;
+    var issuedDate = new Date(document.getElementById('txtIssueDate').value);
+    var today = new Date(y, m, d);
+
+    if (this.state.license != "" && this.state.carplate != "" && this.state.license.length == 9 && (this.state.license.charAt(0) === 'S' || this.state.license.charAt(0) === 'T') && today > issuedDate) {
+      const accountsRef = firebase.database().ref('driverDetails/'+user[7]);
+      const driverDetails = {
+        driverUname: user[2],
+        carplate: this.state.carplate,
+        license: this.state.license,
+        issueDate: document.getElementById('txtIssueDate').value,
+        completed: "no"
+      }
+
+      accountsRef.update(driverDetails);
+      this.state = {
+        carplate: '',
+        license: ''
+      };
+
+      document.getElementById('tblDriverDetails').style.display = 'none';
+      document.getElementById('tblDriverImage').style.display = 'block';
+      document.getElementById('btnImgFrontUpload').style.display = 'inline-block';
+      document.getElementById('btnImgBackUpload').style.display = 'none';
+      document.getElementById('submitDriverDetails').style.display = 'none';
+    }
+    else {
+      if (this.state.license == "" || this.state.carplate == "") {
+        alert('One or more fields are empty');
+      }
+      else if (this.state.license.length != 9 || (this.state.license.charAt(0) != 'S' && this.state.license.charAt(0) != 'T')) {
+        alert('Please enter a valid license number');
+      }
+      else if (issuedDate > today) {
+        alert('You must be a driver for at least 2 years');
+      }
+    }
   }
 
 render() {
@@ -340,13 +444,13 @@ render() {
             <tr>
               <td>isDriver:</td>
               <td>
-                <label id='lblDriver' name='isDriver'>{user[5]}</label>
+                <label id='lblDriver' name='isDriver'>{user[4]}</label>
               </td>
             </tr>
             <tr>
               <td>isAdmin:</td>
               <td>
-                <label id='lblAdmin' name='isAdmin'>{user[6]}</label>
+                <label id='lblAdmin' name='isAdmin'>{user[5]}</label>
               </td>
             </tr>
           </table>
@@ -363,7 +467,28 @@ render() {
 
           <div id="tblApplyDriver" style={{display: 'none'}}>
             <div>
-              <div>
+              <table id='tblDriverDetails'>
+                <tr>
+                  <td>Carplate No:</td>
+                  <td>
+                    <input id='txtCarplate' value={this.state.carplate} onChange={this.handleChange} type="text" name="carplate" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>Issue Date:</td>
+                  <td>
+                    <input id='txtIssueDate' type="date" name="date" />
+                  </td>
+                </tr>
+                <tr>
+                  <td>License Number:</td>
+                  <td>
+                    <input id='txtLicenseNo' value={this.state.license} onChange={this.handleChange} type="text" name="license" />
+                  </td>
+                </tr>
+              </table>
+
+              <div id='tblDriverImage' style={{display: 'none'}}>
                 <table>
                   <tr id='uploadedFront'>
                     <td>
@@ -385,6 +510,7 @@ render() {
           </div>
           <br />
           <br />
+          <button id='submitDriverDetails' onClick={this.submitDriverDetails} style={{display:'none'}}>Continue</button>
           <button id='btnImgFrontUpload' onClick={this.handleFrontUpload} style={{display:'none'}}>Upload Front</button>
           <button id='btnImgBackUpload' onClick={this.handleBackUpload} style={{display:'none'}}>Upload Back</button>
           <button id='cancelApplyDriverButton' onClick={this.cancelApplyDriver} style={{display:'none'}}>Cancel</button>
