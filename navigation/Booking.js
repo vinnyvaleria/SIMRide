@@ -16,6 +16,7 @@ class Booking extends React.Component {
     this.submitCreateBooking = this.submitCreateBooking.bind(this);
     this.viewMyBookings = this.viewMyBookings.bind(this);
     this.viewAllBookings = this.viewAllBookings.bind(this);
+    this.viewBooking = this.viewBooking.bind(this);
     this.state = {
       description: ''
     }
@@ -38,9 +39,61 @@ class Booking extends React.Component {
       .then(function (snapshot) {
         var i = 0;
         snapshot.forEach(function (child) {
-          userDetails[i] = child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+          userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
           i++;
         })
+      });
+
+      document.getElementById('tb_AllBookings').innerHTML = '';
+      var database = firebase.database().ref('bookings').orderByChild('date');
+      database.once('value', function (snapshot) {
+        if (snapshot.exists()) {
+          var content = '';
+          var rowCount = 0;
+          snapshot.forEach(function (data) {
+            var area = data.val().area;
+            var date = data.val().date;
+            var time = data.val().time;
+            var ppl = [];
+
+            if (data.val().passengers != null) {
+              ppl = data.val().passengers.split(',')
+            }
+
+            var passengers = ppl.length + "/" + data.val().maxPassengers;
+            var id = data.val().driverID;
+            var driver = '';
+
+            for (let i = 0; i < userDetails.length; i++) {
+              var key = [];
+              key = userDetails[i].split(':');
+              if (key[0] === id) {
+                driver = key[1];
+              }
+            }
+
+            content += '<tr id=\'' + data.key + '\'>';
+            content += '<td>' + area + '</td>'; //column1
+            content += '<td>' + date + '</td>'; //column2
+            content += '<td>' + time + '</td>';
+            content += '<td>' + driver + '</td>';
+            content += '<td>' + passengers + '</td>';
+            content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
+            content += '</tr>';
+
+            rowCount++;
+          });
+
+          document.getElementById('tb_AllBookings').innerHTML += content;
+
+          for (var v = 0; v < rowCount; v++) {
+            var btn = document.createElement('input');
+            btn.setAttribute('type', 'button')
+            btn.setAttribute('value', 'View');
+            //btn.onclick = this.viewBooking;
+            document.getElementById('btnViewBooking' + v).appendChild(btn);
+          }
+        }
       });
     }
   }
@@ -75,7 +128,6 @@ class Booking extends React.Component {
         var i = 0;
         snapshot.forEach(function (child) {
           userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
-          console.log(userDetails);
           i++;
         })
       });
@@ -84,7 +136,7 @@ class Booking extends React.Component {
     database.once('value', function (snapshot) {
       if (snapshot.exists()) {
         var content = '';
-
+        var rowCount = 0;
         snapshot.forEach(function (data) {
           var area = data.val().area;
           var date = data.val().date;
@@ -107,18 +159,49 @@ class Booking extends React.Component {
             }
           }
 
-          content += '<tr>';
+          content += '<tr id=\'' + data.key + '\'>';
           content += '<td>' + area + '</td>'; //column1
           content += '<td>' + date + '</td>'; //column2
           content += '<td>' + time + '</td>';
           content += '<td>' + driver + '</td>';
           content += '<td>' + passengers + '</td>';
+          content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
           content += '</tr>';
+
+          rowCount++;
         });
 
        document.getElementById('tb_AllBookings').innerHTML += content;
+
+       for (var v = 0; v < rowCount; v++) {
+         var btn = document.createElement('input');
+         btn.setAttribute('type', 'button')
+         btn.setAttribute('value', 'View');
+         btn.onclick = this.viewBooking;
+         document.getElementById('btnViewBooking' + v).appendChild(btn);
+       }
       }
     });
+  }
+
+  viewBooking = e => {
+    var bookingID = e.target.parentElement.id;
+    console.log(bookingID);
+    // firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
+    //   querySnapshot.docChanges().forEach((doc) => {
+    //     var message = doc.doc.data();
+    //     var html = "";
+    //     // give each message a unique ID
+    //     html += "<li id='message-" + message.timestamp + "'>";
+    //     html += message.from + ": " + message.text;
+    //     html += "</li>";
+
+    //     console.log(html);
+
+    //     document.getElementById('submitInboxMessage').style.display = "block";
+    //     document.getElementById("messages").innerHTML += html;
+    //  });
+    //});
   }
 
   // view my bookings
@@ -201,7 +284,7 @@ class Booking extends React.Component {
 
       document.getElementById('div_availBookings').style.display = "block";
       document.getElementById('div_createBooking').style.display = "none";
-      document.getElementById('div_yourBookings').style.display = "none";
+      document.getElementById('div_myBookings').style.display = "none";
     }
   }
 

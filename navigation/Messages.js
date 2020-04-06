@@ -62,7 +62,6 @@ constructor(props) {
         querySnapshot.forEach((doc) => {
           allchats.push(doc.id);
           chats = Array.from(new Set(allchats))
-          console.log(chats);
         });
       });       
     }
