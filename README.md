@@ -67,10 +67,10 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**Wallet page [Shafiq doing now]** | Connected to Firebase 
+**Cancel confirmed ride [Shafiq doing now]** | Connected to Firebase 
 Rate the driver and rider | Registration authentication to Firebase 
 Admin: review driver application | Synced database to Firebase 
-Cancel confirmed ride | Logging into SIMRide 
+Wallet page | Logging into SIMRide 
 Reject request/offer for ride | Logging out of SIMRide 
 Transaction/booking history | Send data to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | Made multiple tabs to act as pages 
