@@ -3,6 +3,8 @@ import { Text, View, Image, Button } from 'react-native';
 import logo from '../assets/logo.png';
 import firebase from '../firebase/base';
 import { validate } from 'email-validator';
+import LoginStyle from '../src/components/LoginStyle';
+import '../src/custom.css';
 
 var user = new Array(8); //fname, lname, uname, email, isDriver, isAdmin, isBanned, id
 var countArr = new Array(1); //account
@@ -11,258 +13,256 @@ var emailArr = [];
 var Util = require('../util/Util');
 
 class Login extends React.Component {
-  constructor(props) {
-    super(props);
-    this.login = this.login.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.signup = this.signup.bind(this);
-    this.state = {
-      firstName: '',
-      lastName: '',
-      username: '',
-      email: '',
-      password: '',
-      repassword: ''
-    };
-  }
-
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
-
-  componentDidMount() {
-    // counts current total account registered
-    firebase.database()
-    .ref('admin')
-    .orderByChild('acct')
-    .once('value')
-    .then(function(snapshot) {
-      snapshot.forEach(function(child) {
-        countArr[0] = child.val().acct;
-        console.log(child.val().acct, countArr[0]);
-      })
-    });
-
-    // loads accounts
-    firebase.database().ref('accounts')
-    .orderByChild('email')
-    .once('value')
-    .then(function (snapshot) {
-      var i = 0;
-      snapshot.forEach(function (child) {
-        unameArr[i] = child.val().uname;
-        emailArr[i] = child.val().email;
-        i++;
-      })
-    });
-
-    console.log(emailArr, unameArr);
-  }
-
-  checkEmail(e) {
-    user[3] = document.getElementById("signinemail").value;
-    user[3] = user[3].toString().toLowerCase();
-
-    const accountsRef = firebase.database().ref('accounts');
-    accountsRef.orderByChild('email')
-      .equalTo(user[3])
-      .once('value')
-      .then(function (snapshot) {
-        snapshot.forEach(function(child) {
-          user[0] = child.val().fname;
-          user[1] = child.val().lname;
-          user[2] = child.val().uname;
-          user[4] = child.val().isDriver;
-          user[5] = child.val().isAdmin;
-          user[6] = child.val().isBanned;
-          user[7] = child.key;
-          console.log(child.val().fname, child.val().email, user[7]);
-        });
-      })
-  }
-
-  login(e) {
-    e.preventDefault();
-    var i = 1;
-    var email = this.state.email.toString().toLowerCase();
-
-    if (!validate(email)) {
-      alert("Email not valid bro");
+    constructor(props) {
+            super(props);
+            this.login = this.login.bind(this);
+            this.handleChange = this.handleChange.bind(this);
+            this.signup = this.signup.bind(this);
+            this.state = {
+                firstName: '',
+                lastName: '',
+                username: '',
+                email: '',
+                password: '',
+                repassword: ''
+        };
     }
-    else {
-      while (i < emailArr.length) {
-        console.log(emailArr[i], email);
-        if (emailArr[i].toString() === email) {
-          if (user[7].toString() === "yes") {
-            alert("Account is banned. Please contact administrator.")
-          }
-          else {
-            firebase.auth().signInWithEmailAndPassword(email, this.state.password).then((u) => {}).catch((error) => {
-              alert(error.message)
+
+    handleChange(e) {
+        this.setState({ [e.target.name]: e.target.value });
+    }
+
+    componentDidMount() {
+        // counts current total account registered
+        firebase.database()
+        .ref('admin')
+        .orderByChild('acct')
+        .once('value')
+        .then(function(snapshot) {
+            snapshot.forEach(function(child) {
+                countArr[0] = child.val().acct;
+                console.log(child.val().acct, countArr[0]);
             })
-            break;
-          }
-        }
-        else if (i == emailArr.length-1) {
-          alert("Email not found yo");
-          i++;
+        });
+
+        // loads accounts
+        firebase.database().ref('accounts')
+        .orderByChild('email')
+        .once('value')
+        .then(function (snapshot) {
+            var i = 0;
+            snapshot.forEach(function (child) {
+                unameArr[i] = child.val().uname;
+                emailArr[i] = child.val().email;
+                i++;
+            })
+        });
+        console.log(emailArr, unameArr);
+    }
+
+    checkEmail(e) {
+        user[3] = document.getElementById('signinemail').value;
+        user[3] = user[3].toString().toLowerCase();
+
+        const accountsRef = firebase.database().ref('accounts');
+        accountsRef.orderByChild('email')
+            .equalTo(user[3])
+            .once('value')
+            .then(function (snapshot) {
+                snapshot.forEach(function(child) {
+                    user[0] = child.val().fname;
+                    user[1] = child.val().lname;
+                    user[2] = child.val().uname;
+                    user[4] = child.val().isDriver;
+                    user[5] = child.val().isAdmin;
+                    user[6] = child.val().isBanned;
+                    user[7] = child.key;
+                    console.log(child.val().fname, child.val().email, user[7]);
+                });
+            })
+    }
+
+    login(e) {
+        e.preventDefault();
+        var i = 1;
+        var email = this.state.email.toString().toLowerCase();
+
+        if (!validate(email)) {
+            alert('Email not valid bro');
         }
         else {
-          i++;
+            while (i < emailArr.length) {
+                console.log(emailArr[i], email);
+                if (emailArr[i].toString() === email) {
+                    if (user[7].toString() === 'yes') {
+                        alert('Account is banned. Please contact administrator.')
+                    }
+                    else {
+                        firebase.auth().signInWithEmailAndPassword(email, this.state.password).then((u) => {}).catch((error) => {
+                        alert(error.message)
+                        })
+                        break;
+                    }
+                }   
+                else if (i == emailArr.length-1) {
+                    alert('Email not found yo');
+                    i++;
+                }
+                else {
+                    i++;
+                }
+            }
         }
-      }
-    }
-  }
-
-  signup(e) {
-    e.preventDefault();
-
-    // checks for duplicate username
-    var i = 0;
-    var unameCheck = false;
-    while (i < unameArr.length) {
-      if (this.state.username === unameArr[i]) {
-        alert("Username has already been registered");
-        unameCheck = false;
-        break;
-      }
-      else {
-        unameCheck = true;
-      }
-      i++;
     }
 
-    // checks confirm password
-    if (this.state.password != this.state.repassword) {
-      alert("Passwords do not match");
+    signup(e) {
+        e.preventDefault();
+
+        // checks for duplicate username
+        var i = 0;
+        var unameCheck = false;
+        while (i < unameArr.length) {
+            if (this.state.username === unameArr[i]) {
+                alert('Username has already been registered');
+                unameCheck = false;
+                break;
+            }
+            else {
+                unameCheck = true;
+            }
+            i++;
+        }
+
+        // checks confirm password
+        if (this.state.password != this.state.repassword) {
+            alert('Passwords do not match');
+        }
+        else {
+            console.log(unameCheck);
+            if (unameCheck) {
+                firebase.auth().createUserWithEmailAndPassword(this.state.email.toString().toLowerCase(), this.state.password).then((u) => {
+                }).then((u)=>{
+                    const accountsRef = firebase.database().ref('accounts');
+                    const account = {
+                        fname: this.state.firstName,
+                        lname: this.state.lastName,
+                        uname: this.state.username,
+                        email: this.state.email.toString().toLowerCase(),
+                        passw: this.state.password,
+                        isDriver: 'no',
+                        isAdmin: 'no',
+                        isBanned: 'no'
+                    }
+
+                    user[0] = account.fname;
+                    user[1] = account.lname;
+                    user[2] = account.uname;
+                    user[3] = account.email;
+                    user[4] = account.isDriver;
+                    user[5] = account.isAdmin;
+                    user[6] = account.isBanned;
+                    user[7] = account.key;
+
+                    accountsRef.push(account);
+                    this.state = {
+                        firstName: '',
+                        lastName: '',
+                        username: '',
+                        email: '',
+                        password: '',
+                        repassword: '',
+                        isDriver: '',
+                        isAdmin: '',
+                        isBanned: ''
+                    };
+
+                    // writing
+                    firebase.database().ref('admin/counter')
+                    .once('value')
+                    .then(function(snapshot) {
+                        countArr[0] += 1;
+                        console.log('rewrite: ', countArr[0]);
+                        snapshot.ref.update({ acct: countArr[0] });
+                    });
+                })
+                .catch((error) => {
+                    alert(error.message);
+                })
+            }
+        }
     }
 
-    else {
-      console.log(unameCheck);
-      if (unameCheck) {
-        firebase.auth().createUserWithEmailAndPassword(this.state.email.toString().toLowerCase(), this.state.password).then((u) => {
-        }).then((u)=>{
-          const accountsRef = firebase.database().ref('accounts');
-          const account = {
-            fname: this.state.firstName,
-            lname: this.state.lastName,
-            uname: this.state.username,
-            email: this.state.email.toString().toLowerCase(),
-            passw: this.state.password,
-            isDriver: "no",
-            isAdmin: "no",
-            isBanned: "no"
-          }
-
-          user[0] = account.fname;
-          user[1] = account.lname;
-          user[2] = account.uname;
-          user[3] = account.email;
-          user[4] = account.isDriver;
-          user[5] = account.isAdmin;
-          user[6] = account.isBanned;
-          user[7] = account.key;
-
-          accountsRef.push(account);
-          this.state = {
-            firstName: '',
-            lastName: '',
-            username: '',
-            email: '',
-            password: '',
-            repassword: '',
-            isDriver: '',
-            isAdmin: '',
-            isBanned: ''
-          };
-
-          // writing
-          firebase.database().ref('admin/counter')
-                             .once('value')
-                             .then(function(snapshot) {
-                                 countArr[0] += 1;
-                                 console.log("rewrite: ", countArr[0]);
-                                 snapshot.ref.update({ acct: countArr[0] });
-                            });
-        })
-        .catch((error) => {
-            alert(error.message);
-        })
-      }
+    extendsignup(e) {
+        e.preventDefault();
+        document.getElementById('signinblock').style.display = 'none';
+        document.getElementById('signupblock').style.display = 'block';
     }
-  }
 
-  extendsignup(e) {
-    e.preventDefault();
-    document.getElementById("signinblock").style.display = "none";
-    document.getElementById("signupblock").style.display = "block";
-  }
+    cancel(e) {
+        e.preventDefault();
+        document.getElementById('signinblock').style.display = 'block';
+        document.getElementById('signupblock').style.display = 'none';
+    }
 
-  cancel(e) {
-    e.preventDefault();
-    document.getElementById("signinblock").style.display = "block";
-    document.getElementById("signupblock").style.display = "none";
-  }
+    render() {
+        return (
+            <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+                <div style={{textAlign: 'center'}}>
+                    <img src={logo} alt='Logo' style={{maxWidth: 200, maxHeight: 200, objectFit: 'contain'}} />
+                    <h1>- Welcome to SIMRide -</h1>
 
-  render() {
-    return (
-      <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
-        <Text style={{ color: '#fff', fontSize: 30, fontFamily: 'Helvetica', fontWeight: '600'}} >Welcome to SIMRide</Text>
-        <Image source={logo} /> 
-        <br/>
-        <div>
-          <form>
-            <div id="signinblock">
-              <input id="signinemail" value={this.state.email} onChange={this.handleChange} type="email" name="email" placeholder="E-Mail (test@this.com)" />
-              <input value={this.state.password} onChange={this.handleChange} onFocus={this.checkEmail} type="password" name="password" placeholder="Password (shafiq)" style={{marginLeft: '15px'}}/>
-              <br/>
-              <br/>
-              <div style={{textAlign: 'center'}}>
-                <button type="submit" onClick={this.login}>Sign In</button>
-              <button onClick={this.extendsignup} style={{marginLeft: '25px'}}>Sign Up</button>
-              </div>
-            </div>
+                    <form>
+                        {/*Signin styling*/}
+                        <div id='signinblock' style={{textAlign: 'left'}}>
+                            <div id='signin-input-wrapper' style={{display: 'flex'}}>
+                                <div style={{marginRight: 20}}>
+                                    <h2>E-mail</h2>
+                                    <input id='signinemail' value={this.state.email} onChange={this.handleChange} type='email' name='email' placeholder='Enter your e-mail (test@this.com)' />
+                                </div>
+                                <div>
+                                    <h2>Password</h2>
+                                    <input value={this.state.password} onChange={this.handleChange} onFocus={this.checkEmail} type='password' name='password' placeholder='Enter your password (shafiq)' />
+                                </div>
+                            </div>
 
-            <div id="signupblock" style={{display: 'none'}}>
-              <table>
-                <tbody>
-                  <tr>
-                    <td>First Name</td>
-                    <td><input value={this.state.firstName} onChange={this.handleChange} type="text" name="firstName"/></td>
-                  </tr>
-                  <tr>
-                    <td>Last Name</td>
-                    <td><input value={this.state.lastName} onChange={this.handleChange} type="text" name="lastName"/></td>
-                  </tr>
-                  <tr>
-                    <td>E-Mail</td>
-                    <td><input value={this.state.email} onChange={this.handleChange} type="email" name="email"/></td>
-                  </tr>
-                  <tr>
-                    <td>Username</td>
-                    <td><input value={this.state.username} onChange={this.handleChange} type="text" name="username"/></td>
-                  </tr>
-                  <tr>
-                    <td>Password</td>
-                    <td><input value={this.state.password} onChange={this.handleChange} type="password" name="password"/></td>
-                  </tr>
-                  <tr>
-                    <td>Re-Enter Password</td>
-                    <td><input value={this.state.repassword} onChange={this.handleChange} type="password" name="repassword"/></td>
-                  </tr>
-                </tbody>
-              </table>
-              <br/>
-              <div style={{textAlign: 'center'}}>
-                <button onClick={this.signup}>Submit</button>
-                <button onClick={this.cancel} style={{marginLeft: '25px'}}>Cancel</button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </View>
-    );
-  }
+                            {/* Bottom button styling */}
+                            <div style={{textAlign: 'center'}}>
+                                <button type='submit' onClick={this.login}>Login</button>
+                                <button onClick={this.extendsignup} style={{marginLeft: 20}}>Register</button>
+                            </div>
+                        </div>
+
+                        {/* Signup styling */}
+                        <div id='signupblock' style={{textAlign: 'left', display: 'none'}}>
+                            <h2>First Name</h2>
+                            <input value={this.state.firstName} onChange={this.handleChange} type='text' name='firstName' placeholder='Enter your first name' />
+
+                            <h2>Last Name</h2>
+                            <input value={this.state.lastName} onChange={this.handleChange} type='text' name='lastName' placeholder='Enter your last name' />
+
+                            <h2>E-mail</h2>
+                            <input value={this.state.email} onChange={this.handleChange} type='email' name='email' placeholder='Enter your e-mail' />
+
+                            <h2>Username</h2>
+                            <input value={this.state.username} onChange={this.handleChange} type='text' name='username' placeholder='Enter your preferred username' />
+
+                            <h2>Password</h2>
+                            <input value={this.state.password} onChange={this.handleChange} type='password' name='password' placeholder='Enter your password' />
+
+                            <h2>Re-enter Password</h2>
+                            <input value={this.state.repassword} onChange={this.handleChange} type='password' name='repassword' placeholder='Please re-enter your password' />
+
+                            {/* Bottom button styling */}
+                            <div style={{textAlign: 'center'}}>
+                                <button onClick={this.signup}>Submit</button>
+                                <button onClick={this.cancel} style={{marginLeft: 20}}>Cancel</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </View>
+        );
+    }
 }
 
 export default Login;

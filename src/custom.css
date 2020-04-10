@@ -1,0 +1,68 @@
+#root {
+    padding: 10px !important;
+    background: #4b9ea1 !important;
+}
+
+p, input, button {
+    font-size: 16px !important;
+    font-weight: 400 !important;
+    line-height: 24px !important;
+    color: #222222 !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    padding: 0.25em 0.5em !important;
+}
+
+h1 {
+    font-size: 2em !important;
+    font-weight: 800 !important;
+    line-height: 2.5em !important;
+    margin-bottom: 0.5em !important;
+    color: #ffffff !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    padding: 0.5em 0 !important;
+    margin: unset !important;
+}
+
+h2 {
+    font-size: 1.5em !important;
+    font-weight: 600 !important;
+    line-height: 2em !important;
+    color: #ffffff !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+    margin: unset !important;
+}
+
+h3 {
+    font-size: 1.5em !important;
+    font-weight: 400 !important;
+    line-height: 2em !important;
+    color: #ffffff !important;
+    font-family: Arial, Helvetica, sans-serif !important;
+}
+
+input {
+    border-radius: 5px !important;
+    border-style: unset !important;
+    width: 300px;
+    margin-bottom: 15px !important;
+}
+
+button {
+    border-radius: 50px !important;
+    padding: 0.25em 1.5em !important;
+    margin-top: 1em !important;
+    border: 0 !important;
+    cursor: pointer;
+}
+
+button:hover {
+    background-color: #4b87a1 !important;
+    color: white !important;
+}
+
+@media only screen and (max-width: 767px) {
+    #signin-input-wrapper {
+        flex-direction: column;
+        width: 100px !important;
+    }
+}
