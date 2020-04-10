@@ -192,6 +192,7 @@ class Booking extends React.Component {
 
   viewBooking = e => {
     var bookingID = e.target.parentElement.parentElement.id;
+    console.log(bookingID)
 
     document.getElementById('div_availBookings').style.display = "none";
     document.getElementById('div_createBooking').style.display = "none";
@@ -291,10 +292,77 @@ class Booking extends React.Component {
 
   // view my bookings
   viewMyBookings = () => {
+    var self = this;
+    document.getElementById('tb_AllBookings').innerHTML = '';
+
     document.getElementById('div_availBookings').style.display = "none";
     document.getElementById('div_createBooking').style.display = "none";
     document.getElementById('div_myBookings').style.display = "block";
     document.getElementById('div_viewSelectedBooking').style.display = "none";
+
+    // get all accounts
+    firebase.database().ref('accounts')
+      .orderByChild('email')
+      .once('value')
+      .then(function (snapshot) {
+        var i = 0;
+        snapshot.forEach(function (child) {
+          userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+          i++;
+        })
+      });
+
+    var database = firebase.database().ref('bookings').orderByChild('date');
+    database.once('value', function (snapshot) {
+      if (snapshot.exists()) {
+        var content = '';
+        var rowCount = 0;
+        snapshot.forEach(function (data) {
+          if (data.val().currPassengers != null) {
+            if (data.val().currPassengers.includes(user[2])) {
+              var area = data.val().area;
+              var date = data.val().date;
+              var time = data.val().time;
+              var ppl = [];
+              ppl = data.val().currPassengers.split(',')
+
+              var passengers = ppl.length + "/" + data.val().maxPassengers;
+              var id = data.val().driverID;
+              var driver = '';
+
+              for (let i = 0; i < userDetails.length; i++) {
+                var key = [];
+                key = userDetails[i].split(':');
+                if (key[0] === id) {
+                  driver = key[1];
+                }
+              }
+
+              content += '<tr id=\'' + data.key + '\'>';
+              content += '<td>' + area + '</td>'; //column1
+              content += '<td>' + date + '</td>'; //column2
+              content += '<td>' + time + '</td>';
+              content += '<td>' + driver + '</td>';
+              content += '<td>' + passengers + '</td>';
+              content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
+              content += '</tr>';
+              
+              rowCount++;
+            }
+          }
+        });
+
+        document.getElementById('tb_myBookings').innerHTML += content;
+
+        for (var v = 0; v < rowCount; v++) {
+          var btn = document.createElement('input');
+          btn.setAttribute('type', 'button')
+          btn.setAttribute('value', 'View');
+          btn.onclick = self.viewBooking;
+          document.getElementById('btnViewBooking' + v).appendChild(btn);
+        }
+      }
+    });
   }
 
   createBooking = () => {
@@ -400,9 +468,7 @@ render() {
                 <th>No. of Passengers</th>
               </tr>
             </thead>
-            <tbody>
-              <tr id="tb_myBookings"></tr>
-            </tbody>
+            <tbody id="tb_myBookings"></tbody>
           </table>
         </div>
 
