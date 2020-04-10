@@ -70,8 +70,8 @@ In-Progress | Done
 **Cancel confirmed ride [Shafiq doing now]** | Connected to Firebase 
 Rate the driver and rider | Registration authentication to Firebase 
 Admin: review driver application | Synced database to Firebase 
-Wallet page | Logging into SIMRide 
-Reject request/offer for ride | Logging out of SIMRide 
+E-Wallet page | Logging into SIMRide 
+Top-up E-Wallet | Logging out of SIMRide 
 Transaction/booking history | Send data to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | Made multiple tabs to act as pages 
 Sorting - by area/time | Retrieve data from Firebase 
