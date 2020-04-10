@@ -67,24 +67,25 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**Cancel confirmed ride [Shafiq doing now]** | Connected to Firebase 
-**Design the app (UI/UX) [Vinny doing now]** | Registration authentication to Firebase 
-BOOKINGS: Filter - by area/time | Synced database to Firebase 
-WALLET: E-Wallet page | Logging into SIMRide 
-WALLET: Top-up E-Wallet | Logging out of SIMRide 
-WALLET: Remove total from E-Wallet after ride | Send data to Firebase 
-WALLET: Cash out for drivers | Made multiple tabs to act as pages 
-WALLET: Balance low reminder | Retrieve data from Firebase 
-USERS: Report user | Edit Profile - Account management 
-USERS: Weekly pickup scheduler (not important) | View Profile - Account management 
-USERS: Rate the driver and rider (not important) | Live chat, store chat, select user to chat with 
-USERS: Transaction/booking history | View other profiles 
-ADMIN: Ban user (blacklist user) | Update password - Account management
-ADMIN: Audit/log (not important) | Stored chat history 
-ADMIN: review driver application | Retrieving chats
-Connect APIs | Create a Booking
-eNETS Open API | Display list of available rides
-MapQuest Directions API | Apply to be driver: upload license image
-MapQuest Traffic API | Apply to be driver: add driver details
-MAPS: Automatic route planning (fastest) | Join booking
--- | View My Bookings
+**WALLET: E-Wallet page [Shafiq doing now]** | Connected to Firebase 
+**Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
+BOOKING: Filter - by area/time | BACKEND: Synced database to Firebase 
+-- | USERS: Logging into SIMRide 
+WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
+WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
+WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
+WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
+USERS: Report user | USERS: Edit Profile 
+USERS: Weekly pickup scheduler (not important) | USERS: View Profile 
+USERS: Rate the driver and rider (not important) | CHAT: Live chat, store chat, select user to chat with 
+USERS: Transaction/booking history | USERS: View other profiles 
+ADMIN: Ban user (blacklist user) | USERS: Update password
+ADMIN: Audit/log (not important) | CHAT: Stored chat history 
+ADMIN: review driver application | CHAT: Retrieving chats
+MAPS: Automatic route planning (fastest) | BOOKING: Create a Booking
+API: eNETS Open API | BOOKING: Display list of available Booking
+API: MapQuest Directions API | USER: Apply to be driver: upload license image
+API: MapQuest Traffic API | USER: Apply to be driver: add driver details
+-- | BOOKING: Join booking
+-- | BOOKING: View My Bookings
+-- | BOOKING: Cancel confirmed ride
