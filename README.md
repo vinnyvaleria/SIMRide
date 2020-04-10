@@ -68,19 +68,19 @@ git checkout [branch_name]
 In-Progress | Done
 ----------- | -----------
 **Cancel confirmed ride [Shafiq doing now]** | Connected to Firebase 
-Rate the driver and rider | Registration authentication to Firebase 
-Admin: review driver application | Synced database to Firebase 
+**Design the app (UI/UX) [Vinny doing now]** | Registration authentication to Firebase 
+Rate the driver and rider | Synced database to Firebase 
 E-Wallet page | Logging into SIMRide 
 Top-up E-Wallet | Logging out of SIMRide 
 Transaction/booking history | Send data to Firebase 
-**Design the app (UI/UX) [Vinny doing now]** | Made multiple tabs to act as pages 
-Sorting - by area/time | Retrieve data from Firebase 
+ADMIN: review driver application | Made multiple tabs to act as pages 
+Filter - by area/time | Retrieve data from Firebase 
 Report user | Edit Profile - Account management 
-Ban user (blacklist user) | View Profile - Account management 
+ADMIN: Ban user (blacklist user) | View Profile - Account management 
 Weekly pickup scheduler | Live chat, store chat, select user to chat with 
 Automatic route planning (fastest) | View other profiles 
 Balance low reminder | Update password - Account management
-Audit/log | Stored chat history 
+ADMIN: Audit/log | Stored chat history 
 Connect APIs | Retrieving chats
 Stripe API | Create a Booking
 eNETS Open API | Display list of available rides
