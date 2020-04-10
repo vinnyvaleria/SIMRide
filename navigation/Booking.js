@@ -16,6 +16,8 @@ class Booking extends React.Component {
     this.submitCreateBooking = this.submitCreateBooking.bind(this);
     this.viewMyBookings = this.viewMyBookings.bind(this);
     this.viewAllBookings = this.viewAllBookings.bind(this);
+    this.viewBooking = this.viewBooking.bind(this);
+    this.joinBooking = this.joinBooking.bind(this);
     this.state = {
       description: ''
     }
@@ -38,9 +40,62 @@ class Booking extends React.Component {
       .then(function (snapshot) {
         var i = 0;
         snapshot.forEach(function (child) {
-          userDetails[i] = child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+          userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
           i++;
         })
+      });
+
+      var self = this;
+      document.getElementById('tb_AllBookings').innerHTML = '';
+      var database = firebase.database().ref('bookings').orderByChild('date');
+      database.once('value', function (snapshot) {
+        if (snapshot.exists()) {
+          var content = '';
+          var rowCount = 0;
+          snapshot.forEach(function (data) {
+            var area = data.val().area;
+            var date = data.val().date;
+            var time = data.val().time;
+            var ppl = [];
+
+            if (data.val().currPassengers != null) {
+              ppl = data.val().currPassengers.split(',')
+            }
+
+            var passengers = ppl.length + "/" + data.val().maxPassengers;
+            var id = data.val().driverID;
+            var driver = '';
+
+            for (let i = 0; i < userDetails.length; i++) {
+              var key = [];
+              key = userDetails[i].split(':');
+              if (key[0] === id) {
+                driver = key[1];
+              }
+            }
+
+            content += '<tr id=\'' + data.key + '\'>';
+            content += '<td>' + area + '</td>'; //column1
+            content += '<td>' + date + '</td>'; //column2
+            content += '<td>' + time + '</td>';
+            content += '<td>' + driver + '</td>';
+            content += '<td>' + passengers + '</td>';
+            content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
+            content += '</tr>';
+
+            rowCount++;
+          });
+
+          document.getElementById('tb_AllBookings').innerHTML += content;
+
+          for (var v = 0; v < rowCount; v++) {
+            var btn = document.createElement('input');
+            btn.setAttribute('type', 'button')
+            btn.setAttribute('value', 'View');
+            btn.onclick = self.viewBooking;
+            document.getElementById('btnViewBooking' + v).appendChild(btn);
+          }
+        }
       });
     }
   }
@@ -61,11 +116,13 @@ class Booking extends React.Component {
 
   // view all available bookings
   viewAllBookings = () => {
+    var self = this;
     document.getElementById('tb_AllBookings').innerHTML = '';
 
     document.getElementById('div_availBookings').style.display = "block";
     document.getElementById('div_createBooking').style.display = "none";
     document.getElementById('div_myBookings').style.display = "none";
+    document.getElementById('div_viewSelectedBooking').style.display = "none";
 
     // get all accounts
     firebase.database().ref('accounts')
@@ -75,7 +132,6 @@ class Booking extends React.Component {
         var i = 0;
         snapshot.forEach(function (child) {
           userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
-          console.log(userDetails);
           i++;
         })
       });
@@ -84,15 +140,15 @@ class Booking extends React.Component {
     database.once('value', function (snapshot) {
       if (snapshot.exists()) {
         var content = '';
-
+        var rowCount = 0;
         snapshot.forEach(function (data) {
           var area = data.val().area;
           var date = data.val().date;
           var time = data.val().time;
           var ppl = [];
 
-          if (data.val().passengers != null) {
-            ppl = data.val().passengers.split(',')
+          if (data.val().currPassengers != null) {
+            ppl = data.val().currPassengers.split(',')
           }
 
           var passengers = ppl.length + "/" + data.val().maxPassengers;
@@ -107,18 +163,130 @@ class Booking extends React.Component {
             }
           }
 
-          content += '<tr>';
+          content += '<tr id=\'' + data.key + '\'>';
           content += '<td>' + area + '</td>'; //column1
           content += '<td>' + date + '</td>'; //column2
           content += '<td>' + time + '</td>';
           content += '<td>' + driver + '</td>';
           content += '<td>' + passengers + '</td>';
+          content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
           content += '</tr>';
+
+          rowCount++;
         });
 
        document.getElementById('tb_AllBookings').innerHTML += content;
+
+       for (var v = 0; v < rowCount; v++) {
+         var btn = document.createElement('input');
+         btn.setAttribute('type', 'button')
+         btn.setAttribute('value', 'View');
+         btn.onclick = self.viewBooking;
+         document.getElementById('btnViewBooking' + v).appendChild(btn);
+
+         console.log(btn);
+       }
       }
     });
+  }
+
+  viewBooking = e => {
+    var bookingID = e.target.parentElement.parentElement.id;
+
+    document.getElementById('div_availBookings').style.display = "none";
+    document.getElementById('div_createBooking').style.display = "none";
+    document.getElementById('div_myBookings').style.display = "none";
+    document.getElementById('div_viewSelectedBooking').style.display = "block";
+    
+    // get all accounts
+    firebase.database().ref('accounts')
+      .orderByChild('email')
+      .once('value')
+      .then(function (snapshot) {
+        var i = 0;
+        snapshot.forEach(function (child) {
+          userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+          i++;
+        })
+      });
+
+    var database = firebase.database().ref('bookings');
+    database.once('value', function (snapshot) {
+      if (snapshot.exists()) {
+        snapshot.forEach(function (data) {
+          if (data.key === bookingID) {
+            var area = data.val().area;
+            var date = data.val().date;
+            var time = data.val().time;
+            var meeting = data.val().description;
+            var ppl = [];
+
+            if (data.val().currPassengers != null) {
+              ppl = data.val().currPassengers.split(', ')
+            }
+
+            var slotsleft = data.val().maxPassengers - ppl.length;
+            var id = data.val().driverID;
+            var driver = '';
+
+            for (let i = 0; i < userDetails.length; i++) {
+              var key = [];
+              key = userDetails[i].split(':');
+              if (key[0] === id) {
+                driver = key[1]; //gets username
+              }
+            }
+
+            console.log(driver, area, date, time, meeting, slotsleft);
+            document.getElementById('td_viewSelectedBooking_bookingID').innerHTML = bookingID;
+            document.getElementById('td_viewSelectedBooking_driverName').innerHTML = driver;
+            document.getElementById('td_viewSelectedBooking_date').innerHTML = date;
+            document.getElementById('td_viewSelectedBooking_time').innerHTML = time;
+            document.getElementById('td_viewSelectedBooking_area').innerHTML = area;
+            document.getElementById('td_viewSelectedBooking_meeting').innerHTML = meeting;
+            document.getElementById('td_viewSelectedBooking_slotsLeft').innerHTML = slotsleft;
+            if (ppl.length > 0) {
+              document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML = data.val().currPassengers;
+              document.getElementById('tr_viewSelectedBooking_currPassengers').style.visibility = "visible";
+            }
+            else {
+              document.getElementById('tr_viewSelectedBooking_currPassengers').style.visibility = "hidden";
+            }
+            if (slotsleft === 0 || ppl.includes(user[2])) {
+              document.getElementById('btnJoinBooking').style.display = "none";
+            }
+            else {
+              document.getElementById('btnJoinBooking').style.display = "inline-block";
+            }
+          }
+        });
+      }
+    });
+  }
+
+  // join booking
+  joinBooking = () => {
+    const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
+    let currPassengers = document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML;
+
+    if (currPassengers === "") {
+      currPassengers += user[2];
+    }
+    else {
+      currPassengers += (", " + user[2]);
+    }
+
+    const accountsRef = firebase.database().ref('bookings/' + bookingID);
+    const bookingDetails = {
+      currPassengers: currPassengers
+    }
+
+    accountsRef.update(bookingDetails);
+
+    document.getElementById('div_availBookings').style.display = "none";
+    document.getElementById('div_createBooking').style.display = "none";
+    document.getElementById('div_myBookings').style.display = "block";
+    document.getElementById('div_viewSelectedBooking').style.display = "none";
   }
 
   // view my bookings
@@ -126,13 +294,15 @@ class Booking extends React.Component {
     document.getElementById('div_availBookings').style.display = "none";
     document.getElementById('div_createBooking').style.display = "none";
     document.getElementById('div_myBookings').style.display = "block";
+    document.getElementById('div_viewSelectedBooking').style.display = "none";
   }
 
   createBooking = () => {
     document.getElementById('div_availBookings').style.display = "none";
     document.getElementById('div_createBooking').style.display = "block";
     document.getElementById('div_myBookings').style.display = "none";
-
+    document.getElementById('div_viewSelectedBooking').style.display = "none";
+    
     document.getElementById('driverID').innerHTML = user[7];
 
     var database = firebase.database().ref().child('admin/area');
@@ -174,7 +344,6 @@ class Booking extends React.Component {
       alert("Please enter zipcode or description of area");
     } 
     else {
-
       const bookingsRef = firebase.database().ref('bookings');
       const booking = {
         driverID: user[7],
@@ -183,7 +352,7 @@ class Booking extends React.Component {
         area: document.getElementById('ddArea').value,
         description: this.state.description,
         maxPassengers: document.getElementById('ddPassengers').value,
-        curPassengers: null
+        currPassengers: null
       }
         // user[0] = account.fname;
         // user[7] = account.key;
@@ -201,7 +370,7 @@ class Booking extends React.Component {
 
       document.getElementById('div_availBookings').style.display = "block";
       document.getElementById('div_createBooking').style.display = "none";
-      document.getElementById('div_yourBookings').style.display = "none";
+      document.getElementById('div_myBookings').style.display = "none";
     }
   }
 
@@ -251,86 +420,129 @@ render() {
             <tbody id="tb_AllBookings"></tbody>
           </table>
         </div>
+
+        <div id='div_viewSelectedBooking' style={{display: 'none'}}>
+          <table id="tbl_AllBookings">
+            <tbody>
+              <tr>
+                <td>Booking ID:</td>
+                <td id='td_viewSelectedBooking_bookingID'></td>
+              </tr>
+              <tr>
+                <td>Driver Username:</td>
+                <td id='td_viewSelectedBooking_driverName'></td>
+              </tr>
+              <tr>
+                <td>Date:</td>
+                <td id='td_viewSelectedBooking_date'></td>
+              </tr>
+              <tr>
+                <td>Time:</td>
+                <td id='td_viewSelectedBooking_time'></td>
+              </tr>
+              <tr>
+                <td>Area:</td>
+                <td id='td_viewSelectedBooking_area'></td>
+              </tr>
+              <tr>
+                <td>Meeting place:</td>
+                <td id='td_viewSelectedBooking_meeting'></td>
+              </tr>
+              <tr>
+                <td>Slots left:</td>
+                <td id='td_viewSelectedBooking_slotsLeft'></td>
+              </tr>
+              <tr id='tr_viewSelectedBooking_currPassengers'>
+                <td>Passengers:</td>
+                <td id='td_viewSelectedBooking_currPassengers'></td>
+              </tr>
+            </tbody>
+          </table>
+          <br/>
+          <button id='btnJoinBooking' onClick={ this.joinBooking }>Join Booking</button>
+        </div>
         
         <div id='div_createBooking' style={{display: 'none'}}>
           <table>
-            <tr>
-              <td>Driver ID</td>
-              <td><label id="driverID"/></td>
-            </tr>
-            <tr>
-              <td>Date</td>
-              <td><input id="txtDate" onChange={this.handleChange} type="date" style={{width: '12.6em'}} required="true" /></td>
-            </tr>
-            <tr>
-              <td>Meet-Up Time</td>
-              <td>
-                <select id="ddMeetTime" style={{width: '13em'}} required="true">
-                  <option value="06:30">06:30</option>
-                  <option value="07:00">07:00</option>
-                  <option value="07:30">07:30</option>
-                  <option value="08:00">08:00</option>
-                  <option value="08:30">08:30</option>
-                  <option value="09:00">09:00</option>
-                  <option value="09:30">09:30</option>
-                  <option value="10:00">10:00</option>
-                  <option value="10:30">10:30</option>
-                  <option value="11:00">11:00</option>
-                  <option value="11:30">11:30</option>
-                  <option value="12:00">12:00</option>
-                  <option value="12:30">12:30</option>
-                  <option value="13:00">13:00</option>
-                  <option value="13:30">13:30</option>
-                  <option value="14:00">14:00</option>
-                  <option value="14:30">14:30</option>
-                  <option value="15:00">15:00</option>
-                  <option value="15:30">15:30</option>
-                  <option value="16:00">16:00</option>
-                  <option value="16:30">16:30</option>
-                  <option value="17:00">17:00</option>
-                  <option value="17:30">17:30</option>
-                  <option value="18:00">18:00</option>
-                  <option value="18:30">18:30</option>
-                  <option value="19:00">19:00</option>
-                  <option value="19:30">19:30</option>
-                  <option value="20:00">20:00</option>
-                  <option value="20:30">20:30</option>
-                  <option value="21:00">21:00</option>
-                  <option value="21:30">21:30</option>
-                  <option value="22:00">22:00</option>
-                  <option value="22:30">22:30</option>
-                  <option value="23:00">23:00</option>
-                  <option value="23:30">23:30</option>
-                  <option value="00:00">00:00</option>
-                </select>
-              </td>
-            </tr>
-            <tr>
-              <td>Area</td>
-              <td>
-                <select id="ddArea" style={{width: '13em'}} required="true"></select>
-              </td>
-            </tr>
-            <tr>
-              <td>Description</td>
-              <td>
-                <input id="txtDescription" value={this.state.description} onChange={this.handleChange} type="text" name="description" placeholder="Description/zipcode of area" style={{width: '12.6em'}} />
-              </td>
-            </tr>
-            <tr>
-              <td>No. of Passengers</td>
-              <td>
-                <select id="ddPassengers">
-                  <option value="1">1</option>
-                  <option value="2">2</option>
-                  <option value="3">3</option>
-                  <option value="4">4</option>
-                  <option value="5">5</option>
-                  <option value="6">6</option>
-                  <option value="7">7</option>
-                </select>
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>Driver ID</td>
+                <td><label id="driverID"/></td>
+              </tr>
+              <tr>
+                <td>Date</td>
+                <td><input id="txtDate" onChange={this.handleChange} type="date" style={{width: '12.6em'}} required /></td>
+              </tr>
+              <tr>
+                <td>Meet-Up Time</td>
+                <td>
+                  <select id="ddMeetTime" style={{width: '13em'}} required>
+                    <option value="06:30">06:30</option>
+                    <option value="07:00">07:00</option>
+                    <option value="07:30">07:30</option>
+                    <option value="08:00">08:00</option>
+                    <option value="08:30">08:30</option>
+                    <option value="09:00">09:00</option>
+                    <option value="09:30">09:30</option>
+                    <option value="10:00">10:00</option>
+                    <option value="10:30">10:30</option>
+                    <option value="11:00">11:00</option>
+                    <option value="11:30">11:30</option>
+                    <option value="12:00">12:00</option>
+                    <option value="12:30">12:30</option>
+                    <option value="13:00">13:00</option>
+                    <option value="13:30">13:30</option>
+                    <option value="14:00">14:00</option>
+                    <option value="14:30">14:30</option>
+                    <option value="15:00">15:00</option>
+                    <option value="15:30">15:30</option>
+                    <option value="16:00">16:00</option>
+                    <option value="16:30">16:30</option>
+                    <option value="17:00">17:00</option>
+                    <option value="17:30">17:30</option>
+                    <option value="18:00">18:00</option>
+                    <option value="18:30">18:30</option>
+                    <option value="19:00">19:00</option>
+                    <option value="19:30">19:30</option>
+                    <option value="20:00">20:00</option>
+                    <option value="20:30">20:30</option>
+                    <option value="21:00">21:00</option>
+                    <option value="21:30">21:30</option>
+                    <option value="22:00">22:00</option>
+                    <option value="22:30">22:30</option>
+                    <option value="23:00">23:00</option>
+                    <option value="23:30">23:30</option>
+                    <option value="00:00">00:00</option>
+                  </select>
+                </td>
+              </tr>
+              <tr>
+                <td>Area</td>
+                <td>
+                  <select id="ddArea" style={{width: '13em'}} required></select>
+                </td>
+              </tr>
+              <tr>
+                <td>Description</td>
+                <td>
+                  <input id="txtDescription" value={this.state.description} onChange={this.handleChange} type="text" name="description" placeholder="Description/zipcode of area" style={{width: '12.6em'}} />
+                </td>
+              </tr>
+              <tr>
+                <td>No. of Passengers</td>
+                <td>
+                  <select id="ddPassengers">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                  </select>
+                </td>
+              </tr>
+            </tbody>
           </table>
           <br/>
           <div style={{textAlign: 'center'}}>
