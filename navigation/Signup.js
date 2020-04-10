@@ -1,1 +1,0 @@
-// This is for the signup aka registration page

@@ -8,13 +8,14 @@ import 'bootstrap/dist/css/bootstrap.css';
 //
 import App from './App';
 import Start from './navigation/Start';
-import Signup from './navigation/Signup';
+import Signup from './navigation/Wallet';
 import Login from './navigation/Login';
 import Home from './navigation/Home';
 import Account from './navigation/Account';
 import Booking from './navigation/Booking';
 import Rating from './navigation/Rating';
 import Messages from './navigation/Messages';
+import Wallet from './navigation/Wallet';
 
 ReactDOM.render((
     <BrowserRouter>
@@ -32,6 +33,7 @@ const Main = () => {
         <Route exact path='/login' component={Login}></Route>
         <Route exact path='/login/home' component={Home}></Route>
         <Route exact path='/login/home/account' component={Account}></Route>
+        <Route exact path='/login/home/wallet' component={Wallet}></Route>
         <Route exact path='/login/home/booking' component={Booking}></Route>
         <Route exact path='/login/home/rating' component={Rating}></Route>
         <Route exact path='/login/home/messages' component={Messages}></Route>

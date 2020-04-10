@@ -4,6 +4,7 @@ import Messages from './Messages';
 import Account from './Account';
 import Booking from './Booking';
 import Home from './Home';
+import Wallet from './Wallet';
 
 export default function Start() {
   return (
@@ -23,6 +24,9 @@ export default function Start() {
             <li>
               <Link to="/Account">Account</Link>
             </li>
+            <li>
+              <Link to="/Wallet">Wallet</Link>
+            </li>
           </ul>
         </nav>
 
@@ -37,6 +41,9 @@ export default function Start() {
           </Route>
           <Route path="/Account">
             <Account />
+          </Route>
+          <Route path="/Wallet">
+            <Wallet />
           </Route>
           <Route path="/">
             <Home />
