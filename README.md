@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**Choose the driver [Shafiq doing now]** | Connected to Firebase 
+** View My Bookings [Shafiq doing now]** | Connected to Firebase 
 Rate the driver and rider | Registration authentication to Firebase 
 Admin: review driver application | Synced database to Firebase 
 Cancel confirmed ride | Logging in of SIMRide 
@@ -86,3 +86,4 @@ Stripe API | Create a Booking
 eNETS Open API | Display list of available rides
 MapQuest Directions API | Apply to be driver: upload license image
 MapQuest Traffic API | Apply to be driver: add driver details
+- | Join booking
