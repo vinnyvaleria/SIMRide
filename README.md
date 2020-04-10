@@ -86,4 +86,4 @@ Stripe API | Create a Booking
 eNETS Open API | Display list of available rides
 MapQuest Directions API | Apply to be driver: upload license image
 MapQuest Traffic API | Apply to be driver: add driver details
-- | Join booking
+-- | Join booking
