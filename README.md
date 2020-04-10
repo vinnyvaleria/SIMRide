@@ -69,22 +69,22 @@ In-Progress | Done
 ----------- | -----------
 **Cancel confirmed ride [Shafiq doing now]** | Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | Registration authentication to Firebase 
-Rate the driver and rider | Synced database to Firebase 
-E-Wallet page | Logging into SIMRide 
-Top-up E-Wallet | Logging out of SIMRide 
-Transaction/booking history | Send data to Firebase 
-ADMIN: review driver application | Made multiple tabs to act as pages 
-Filter - by area/time | Retrieve data from Firebase 
-Report user | Edit Profile - Account management 
-ADMIN: Ban user (blacklist user) | View Profile - Account management 
-Weekly pickup scheduler | Live chat, store chat, select user to chat with 
-Automatic route planning (fastest) | View other profiles 
-Balance low reminder | Update password - Account management
-ADMIN: Audit/log | Stored chat history 
-Connect APIs | Retrieving chats
-Stripe API | Create a Booking
+BOOKINGS: Filter - by area/time | Synced database to Firebase 
+WALLET: E-Wallet page | Logging into SIMRide 
+WALLET: Top-up E-Wallet | Logging out of SIMRide 
+WALLET: Remove total from E-Wallet after ride | Send data to Firebase 
+WALLET: Cash out for drivers | Made multiple tabs to act as pages 
+WALLET: Balance low reminder | Retrieve data from Firebase 
+USERS: Report user | Edit Profile - Account management 
+USERS: Weekly pickup scheduler (not important) | View Profile - Account management 
+USERS: Rate the driver and rider (not important) | Live chat, store chat, select user to chat with 
+USERS: Transaction/booking history | View other profiles 
+ADMIN: Ban user (blacklist user) | Update password - Account management
+ADMIN: Audit/log (not important) | Stored chat history 
+ADMIN: review driver application | Retrieving chats
+Connect APIs | Create a Booking
 eNETS Open API | Display list of available rides
 MapQuest Directions API | Apply to be driver: upload license image
 MapQuest Traffic API | Apply to be driver: add driver details
-Remove total from E-Wallet after ride | Join booking
-Cash out for drivers | View My Bookings
+MAPS: Automatic route planning (fastest) | Join booking
+-- | View My Bookings
