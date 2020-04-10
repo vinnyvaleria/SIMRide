@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**Payment page [Shafiq doing now]** | Connected to Firebase 
+**Wallet page [Shafiq doing now]** | Connected to Firebase 
 Rate the driver and rider | Registration authentication to Firebase 
 Admin: review driver application | Synced database to Firebase 
 Cancel confirmed ride | Logging into SIMRide 
