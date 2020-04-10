@@ -245,8 +245,8 @@ constructor(props) {
               <div>
                 <h1>This is the messages tab</h1>
               </div>
-              <div class="chat">
-                <div class="chat-title">
+              <div>
+                <div>
                     <h1>SIMWorld Chat</h1>
                 </div>
                 <div id='msgOption'>
@@ -258,26 +258,23 @@ constructor(props) {
                   <div id='chatsStarted' ></div>
                   <div><ul id="messages"></ul></div>
                   <div id="submitInboxMessage"  style={{display: 'none'}} >
-                    <input id="message" placeholder="Enter message" autocomplete="off" value={this.state.message} onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
+                    <input id="message" placeholder="Enter message" value={this.state.message} onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
                     <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
                   </div>
                 </div>
                 
                 <br/>
                 <div id='searchUser' style={{display: 'none'}}>
-                    <input id="selectUser" placeholder="Search user" autocomplete="off" value={this.state.to} onChange={this.handleChange} type="text" name="to" style={{width:'350px'}} />
+                    <input id="selectUser" placeholder="Search user" value={this.state.to} onChange={this.handleChange} type="text" name="to" style={{width:'350px'}} />
                     <button id='submitSearchUserButton' onClick={this.searchUsername}>Submit</button>
                 </div>
 
                 <div id="sendNewMessage" style={{display: 'none'}}>
-                <button id='chattingTo' onClick={ this.viewUserProfile }></button>
-                    <div class="messages-content">
-                      
-                    </div>
-                    <div class="message-box">
-                    <input id="message" placeholder="Enter message" autocomplete="off" value={this.state.message} onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
+                  <button id='chattingTo' onClick={ this.viewUserProfile }></button>
+                  <div>
+                    <input id="message" placeholder="Enter message" value={this.state.message} onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
                     <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
-                    </div>
+                  </div>
                 </div>
               </div>
 
@@ -290,36 +287,38 @@ constructor(props) {
                 <h1 id="viewOtherAcctPageUser"></h1>
                 <br />
                 <table>
-                  <tr>
-                    <td>First Name:</td>
-                    <td>
-                        <label id='lblotherfName' style={{display:'inline'}}></label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Last Name:</td>
-                    <td>
-                        <label id='lblotherlName' style={{display:'inline'}}></label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>Email:</td>
-                    <td>
-                        <label id='lblotherEmail' style={{display:'inline'}} name='email'></label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>isDriver:</td>
-                    <td>
-                        <label id='lblotherDriver' name='isDriver'></label>
-                    </td>
-                  </tr>
-                  <tr>
-                    <td>isAdmin:</td>
-                    <td>
-                        <label id='lblotherAdmin' name='isAdmin'></label>
-                    </td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td>First Name:</td>
+                      <td>
+                          <label id='lblotherfName' style={{display:'inline'}}></label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Last Name:</td>
+                      <td>
+                          <label id='lblotherlName' style={{display:'inline'}}></label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>Email:</td>
+                      <td>
+                          <label id='lblotherEmail' style={{display:'inline'}} name='email'></label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>isDriver:</td>
+                      <td>
+                          <label id='lblotherDriver' name='isDriver'></label>
+                      </td>
+                    </tr>
+                    <tr>
+                      <td>isAdmin:</td>
+                      <td>
+                          <label id='lblotherAdmin' name='isAdmin'></label>
+                      </td>
+                    </tr>
+                  </tbody>
                 </table>
                 <br />
                 <br />

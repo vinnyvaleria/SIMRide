@@ -225,30 +225,32 @@ class Login extends React.Component {
 
             <div id="signupblock" style={{display: 'none'}}>
               <table>
-                <tr>
-                  <td>First Name</td>
-                  <td><input value={this.state.firstName} onChange={this.handleChange} type="text" name="firstName"/></td>
-                </tr>
-                <tr>
-                  <td>Last Name</td>
-                  <td><input value={this.state.lastName} onChange={this.handleChange} type="text" name="lastName"/></td>
-                </tr>
-                <tr>
-                  <td>E-Mail</td>
-                  <td><input value={this.state.email} onChange={this.handleChange} type="email" name="email"/></td>
-                </tr>
-                <tr>
-                  <td>Username</td>
-                  <td><input value={this.state.username} onChange={this.handleChange} type="text" name="username"/></td>
-                </tr>
-                <tr>
-                  <td>Password</td>
-                  <td><input value={this.state.password} onChange={this.handleChange} type="password" name="password"/></td>
-                </tr>
-                <tr>
-                  <td>Re-Enter Password</td>
-                  <td><input value={this.state.repassword} onChange={this.handleChange} type="password" name="repassword"/></td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>First Name</td>
+                    <td><input value={this.state.firstName} onChange={this.handleChange} type="text" name="firstName"/></td>
+                  </tr>
+                  <tr>
+                    <td>Last Name</td>
+                    <td><input value={this.state.lastName} onChange={this.handleChange} type="text" name="lastName"/></td>
+                  </tr>
+                  <tr>
+                    <td>E-Mail</td>
+                    <td><input value={this.state.email} onChange={this.handleChange} type="email" name="email"/></td>
+                  </tr>
+                  <tr>
+                    <td>Username</td>
+                    <td><input value={this.state.username} onChange={this.handleChange} type="text" name="username"/></td>
+                  </tr>
+                  <tr>
+                    <td>Password</td>
+                    <td><input value={this.state.password} onChange={this.handleChange} type="password" name="password"/></td>
+                  </tr>
+                  <tr>
+                    <td>Re-Enter Password</td>
+                    <td><input value={this.state.repassword} onChange={this.handleChange} type="password" name="repassword"/></td>
+                  </tr>
+                </tbody>
               </table>
               <br/>
               <div style={{textAlign: 'center'}}>

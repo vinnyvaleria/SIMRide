@@ -296,7 +296,7 @@ class Account extends React.Component {
     document.getElementById('btnImgFrontUpload').style.display = 'none';
     document.getElementById('btnImgBackUpload').style.display = 'none';
     document.getElementById('submitDriverDetails').style.display = 'none';
-
+    
     document.getElementById('editfName').value = "";
     document.getElementById('editlName').value = "";
   }
@@ -421,89 +421,99 @@ render() {
         <div>
           <h1>{user[2] + "'s Account"}</h1>
           <table id='tblProfile'>
-            <tr>
-              <td>First Name:</td>
-              <td>
-                <label id='lblfName' style={{display:'inline'}}>{user[0]}</label>
-                <input id='editfName' style={{display:'none'}} value={this.state.firstName} onChange={this.handleChange} type="text" name="firstName" />
-              </td>
-            </tr>
-            <tr>
-              <td>Last Name:</td>
-              <td>
-                <label id='lbllName' style={{display:'inline'}}>{user[1]}</label>
-                <input id='editlName' style={{display:'none'}} value={this.state.lastName} onChange={this.handleChange} type="text" name="lastName" />
-              </td>
-            </tr>
-            <tr>
-              <td>Email:</td>
-              <td>
-                <label id='lblEmail' style={{display:'inline'}} name='email'>{user[3]}</label>
-              </td>
-            </tr>
-            <tr>
-              <td>isDriver:</td>
-              <td>
-                <label id='lblDriver' name='isDriver'>{user[4]}</label>
-              </td>
-            </tr>
-            <tr>
-              <td>isAdmin:</td>
-              <td>
-                <label id='lblAdmin' name='isAdmin'>{user[5]}</label>
-              </td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>First Name:</td>
+                <td>
+                  <label id='lblfName' style={{display:'inline'}}>{user[0]}</label>
+                  <input id='editfName' style={{display:'none'}} value={this.state.firstName} onChange={this.handleChange} type="text" name="firstName" />
+                </td>
+              </tr>
+              <tr>
+                <td>Last Name:</td>
+                <td>
+                  <label id='lbllName' style={{display:'inline'}}>{user[1]}</label>
+                  <input id='editlName' style={{display:'none'}} value={this.state.lastName} onChange={this.handleChange} type="text" name="lastName" />
+                </td>
+              </tr>
+              <tr>
+                <td>Email:</td>
+                <td>
+                  <label id='lblEmail' style={{display:'inline'}} name='email'>{user[3]}</label>
+                </td>
+              </tr>
+              <tr>
+                <td>isDriver:</td>
+                <td>
+                  <label id='lblDriver' name='isDriver'>{user[4]}</label>
+                </td>
+              </tr>
+              <tr>
+                <td>isAdmin:</td>
+                <td>
+                  <label id='lblAdmin' name='isAdmin'>{user[5]}</label>
+                </td>
+              </tr>
+            </tbody>
           </table>
           <table id='tblPassword' style={{display: 'none'}}>
-            <tr>
-              <td>New Password:</td>
-              <td><input id='editNewPassword' value={this.state.newPassword} onChange={this.handleChange} type="password" name="newPassword" /></td>
-            </tr>
-            <tr>
-              <td>Confirm Password:</td>
-              <td><input id='editConfirmPassword' value={this.state.confirmPassword} onChange={this.handleChange} type="password" name="confirmPassword" /></td>
-            </tr>
+            <tbody>
+              <tr>
+                <td>New Password:</td>
+                <td><input id='editNewPassword' value={this.state.newPassword} onChange={this.handleChange} type="password" name="newPassword" /></td>
+              </tr>
+              <tr>
+                <td>Confirm Password:</td>
+                <td><input id='editConfirmPassword' value={this.state.confirmPassword} onChange={this.handleChange} type="password" name="confirmPassword" /></td>
+              </tr>
+            </tbody>
           </table>
 
           <div id="tblApplyDriver" style={{display: 'none'}}>
             <div>
               <table id='tblDriverDetails'>
-                <tr>
-                  <td>Carplate No:</td>
-                  <td>
-                    <input id='txtCarplate' value={this.state.carplate} onChange={this.handleChange} type="text" name="carplate" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Issue Date:</td>
-                  <td>
-                    <input id='txtIssueDate' type="date" name="date" />
-                  </td>
-                </tr>
-                <tr>
-                  <td>License Number:</td>
-                  <td>
-                    <input id='txtLicenseNo' value={this.state.license} onChange={this.handleChange} type="text" name="license" />
-                  </td>
-                </tr>
+                <tbody>
+                  <tr>
+                    <td>Carplate No:</td>
+                    <td>
+                      <input id='txtCarplate' value={this.state.carplate} onChange={this.handleChange} type="text" name="carplate" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Issue Date:</td>
+                    <td>
+                      <input id='txtIssueDate' type="date" name="date" />
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>License Number:</td>
+                    <td>
+                      <input id='txtLicenseNo' value={this.state.license} onChange={this.handleChange} type="text" name="license" />
+                    </td>
+                  </tr>
+                </tbody>
               </table>
 
               <div id='tblDriverImage' style={{display: 'none'}}>
                 <table>
-                  <tr id='uploadedFront'>
-                    <td>
-                      {this.state.frontURL && <img src={this.state.frontURL} height='150' width='200' />}
-                    </td>
-                    <td>
-                      {this.state.backURL && <img src={this.state.backURL} height='150' width='200' />}   
-                    </td>
-                  </tr>
+                  <tbody>
+                    <tr id='uploadedFront'>
+                      <td>
+                        {this.state.frontURL && <img src={this.state.frontURL} height='150' width='200' />}
+                      </td>
+                      <td>
+                        {this.state.backURL && <img src={this.state.backURL} height='150' width='200' />}   
+                      </td>
+                    </tr>
+                  </tbody>  
                 </table>
                 <table>
-                  <tr>
-                    <td id='td_license'>License Front:</td>
-                    <td><input type="file" id='file' accept="image/*" onChange={this.handleImgChange} /></td>
-                  </tr>
+                  <tbody>
+                    <tr>
+                      <td id='td_license'>License Front:</td>
+                      <td><input type="file" id='file' accept="image/*" onChange={this.handleImgChange} /></td>
+                    </tr>
+                  </tbody>  
                 </table>
               </div>
             </div>
