@@ -11,112 +11,112 @@ var chatName;
 var clickedUser;
 
 class Messages extends React.Component {
-constructor(props) {
+    constructor(props) {
 
-    super(props);
-    this.logout = this.logout.bind(this);
-    this.sendMessage = this.sendMessage.bind(this);
-    this.searchUsername = this.searchUsername.bind(this);
-    this.handleChange = this.handleChange.bind(this);
-    this.openChat = this.openChat.bind(this);
-    this.state = {
-      firstName: '',
-      lastName: '',
-      username: '',
-      email: '',
-      newPassword: '',
-      confirmPassword: '',
-      isDriver: '',
-      isAdmin: '',
-      to: '',
-      from: '',
-      message: '',
-      id: ''
-    };
-  }
+      super(props);
+      this.logout = this.logout.bind(this);
+      this.sendMessage = this.sendMessage.bind(this);
+      this.searchUsername = this.searchUsername.bind(this);
+      this.handleChange = this.handleChange.bind(this);
+      this.openChat = this.openChat.bind(this);
+      this.state = {
+        firstName: '',
+        lastName: '',
+        username: '',
+        email: '',
+        newPassword: '',
+        confirmPassword: '',
+        isDriver: '',
+        isAdmin: '',
+        to: '',
+        from: '',
+        message: '',
+        id: ''
+      };
+    }
 
-  handleChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
-  }
+    handleChange(e) {
+      this.setState({
+        [e.target.name]: e.target.value
+      });
+    }
 
-  // goes back to login page if stumble upon another page by accident without logging in
-  componentDidMount() {
-    if (typeof user[3] === 'undefined') {
+    // goes back to login page if stumble upon another page by accident without logging in
+    componentDidMount() {
+      if (typeof user[3] === 'undefined') {
+        firebase.auth().signOut();
+      } else {
+        // loads accounts
+        firebase.database()
+          .ref('accounts')
+          .orderByChild('email')
+          .once('value')
+          .then(function (snapshot) {
+            var i = 0;
+            snapshot.forEach(function (child) {
+              unameArr[i] = child.val().uname;
+              i++;
+            })
+          });
+
+        firebase.firestore().collection("chat").get().then((querySnapshot) => {
+          querySnapshot.forEach((doc) => {
+            allchats.push(doc.id);
+            chats = Array.from(new Set(allchats))
+          });
+        });
+      }
+    }
+
+    logout() {
+      user[0] = '';
+      user[1] = '';
+      user[2] = '';
+      user[3] = '';
+      user[4] = '';
+      user[5] = '';
+      user[6] = '';
+      user[7] = '';
+
+      console.log(user.email);
       firebase.auth().signOut();
     }
-    else {
-      // loads accounts
-      firebase.database()
-      .ref('accounts')
-      .orderByChild('email')
-      .once('value')
-      .then(function(snapshot) {
-        var i = 0;
-        snapshot.forEach(function(child) {
-          unameArr[i] = child.val().uname;
-          i++;
-      })
-    });
 
-      firebase.firestore().collection("chat").get().then((querySnapshot) => {
-        querySnapshot.forEach((doc) => {
-          allchats.push(doc.id);
-          chats = Array.from(new Set(allchats))
-        });
-      });       
+    sendMessage(e) {
+      e.preventDefault();
+
+      firebase.firestore().collection('messages').doc(chatName)
+        .get()
+        .then((docSnapshot) => {
+          if (docSnapshot.exists) {
+            // save in database
+            firebase.firestore().collection('messages/' + chatName).add({
+              from: user[2],
+              to: this.state.to,
+              text: this.state.message,
+              timestamp: new Date()
+            }).catch(function (error) {
+              alert('Error sending message.', error);
+            });
+
+            this.state.message = '';
+            document.getElementById('message').value = '';
+          } else {
+            // save in database
+            firebase.firestore().collection('chat').doc(chatName).collection('messages').add({
+              from: user[2],
+              to: this.state.to,
+              text: this.state.message,
+              timestamp: new Date()
+            }).catch(function (error) {
+              alert('Error sending message.', error);
+            });
+
+            this.state.message = '';
+            document.getElementById('message').value = '';
+          }
+        })
     }
-  }
-
-  logout() {
-    user[0] = '';
-    user[1] = '';
-    user[2] = '';
-    user[3] = '';
-    user[4] = '';
-    user[5] = '';
-    user[6] = '';
-    user[7] = '';
-
-    console.log(user.email);
-    firebase.auth().signOut();
-  }
-
-  sendMessage(e) {
-    e.preventDefault();
-
-    firebase.firestore().collection('messages').doc(chatName)
-            .get()
-            .then((docSnapshot) => {
-              if (docSnapshot.exists) {
-                // save in database
-            		firebase.firestore().collection('messages/' + chatName).add({
-                  from: user[2],
-                  to: this.state.to,
-                  text: this.state.message,
-                  timestamp: new Date()
-                }).catch(function(error) {
-                  alert('Error sending message.', error);
-                });
-    
-                this.state.message = '';
-                document.getElementById('message').value = '';
-              }
-              else {
-                // save in database
-                firebase.firestore().collection('chat').doc(chatName).collection('messages').add({
-                  from: user[2],
-                  to: this.state.to,
-                  text: this.state.message,
-                  timestamp: new Date()
-                }).catch(function (error) {
-                  alert('Error sending message.', error);
-                });
-
-                this.state.message = '';
-                document.getElementById('message').value = '';
-                }
-              })
-            }
 
     searchUsername(e) {
       e.preventDefault();
@@ -124,7 +124,7 @@ constructor(props) {
       var i = 0;
 
       // creates chat based on usernames
-      while (i < unameArr.length+1) {
+      while (i < unameArr.length + 1) {
         // checks if there is a valid account in the database
         if (this.state.to === unameArr[i]) {
           document.getElementById('searchUser').style.display = "none";
@@ -134,10 +134,9 @@ constructor(props) {
           chatName;
           if (user[2].length != this.state.to.length) {
             if (user[2].length < this.state.to.length) {
-              chatName = (user[2]+"-"+this.state.to)
-            }
-            else {
-              chatName = (this.state.to+"-"+user[2])
+              chatName = (user[2] + "-" + this.state.to)
+            } else {
+              chatName = (this.state.to + "-" + user[2])
             }
           }
           // if same length compare by alphabets
@@ -146,13 +145,11 @@ constructor(props) {
             while (i < user[2].length) {
               if (user[2][i] != this.state.to[i]) {
                 if (user[2][i] < this.state.to[i]) {
-                  chatName = (user[2]+"-"+this.state.to)
+                  chatName = (user[2] + "-" + this.state.to)
+                } else {
+                  chatName = (this.state.to + "-" + user[2])
                 }
-                else {
-                  chatName = (this.state.to+"-"+user[2])
-                }
-              }
-              else {
+              } else {
                 i++;
               }
             }
@@ -164,8 +161,7 @@ constructor(props) {
           chattingTo.innerHTML = clickedUser;
           viewOtherAcctPageUser.innerHTML = clickedUser;
           break;
-        }
-        else if (i === unameArr.length) {
+        } else if (i === unameArr.length) {
           alert("User not found.")
         }
         i++;
@@ -173,162 +169,167 @@ constructor(props) {
     }
 
     viewUserProfile() {
-    document.getElementById('otherAcctPage').style.display = "block";
-    document.getElementById('msgsPage').style.display = "none";
+      document.getElementById('otherAcctPage').style.display = "block";
+      document.getElementById('msgsPage').style.display = "none";
 
-    const accountsRef = firebase.database().ref('accounts');
-    accountsRef.orderByChild('uname')
-      .equalTo(clickedUser)
-      .once('value')
-      .then(function (snapshot) {
-        snapshot.forEach(function(child) {
-          lblotherfName.innerHTML = child.val().fname;
-          lblotherlName.innerHTML = child.val().lname;
-          lblotherEmail.innerHTML = child.val().email;
-          lblotherDriver.innerHTML = child.val().isDriver;
-          lblotherAdmin.innerHTML = child.val().isAdmin;
-          console.log(child.val().fname, child.val().email);
-        });
-      })
-  }
-
-  // new msg button
-  newMsgButton = () => {
-    document.getElementById('inbox').style.display = "none";
-    document.getElementById('searchUser').style.display = "block";
-    document.getElementById('sendNewMessage').style.display = "none";
-    this.state.to = '';
-    document.getElementById('selectUser').value = '';
-  }
-
-  inboxMsgButton = () => {
-    document.getElementById("chatsStarted").innerHTML = "";
-    document.getElementById('searchUser').style.display = "none";
-    document.getElementById('inbox').style.display = "block";
-
-    for (var c = 0; c < chats.length; c++) {
-      var btn = document.createElement('input');
-      btn.setAttribute('type', 'button')
-      btn.setAttribute('value', chats[c].toString().replace(user[2], '').replace('-', ''));
-      btn.setAttribute('id', c);
-      btn.onclick = this.openChat;
-      document.getElementById('chatsStarted').appendChild(btn);
+      const accountsRef = firebase.database().ref('accounts');
+      accountsRef.orderByChild('uname')
+        .equalTo(clickedUser)
+        .once('value')
+        .then(function (snapshot) {
+          snapshot.forEach(function (child) {
+            lblotherfName.innerHTML = child.val().fname;
+            lblotherlName.innerHTML = child.val().lname;
+            lblotherEmail.innerHTML = child.val().email;
+            lblotherDriver.innerHTML = child.val().isDriver;
+            lblotherAdmin.innerHTML = child.val().isAdmin;
+            console.log(child.val().fname, child.val().email);
+          });
+        })
     }
-  }
 
-  openChat = e => {
-    document.getElementById("messages").innerHTML = "";
+    // new msg button
+    newMsgButton = () => {
+      document.getElementById('inbox').style.display = "none";
+      document.getElementById('searchUser').style.display = "block";
+      document.getElementById('sendNewMessage').style.display = "none";
+      this.state.to = '';
+      document.getElementById('selectUser').value = '';
+    }
 
-    chatName = chats[e.target.id];
-    console.log(chatName);
-    firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
-          querySnapshot.docChanges().forEach((doc) => {
-            var message = doc.doc.data();
-            var html = "";
-            // give each message a unique ID
-            html += "<li id='message-" + message.timestamp + "'>";
-            html += message.from + ": " + message.text;
-            html += "</li>";
+    inboxMsgButton = () => {
+      document.getElementById("chatsStarted").innerHTML = "";
+      document.getElementById('searchUser').style.display = "none";
+      document.getElementById('inbox').style.display = "block";
 
-            console.log(html);
+      for (var c = 0; c < chats.length; c++) {
+        var btn = document.createElement('input');
+        btn.setAttribute('type', 'button')
+        btn.setAttribute('value', chats[c].toString().replace(user[2], '').replace('-', ''));
+        btn.setAttribute('id', c);
+        btn.onclick = this.openChat;
+        document.getElementById('chatsStarted').appendChild(btn);
+      }
+    }
 
-            document.getElementById('submitInboxMessage').style.display = "block";
-            document.getElementById("messages").innerHTML += html;
+    openChat = e => {
+      document.getElementById("messages").innerHTML = "";
+
+      chatName = chats[e.target.id];
+      console.log(chatName);
+      firebase.firestore().collection("chat/" + chatName + "/messages").orderBy("timestamp").onSnapshot((querySnapshot) => {
+        querySnapshot.docChanges().forEach((doc) => {
+          var message = doc.doc.data();
+          var html = "";
+          // give each message a unique ID
+          html += "<li id='message-" + message.timestamp + "'>";
+          html += message.from + ": " + message.text;
+          html += "</li>";
+
+          console.log(html);
+
+          document.getElementById('submitInboxMessage').style.display = "block";
+          document.getElementById("messages").innerHTML += html;
+        });
       });
-    });
-  }
+    }
 
   render() { 
-      return (
-        <View>
-            <div id='msgsPage'>
+    return (
+      <View>
+        <div id='msgsPage'>
+          <div>
+            <h1>This is the messages tab</h1>
+          </div>
+          <div>
+            <div>
+              <h1>SIMWorld Chat</h1>
+            </div>
+            <div id='msgOption'>
+              <button id='inboxMsgButton' title="Inbox" onClick={ this.inboxMsgButton }>Inbox</button>
+              <button id='newMsgButton' title="newMessage" onClick={ this.newMsgButton }>New Message</button>
+            </div>
+            <br />
+            <div id='inbox' style={{display: 'none'}}>
+              <div id='chatsStarted'></div>
               <div>
-                <h1>This is the messages tab</h1>
+                <ul id="messages"></ul>
               </div>
-              <div>
-                <div>
-                    <h1>SIMWorld Chat</h1>
-                </div>
-                <div id='msgOption'>
-                    <button id='inboxMsgButton' title="Inbox" onClick={ this.inboxMsgButton }>Inbox</button>
-                    <button id='newMsgButton' title="newMessage" onClick={ this.newMsgButton }>New Message</button>
-                </div>
-                <br/>
-                <div id='inbox' style={{display: 'none'}} >
-                  <div id='chatsStarted' ></div>
-                  <div><ul id="messages"></ul></div>
-                  <div id="submitInboxMessage"  style={{display: 'none'}} >
-                    <input id="message" placeholder="Enter message" value={this.state.message} onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
-                    <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
-                  </div>
-                </div>
-                
-                <br/>
-                <div id='searchUser' style={{display: 'none'}}>
-                    <input id="selectUser" placeholder="Search user" value={this.state.to} onChange={this.handleChange} type="text" name="to" style={{width:'350px'}} />
-                    <button id='submitSearchUserButton' onClick={this.searchUsername}>Submit</button>
-                </div>
-
-                <div id="sendNewMessage" style={{display: 'none'}}>
-                  <button id='chattingTo' onClick={ this.viewUserProfile }></button>
-                  <div>
-                    <input id="message" placeholder="Enter message" value={this.state.message} onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
-                    <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
-                  </div>
-                </div>
+              <div id="submitInboxMessage" style={{display: 'none'}}>
+                <input id="message" placeholder="Enter message" value={this.state.message}
+                  onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
+                <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
               </div>
-
-              <br />
-              <br />
             </div>
 
-            <div id='otherAcctPage' style={{display: 'none'}}>
-              <div>
-                <h1 id="viewOtherAcctPageUser"></h1>
-                <br />
-                <table>
-                  <tbody>
-                    <tr>
-                      <td>First Name:</td>
-                      <td>
-                          <label id='lblotherfName' style={{display:'inline'}}></label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Last Name:</td>
-                      <td>
-                          <label id='lblotherlName' style={{display:'inline'}}></label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>Email:</td>
-                      <td>
-                          <label id='lblotherEmail' style={{display:'inline'}} name='email'></label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>isDriver:</td>
-                      <td>
-                          <label id='lblotherDriver' name='isDriver'></label>
-                      </td>
-                    </tr>
-                    <tr>
-                      <td>isAdmin:</td>
-                      <td>
-                          <label id='lblotherAdmin' name='isAdmin'></label>
-                      </td>
-                    </tr>
-                  </tbody>
-                </table>
-                <br />
-                <br />
-                <button onClick={this.logout}>Logout</button>
-              </div>
-              <br />
+            <br />
+            <div id='searchUser' style={{display: 'none'}}>
+              <input id="selectUser" placeholder="Search user" value={this.state.to} onChange={this.handleChange}
+                type="text" name="to" style={{width:'350px'}} />
+              <button id='submitSearchUserButton' onClick={this.searchUsername}>Submit</button>
             </div>
-        </View>
-        );
+
+            <div id="sendNewMessage" style={{display: 'none'}}>
+              <button id='chattingTo' onClick={ this.viewUserProfile }></button>
+              <div>
+                <input id="message" placeholder="Enter message" value={this.state.message}
+                  onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
+                <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
+              </div>
+            </div>
+          </div>
+
+          <br />
+          <br />
+        </div>
+
+        <div id='otherAcctPage' style={{display: 'none'}}>
+          <div>
+            <h1 id="viewOtherAcctPageUser"></h1>
+            <br />
+            <table>
+              <tbody>
+                <tr>
+                  <td>First Name:</td>
+                  <td>
+                    <label id='lblotherfName' style={{display:'inline'}}></label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Last Name:</td>
+                  <td>
+                    <label id='lblotherlName' style={{display:'inline'}}></label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Email:</td>
+                  <td>
+                    <label id='lblotherEmail' style={{display:'inline'}} name='email'></label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>isDriver:</td>
+                  <td>
+                    <label id='lblotherDriver' name='isDriver'></label>
+                  </td>
+                </tr>
+                <tr>
+                  <td>isAdmin:</td>
+                  <td>
+                    <label id='lblotherAdmin' name='isAdmin'></label>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+            <br />
+            <br />
+            <button onClick={this.logout}>Logout</button>
+          </div>
+          <br />
+        </div>
+      </View>
+      );
     }
-}
+  }
 
 export default Messages;
