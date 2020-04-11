@@ -83,9 +83,9 @@ ADMIN: Ban user (blacklist user) | USERS: Update password
 ADMIN: Audit/log (not important) | CHAT: Stored chat history 
 ADMIN: review driver application | CHAT: Retrieving chats
 MAPS: Automatic route planning (fastest) | BOOKING: Create a Booking
- | BOOKING: Display list of available Booking
+API: MapQuest Traffic API | BOOKING: Display list of available Booking
 API: MapQuest Directions API | USERS: Apply to be driver: upload license image
-API: MapQuest Traffic API | USERS: Apply to be driver: add driver details
+-- | USERS: Apply to be driver: add driver details
 -- | BOOKING: Join booking
 -- | BOOKING: View My Bookings
 -- | BOOKING: Cancel confirmed ride
