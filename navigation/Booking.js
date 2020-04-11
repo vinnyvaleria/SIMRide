@@ -342,7 +342,7 @@ class Booking extends React.Component {
       document.getElementById('div_myBookings').style.display = "none";
       document.getElementById('div_viewSelectedBooking').style.display = "none";
 
-      document.getElementById('driverID').innerHTML = user[7];
+      document.getElementById('driverID').innerHTML = user[8];
 
       const database = firebase.database().ref().child('admin/area');
       database.once('value', function (snapshot) {
@@ -384,7 +384,7 @@ class Booking extends React.Component {
       } else {
         const bookingsRef = firebase.database().ref('bookings');
         const booking = {
-          driverID: user[7],
+          driverID: user[8],
           date: document.getElementById('txtDate').value,
           time: document.getElementById('ddMeetTime').value,
           area: document.getElementById('ddArea').value,
@@ -393,7 +393,7 @@ class Booking extends React.Component {
           currPassengers: ''
         }
         // user[0] = account.fname;
-        // user[7] = account.key;
+        // user[8] = account.key;
 
         bookingsRef.push(booking);
         this.state = {

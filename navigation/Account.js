@@ -6,7 +6,6 @@ import "firebase/storage";
 import {user} from './Login';
 import { getPlaneDetection } from 'expo/build/AR';
 
-var clickedUser;
 var Util = require('../util/Util');
 
 class Account extends React.Component {
@@ -15,6 +14,7 @@ class Account extends React.Component {
       super(props);
       this.logout = this.logout.bind(this);
       this.submitEditProfile = this.submitEditProfile.bind(this);
+      this.editProfile = this.editProfile.bind(this);
       this.submitDriverDetails = this.submitDriverDetails.bind(this);
       this.submitPassword = this.submitPassword.bind(this);
       this.applyDriver = this.applyDriver.bind(this);
@@ -24,6 +24,7 @@ class Account extends React.Component {
         firstName: '',
         lastName: '',
         username: '',
+        phone: '',
         email: '',
         newPassword: '',
         confirmPassword: '',
@@ -59,7 +60,7 @@ class Account extends React.Component {
         image
       } = this.state;
       if (image != null) {
-        const uploadTask = firebase.storage().ref().child(`license/${user[7]}/front`).put(image);
+        const uploadTask = firebase.storage().ref().child(`license/${user[8]}/front`).put(image);
         uploadTask.on(
           "state_changed",
           snapshot => {
@@ -83,7 +84,7 @@ class Account extends React.Component {
             document.getElementById('td_license').innerHTML = 'License Back:';
             document.getElementById('file').value = "";
             firebase.storage()
-              .ref("license/" + user[7])
+              .ref("license/" + user[8])
               .child("front")
               .getDownloadURL()
               .then(frontURL => {
@@ -103,7 +104,7 @@ class Account extends React.Component {
         image
       } = this.state;
       if (image != null) {
-        const uploadTask = firebase.storage().ref().child(`license/${user[7]}/back`).put(image);
+        const uploadTask = firebase.storage().ref().child(`license/${user[8]}/back`).put(image);
         uploadTask.on(
           "state_changed",
           snapshot => {
@@ -122,7 +123,7 @@ class Account extends React.Component {
             // complete function ...
             alert('Image is uploaded!')
             firebase.storage()
-              .ref("license/" + user[7])
+              .ref("license/" + user[8])
               .child("back")
               .getDownloadURL()
               .then(backURL => {
@@ -148,13 +149,13 @@ class Account extends React.Component {
       if (typeof user[3] === 'undefined') {
         firebase.auth().signOut();
       } else {
-        if (user[4].toString().toLowerCase() === "no") {
+        if (user[5].toString().toLowerCase() === "no") {
           firebase.database().ref('driverDetails')
             .once('value')
             .then(function (snapshot) {
               var i = 0;
               snapshot.forEach(function (child) {
-                if (user[7] = child.key) {
+                if (user[8] = child.key) {
                   if (child.val().completed === "yes") {
                     document.getElementById('btnApplyDriver').disabled = "true";
                     document.getElementById('btnApplyDriver').style.display = "inline-block";
@@ -180,12 +181,18 @@ class Account extends React.Component {
       user[5] = '';
       user[6] = '';
       user[7] = '';
+      user[8] = '';
 
       console.log(user.email);
       firebase.auth().signOut();
     }
 
     editProfile() {
+      this.setState({
+        firstName: user[0],
+        lastName: user[1],
+        phone: user[4]
+      });
       Util.editProfile();
 
       document.getElementById('tblApplyDriver').style.display = 'none';
@@ -198,11 +205,12 @@ class Account extends React.Component {
 
     submitEditProfile(e) {
       e.preventDefault();
-      if (this.state.firstName != "" && this.state.lastName != "") {
+      if (this.state.firstName != "" && this.state.lastName != "" && this.state.phone != "") {
         user[0] = this.state.firstName;
         user[1] = this.state.lastName;
+        user[4] = this.state.phone;
 
-        const accountsRef = firebase.database().ref('accounts/' + user[7]);
+        const accountsRef = firebase.database().ref('accounts/' + user[8]);
         accountsRef.orderByChild('email')
           .equalTo(user[3])
           .once('value')
@@ -213,43 +221,24 @@ class Account extends React.Component {
             snapshot.ref.update({
               lname: user[1]
             })
-          });
-
-        //Util.updateProfile(user[3], user[0], user[1], user[7]);
-      } else if (this.state.firstName != "" && this.state.lastName === "") {
-        user[0] = this.state.firstName;
-
-        const accountsRef = firebase.database().ref('accounts/' + user[7]);
-        accountsRef.orderByChild('email')
-          .equalTo(user[3])
-          .once('value')
-          .then(function (snapshot) {
             snapshot.ref.update({
-              fname: user[0]
+              phone: user[4]
             })
           });
-      } else if (this.state.firstName == "" && this.state.lastName != "") {
-        user[1] = this.state.lastName;
 
-        const accountsRef = firebase.database().ref('accounts/' + user[7]);
-        accountsRef.orderByChild('email')
-          .equalTo(user[3])
-          .once('value')
-          .then(function (snapshot) {
-            snapshot.ref.update({
-              lname: user[1]
-            })
-          });
+        //Util.updateProfile(user[3], user[0], user[1], user[8]);
       } else {
         alert("Account was not updated.")
       }
       document.getElementById('lblfName').innerHTML = user[0];
       document.getElementById('lbllName').innerHTML = user[1];
+      document.getElementById('lblPhone').innerHTML = user[4];
 
       Util.profilePageReset();
 
       document.getElementById('editfName').value = "";
       document.getElementById('editlName').value = "";
+      document.getElementById('editPhone').value = "";
     }
 
     cancelEditProfile() {
@@ -264,6 +253,7 @@ class Account extends React.Component {
 
       document.getElementById('editfName').value = "";
       document.getElementById('editlName').value = "";
+      document.getElementById('editPhone').value = "";
     }
 
     changePassword() {
@@ -273,9 +263,11 @@ class Account extends React.Component {
 
       document.getElementById('lblfName').style.display = 'none';
       document.getElementById('lbllName').style.display = 'none';
+      document.getElementById('lblPhone').style.display = 'none';
 
       document.getElementById('editfName').style.display = 'none';
       document.getElementById('editlName').style.display = 'none';
+      document.getElementById('editPhone').style.display = 'none';
 
       document.getElementById('editButton').style.display = 'none';
       document.getElementById('changePasswordButton').style.display = 'none';
@@ -293,6 +285,7 @@ class Account extends React.Component {
 
       document.getElementById('editfName').value = "";
       document.getElementById('editlName').value = "";
+      document.getElementById('editPhone').value = "";
     }
 
     submitPassword(e) {
@@ -337,6 +330,7 @@ class Account extends React.Component {
 
       document.getElementById('lblfName').style.display = 'none';
       document.getElementById('lbllName').style.display = 'none';
+      document.getElementById('lblPhone').style.display = 'none';
 
       document.getElementById('editfName').style.display = 'none';
       document.getElementById('editlName').style.display = 'none';
@@ -373,7 +367,7 @@ class Account extends React.Component {
       var today = new Date(y, m, d);
 
       if (this.state.license != "" && this.state.carplate != "" && this.state.license.length == 9 && (this.state.license.charAt(0) === 'S' || this.state.license.charAt(0) === 'T') && today > issuedDate) {
-        const accountsRef = firebase.database().ref('driverDetails/' + user[7]);
+        const accountsRef = firebase.database().ref('driverDetails/' + user[8]);
         const driverDetails = {
           driverUname: user[2],
           carplate: this.state.carplate,
@@ -416,7 +410,7 @@ render() {
                 <td>First Name:</td>
                 <td>
                   <label id='lblfName' style={{display:'inline'}}>{user[0]}</label>
-                  <input id='editfName' style={{display:'none'}} value={this.state.firstName}
+                  <input id='editfName' style={{display:'none'}} placeholder={user[0]} value={this.state.firstName}
                     onChange={this.handleChange} type="text" name="firstName" />
                 </td>
               </tr>
@@ -424,7 +418,7 @@ render() {
                 <td>Last Name:</td>
                 <td>
                   <label id='lbllName' style={{display:'inline'}}>{user[1]}</label>
-                  <input id='editlName' style={{display:'none'}} value={this.state.lastName}
+                  <input id='editlName' style={{display:'none'}} placeholder={user[1]} value={this.state.lastName}
                     onChange={this.handleChange} type="text" name="lastName" />
                 </td>
               </tr>
@@ -435,15 +429,23 @@ render() {
                 </td>
               </tr>
               <tr>
+                <td>Phone:</td>
+                <td>
+                  <label id='lblPhone' style={{display:'inline'}}>{user[4]}</label>
+                  <input id='editPhone' style={{display:'none'}} placeholder={user[4]} value={this.state.phone}
+                   onChange={this.handleChange} type="phone" name="phone" />
+                </td>
+              </tr>
+              <tr>
                 <td>isDriver:</td>
                 <td>
-                  <label id='lblDriver' name='isDriver'>{user[4]}</label>
+                  <label id='lblDriver' name='isDriver'>{user[5]}</label>
                 </td>
               </tr>
               <tr>
                 <td>isAdmin:</td>
                 <td>
-                  <label id='lblAdmin' name='isAdmin'>{user[5]}</label>
+                  <label id='lblAdmin' name='isAdmin'>{user[6]}</label>
                 </td>
               </tr>
             </tbody>
