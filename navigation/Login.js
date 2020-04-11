@@ -4,7 +4,7 @@ import logo from '../assets/logo.png';
 import firebase from '../firebase/base';
 import { validate } from 'email-validator';
 
-var user = new Array(9); //fname, lname, uname, email, phone, isDriver, isAdmin, isBanned, id
+var user = new Array(10); //fname, lname, uname, email, phone, isDriver, isAdmin, isBanned, wallet, id
 var countArr = new Array(1); //account
 var unameArr = [];
 var emailArr = [];
@@ -23,7 +23,8 @@ class Login extends React.Component {
         phone: '',
         email: '',
         password: '',
-        repassword: ''
+        repassword: '',
+        wallet: ''
       };
     }
 
@@ -79,8 +80,9 @@ class Login extends React.Component {
             user[5] = child.val().isDriver;
             user[6] = child.val().isAdmin;
             user[7] = child.val().isBanned;
-            user[8] = child.key;
-            console.log(child.val().fname, child.val().email, user[8]);
+            user[8] = child.val().wallet;
+            user[9] = child.key;
+            console.log(child.val().fname, child.val().email, user[9]);
           });
         })
     }
@@ -147,7 +149,8 @@ class Login extends React.Component {
                 email: this.state.email.toString().toLowerCase(),
                 isDriver: "no",
                 isAdmin: "no",
-                isBanned: "no"
+                isBanned: "no",
+                wallet: "0.00"
               }
 
               user[0] = account.fname;
@@ -158,7 +161,8 @@ class Login extends React.Component {
               user[5] = account.isDriver;
               user[6] = account.isAdmin;
               user[7] = account.isBanned;
-              user[8] = account.key;
+              user[8] = account.wallet;
+              user[9] = account.key;
 
               accountsRef.push(account);
               this.state = {
@@ -171,7 +175,8 @@ class Login extends React.Component {
                 repassword: '',
                 isDriver: '',
                 isAdmin: '',
-                isBanned: ''
+                isBanned: '',
+                wallet: ''
               };
 
               // writing

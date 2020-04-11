@@ -3,19 +3,34 @@ import { Text, View } from 'react-native';
 import firebase from '../firebase/base';
 import 'firebase/firestore';
 import {user} from './Login';
+import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
+import { toast } from "react-toastify";
 
 class Wallet extends React.Component {
     constructor(props) {
 
         super(props);
+        this.handleToken = this.handleToken.bind(this);
+        this.setTwoNumberDecimal = this.setTwoNumberDecimal.bind(this);
         this.topupWallet = this.topupWallet.bind(this);
         this.topUpWalletPage = this.topUpWalletPage.bind(this);
         this.walletHomePage = this.walletHomePage.bind(this);
         this.transactionsPage = this.transactionsPage.bind(this);
         this.handleChange = this.handleChange.bind(this);
+        this.state = {
+            amount: ''
+        }
     }
 
     handleChange(e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
+    setTwoNumberDecimal(e) {
+        e.target.value = parseFloat(e.target.value).toFixed(2);
         this.setState({
             [e.target.name]: e.target.value
         });
@@ -26,6 +41,9 @@ class Wallet extends React.Component {
         if (typeof user[3] === 'undefined') {
             firebase.auth().signOut();
         }
+        else {
+            this.walletHomePage();
+        }
     }
 
     walletHomePage = () => {
@@ -33,19 +51,19 @@ class Wallet extends React.Component {
         document.getElementById('div_WalletTopUp').style.display = "none";
         document.getElementById('div_WalletHistory').style.display = "none";
 
-
+        document.getElementById('td_WalletAmount').innerHTML = "$" + user[8];
     }
 
     topupWallet = () => {
-        document.getElementById('div_WalletHome').style.display = "none";
-        document.getElementById('div_WalletTopUp').style.display = "block";
-        document.getElementById('div_WalletHistory').style.display = "none";
+        
 
 
     }
 
     topUpWalletPage = () => {
-
+        document.getElementById('div_WalletHome').style.display = "none";
+        document.getElementById('div_WalletTopUp').style.display = "block";
+        document.getElementById('div_WalletHistory').style.display = "none";
 
     }
 
@@ -57,32 +75,73 @@ class Wallet extends React.Component {
 
     }
 
+    async handleToken(token) {
+        const price = this.state.amount;
+        const response = await axios.post(
+            "http://192.168.1.96:19006/Payment",
+            { token, price }
+        );
+        const { status } = response.data;
+        console.log("Response:", response.data);
+        if (status === "success") {
+            toast("Success! Check email for details", { type: "success" });
+        } else {
+            toast("Something went wrong", { type: "error" });
+        }
+    }
+
 render() {
   return (
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <div id='homePage'>
         <div>
-          <h1>Wallet Page</h1>
+          <h1>E-Wallet Page</h1>
           <button id='btnWalletHome' onClick={ this.walletHomePage }>Wallet</button>
           <button id='btnTransactionPage' onClick={ this.transactionsPage }>Transactions</button>
         </div>
+        <br/>
         <div id='div_WalletHome'>
             <div>
                 <table>
                     <tbody>
                         <tr>
-                            <td>Wallet Amount:</td>
+                            <td>E-Wallet Amount:</td>
                             <td id='td_WalletAmount'></td>
                         </tr>
                     </tbody>
                 </table>
+                <br/>
+                <br/>
+                <table>
+                    <thead>
+                        <tr rowSpan='3'>
+                            <th>Last 5 Transactions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td id='td_Description'></td>
+                            <td id='td_PaidAmount'></td>
+                            <td id='td_PaidBy'></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
+            <br/>
             <div>
                 <button id='btnTopUpPage' onClick={ this.topUpWalletPage }>Top-Up</button>
             </div>
         </div>
         <div id='div_WalletTopUp' style={{display: 'none'}}>
-          <button id='btnTopUpSubmit' onClick={ this.topUpWallet }>Top-Up</button>
+            <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' /><br/><br/>
+            <StripeCheckout
+                stripeKey="pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv"
+                token={this.handleToken}
+                amount={this.state.amount * 100}
+                name="E-Wallet Top-Up"
+                currency="SGD"
+                email={user[3]}
+            />
         </div>
         <div id='div_WalletHistory' style={{display: 'none'}}>
           

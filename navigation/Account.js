@@ -60,7 +60,7 @@ class Account extends React.Component {
         image
       } = this.state;
       if (image != null) {
-        const uploadTask = firebase.storage().ref().child(`license/${user[8]}/front`).put(image);
+        const uploadTask = firebase.storage().ref().child(`license/${user[9]}/front`).put(image);
         uploadTask.on(
           "state_changed",
           snapshot => {
@@ -84,7 +84,7 @@ class Account extends React.Component {
             document.getElementById('td_license').innerHTML = 'License Back:';
             document.getElementById('file').value = "";
             firebase.storage()
-              .ref("license/" + user[8])
+              .ref("license/" + user[9])
               .child("front")
               .getDownloadURL()
               .then(frontURL => {
@@ -104,7 +104,7 @@ class Account extends React.Component {
         image
       } = this.state;
       if (image != null) {
-        const uploadTask = firebase.storage().ref().child(`license/${user[8]}/back`).put(image);
+        const uploadTask = firebase.storage().ref().child(`license/${user[9]}/back`).put(image);
         uploadTask.on(
           "state_changed",
           snapshot => {
@@ -123,7 +123,7 @@ class Account extends React.Component {
             // complete function ...
             alert('Image is uploaded!')
             firebase.storage()
-              .ref("license/" + user[8])
+              .ref("license/" + user[9])
               .child("back")
               .getDownloadURL()
               .then(backURL => {
@@ -155,7 +155,7 @@ class Account extends React.Component {
             .then(function (snapshot) {
               var i = 0;
               snapshot.forEach(function (child) {
-                if (user[8] = child.key) {
+                if (user[9] = child.key) {
                   if (child.val().completed === "yes") {
                     document.getElementById('btnApplyDriver').disabled = "true";
                     document.getElementById('btnApplyDriver').style.display = "inline-block";
@@ -182,6 +182,7 @@ class Account extends React.Component {
       user[6] = '';
       user[7] = '';
       user[8] = '';
+      user[9] = '';
 
       console.log(user.email);
       firebase.auth().signOut();
@@ -210,7 +211,7 @@ class Account extends React.Component {
         user[1] = this.state.lastName;
         user[4] = this.state.phone;
 
-        const accountsRef = firebase.database().ref('accounts/' + user[8]);
+        const accountsRef = firebase.database().ref('accounts/' + user[9]);
         accountsRef.orderByChild('email')
           .equalTo(user[3])
           .once('value')
@@ -226,7 +227,7 @@ class Account extends React.Component {
             })
           });
 
-        //Util.updateProfile(user[3], user[0], user[1], user[8]);
+        //Util.updateProfile(user[3], user[0], user[1], user[9]);
       } else {
         alert("Account was not updated.")
       }
@@ -367,7 +368,7 @@ class Account extends React.Component {
       var today = new Date(y, m, d);
 
       if (this.state.license != "" && this.state.carplate != "" && this.state.license.length == 9 && (this.state.license.charAt(0) === 'S' || this.state.license.charAt(0) === 'T') && today > issuedDate) {
-        const accountsRef = firebase.database().ref('driverDetails/' + user[8]);
+        const accountsRef = firebase.database().ref('driverDetails/' + user[9]);
         const driverDetails = {
           driverUname: user[2],
           carplate: this.state.carplate,
