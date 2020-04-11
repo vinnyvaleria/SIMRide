@@ -14,7 +14,6 @@ class Messages extends React.Component {
     constructor(props) {
 
       super(props);
-      this.logout = this.logout.bind(this);
       this.sendMessage = this.sendMessage.bind(this);
       this.searchUsername = this.searchUsername.bind(this);
       this.handleChange = this.handleChange.bind(this);
@@ -68,20 +67,6 @@ class Messages extends React.Component {
       }
     }
 
-    logout() {
-      user[0] = '';
-      user[1] = '';
-      user[2] = '';
-      user[3] = '';
-      user[4] = '';
-      user[5] = '';
-      user[6] = '';
-      user[7] = '';
-
-      console.log(user.email);
-      firebase.auth().signOut();
-    }
-
     sendMessage(e) {
       e.preventDefault();
 
@@ -102,6 +87,8 @@ class Messages extends React.Component {
             this.state.message = '';
             document.getElementById('message').value = '';
           } else {
+            let data = {field: 'field'}
+            firebase.firestore().collection('chat').doc(chatName).set(data);
             // save in database
             firebase.firestore().collection('chat').doc(chatName).collection('messages').add({
               from: user[2],
@@ -116,6 +103,11 @@ class Messages extends React.Component {
             document.getElementById('message').value = '';
           }
         })
+
+      if (e.target.id === "submitMsgButtonNew") {
+
+        this.inboxMsgButton();
+      }
     }
 
     searchUsername(e) {
@@ -201,6 +193,7 @@ class Messages extends React.Component {
       document.getElementById("chatsStarted").innerHTML = "";
       document.getElementById('searchUser').style.display = "none";
       document.getElementById('inbox').style.display = "block";
+      document.getElementById('sendNewMessage').style.display = "none";
 
       for (var c = 0; c < chats.length; c++) {
         var btn = document.createElement('input');
@@ -272,9 +265,10 @@ class Messages extends React.Component {
             <div id="sendNewMessage" style={{display: 'none'}}>
               <button id='chattingTo' onClick={ this.viewUserProfile }></button>
               <div>
+                <br/>
                 <input id="message" placeholder="Enter message" value={this.state.message}
                   onChange={this.handleChange} type="text" name="message" style={{width:'350px'}} />
-                <button id='submitMsgButton' onClick={this.sendMessage}>Submit</button>
+                <button id='submitMsgButtonNew' onClick={this.sendMessage}>Submit</button>
               </div>
             </div>
           </div>

@@ -8,7 +8,6 @@ class Wallet extends React.Component {
     constructor(props) {
 
         super(props);
-        this.logout = this.logout.bind(this);
         this.topupWallet = this.topupWallet.bind(this);
         this.topUpWalletPage = this.topUpWalletPage.bind(this);
         this.walletHomePage = this.walletHomePage.bind(this);
@@ -29,10 +28,31 @@ class Wallet extends React.Component {
         }
     }
 
-    viewAllBookings = () => {
+    walletHomePage = () => {
         document.getElementById('div_WalletHome').style.display = "block";
         document.getElementById('div_WalletTopUp').style.display = "none";
         document.getElementById('div_WalletHistory').style.display = "none";
+
+
+    }
+
+    topupWallet = () => {
+        document.getElementById('div_WalletHome').style.display = "none";
+        document.getElementById('div_WalletTopUp').style.display = "block";
+        document.getElementById('div_WalletHistory').style.display = "none";
+
+
+    }
+
+    topUpWalletPage = () => {
+
+
+    }
+
+    transactionsPage = () => {
+        document.getElementById('div_WalletHome').style.display = "none";
+        document.getElementById('div_WalletTopUp').style.display = "none";
+        document.getElementById('div_WalletHistory').style.display = "block";
 
 
     }
@@ -42,23 +62,29 @@ render() {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <div id='homePage'>
         <div>
-          <h1>Wallet</h1>
+          <h1>Wallet Page</h1>
+          <button id='btnWalletHome' onClick={ this.walletHomePage }>Wallet</button>
+          <button id='btnTransactionPage' onClick={ this.transactionsPage }>Transactions</button>
         </div>
         <div id='div_WalletHome'>
             <div>
-                <button id='btnWalletHome' onClick={ this.walletHomePage }>Top-Up</button>
-                <button id='btnTransactionPage' onClick={ this.transactionsPage }>Transactions</button>
-                <br/>
-                
+                <table>
+                    <tbody>
+                        <tr>
+                            <td>Wallet Amount:</td>
+                            <td id='td_WalletAmount'></td>
+                        </tr>
+                    </tbody>
+                </table>
             </div>
             <div>
                 <button id='btnTopUpPage' onClick={ this.topUpWalletPage }>Top-Up</button>
             </div>
         </div>
-        <div id='div_WalletTopUp'>
+        <div id='div_WalletTopUp' style={{display: 'none'}}>
           <button id='btnTopUpSubmit' onClick={ this.topUpWallet }>Top-Up</button>
         </div>
-        <div id='div_WalletHistory'>
+        <div id='div_WalletHistory' style={{display: 'none'}}>
           
         </div>
       </div>

@@ -4,7 +4,7 @@ import logo from '../assets/logo.png';
 import firebase from '../firebase/base';
 import { validate } from 'email-validator';
 
-var user = new Array(8); //fname, lname, uname, email, isDriver, isAdmin, isBanned, id
+var user = new Array(9); //fname, lname, uname, email, phone, isDriver, isAdmin, isBanned, id
 var countArr = new Array(1); //account
 var unameArr = [];
 var emailArr = [];
@@ -20,6 +20,7 @@ class Login extends React.Component {
         firstName: '',
         lastName: '',
         username: '',
+        phone: '',
         email: '',
         password: '',
         repassword: ''
@@ -41,7 +42,6 @@ class Login extends React.Component {
         .then(function (snapshot) {
           snapshot.forEach(function (child) {
             countArr[0] = child.val().acct;
-            console.log(child.val().acct, countArr[0]);
           })
         });
 
@@ -55,6 +55,7 @@ class Login extends React.Component {
             unameArr[i] = child.val().uname;
             emailArr[i] = child.val().email;
             i++;
+            console.log(countArr[0], emailArr.length);
           })
         });
 
@@ -74,11 +75,12 @@ class Login extends React.Component {
             user[0] = child.val().fname;
             user[1] = child.val().lname;
             user[2] = child.val().uname;
-            user[4] = child.val().isDriver;
-            user[5] = child.val().isAdmin;
-            user[6] = child.val().isBanned;
-            user[7] = child.key;
-            console.log(child.val().fname, child.val().email, user[7]);
+            user[4] = child.val().phone;
+            user[5] = child.val().isDriver;
+            user[6] = child.val().isAdmin;
+            user[7] = child.val().isBanned;
+            user[8] = child.key;
+            console.log(child.val().fname, child.val().email, user[8]);
           });
         })
     }
@@ -141,8 +143,8 @@ class Login extends React.Component {
                 fname: this.state.firstName,
                 lname: this.state.lastName,
                 uname: this.state.username,
+                phone: this.state.phone,
                 email: this.state.email.toString().toLowerCase(),
-                passw: this.state.password,
                 isDriver: "no",
                 isAdmin: "no",
                 isBanned: "no"
@@ -152,10 +154,11 @@ class Login extends React.Component {
               user[1] = account.lname;
               user[2] = account.uname;
               user[3] = account.email;
-              user[4] = account.isDriver;
-              user[5] = account.isAdmin;
-              user[6] = account.isBanned;
-              user[7] = account.key;
+              user[4] = account.phone;
+              user[5] = account.isDriver;
+              user[6] = account.isAdmin;
+              user[7] = account.isBanned;
+              user[8] = account.key;
 
               accountsRef.push(account);
               this.state = {
@@ -163,6 +166,7 @@ class Login extends React.Component {
                 lastName: '',
                 username: '',
                 email: '',
+                phone: '',
                 password: '',
                 repassword: '',
                 isDriver: '',
@@ -174,7 +178,7 @@ class Login extends React.Component {
               firebase.database().ref('admin/counter')
                 .once('value')
                 .then(function (snapshot) {
-                  countArr[0] += 1;
+                  countArr[0] = emailArr.length+1;
                   console.log("rewrite: ", countArr[0]);
                   snapshot.ref.update({
                     acct: countArr[0]
@@ -237,6 +241,10 @@ class Login extends React.Component {
                   <tr>
                     <td>E-Mail</td>
                     <td><input value={this.state.email} onChange={this.handleChange} type="email" name="email" /></td>
+                  </tr>
+                  <tr>
+                    <td>Phone</td>
+                    <td><input value={this.state.phone} onChange={this.handleChange} type="phone" name="phone" /></td>
                   </tr>
                   <tr>
                     <td>Username</td>
