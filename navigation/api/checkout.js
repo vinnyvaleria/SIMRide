@@ -18,7 +18,7 @@ app.get("/", (req, res, next) => {
   res.send("Add your Stripe Secret Key to the .require('stripe') statement!");
 });
 
-app.post("/api/charge", async (req, res, next) => {
+app.post("/checkout", async (req, res, next) => {
   console.log("Request:", req.body);
 
   let error;

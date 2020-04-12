@@ -79,7 +79,7 @@ class Wallet extends React.Component {
     async handleToken(token) {
         let product = {price: this.state.amount, name: "Top-Up E-Wallet", decscription: "Top-Up"}
         const response = await axios.post(
-            "/api/charge",
+            "http://localhost:19006/checkout",
             { token, product }
         );
         const { status } = response.data;
