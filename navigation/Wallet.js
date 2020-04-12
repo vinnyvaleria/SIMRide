@@ -6,6 +6,7 @@ import {user} from './Login';
 import StripeCheckout from "react-stripe-checkout";
 import axios from "axios";
 import { toast } from "react-toastify";
+require('dotenv').config();
 
 class Wallet extends React.Component {
     constructor(props) {
@@ -76,18 +77,15 @@ class Wallet extends React.Component {
     }
 
     async handleToken(token) {
+        event.preventDefault()
         const price = this.state.amount;
-        const response = await axios.post(
-            "http://192.168.1.96:19006/Payment",
-            { token, price }
-        );
-        const { status } = response.data;
-        console.log("Response:", response.data);
-        if (status === "success") {
-            toast("Success! Check email for details", { type: "success" });
-        } else {
-            toast("Something went wrong", { type: "error" });
-        }
+        const order = await axios.post('http://localhost:7000/api/stripe/charge', {
+            amount: price,
+            source: token.id,
+            receipt_email: user[3]
+        })
+
+        setReceiptUrl(order.data.charge.receipt_url)
     }
 
 render() {
@@ -135,7 +133,7 @@ render() {
         <div id='div_WalletTopUp' style={{display: 'none'}}>
             <input type='number' step='0.01' min='0.01' value={this.state.amount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='amount' /><br/><br/>
             <StripeCheckout
-                stripeKey="pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv"
+                stripeKey='pk_test_K5hyuKJAvnl8PNzfuwes3vn400X0HYzEvv'
                 token={this.handleToken}
                 amount={this.state.amount * 100}
                 name="E-Wallet Top-Up"

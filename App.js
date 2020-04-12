@@ -1,6 +1,5 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button, Alert } from 'react-native';
-import { Link } from 'react-router-dom';
+import { StyleSheet, View } from 'react-native';
 import fire from './firebase/base';
 import Login from './navigation/Login';
 import Start from './navigation/Start';

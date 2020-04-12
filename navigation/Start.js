@@ -1,14 +1,16 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
+import { createBrowserHistory } from 'history'
 import Messages from './Messages';
 import Account from './Account';
 import Booking from './Booking';
 import Home from './Home';
 import Wallet from './Wallet';
+const history = createBrowserHistory();
 
 export default function Start() {
   return (
-    <Router>
+    <Router history={history}>
       <div>
         <nav>
           <ul>
