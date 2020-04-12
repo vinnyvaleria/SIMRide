@@ -77,15 +77,18 @@ class Wallet extends React.Component {
     }
 
     async handleToken(token) {
-        event.preventDefault()
-        const price = this.state.amount;
-        const order = await axios.post('http://localhost:7000/api/stripe/charge', {
-            amount: price,
-            source: token.id,
-            receipt_email: user[3]
-        })
-
-        setReceiptUrl(order.data.charge.receipt_url)
+        let product = {price: this.state.amount, name: "Top-Up E-Wallet", decscription: "Top-Up"}
+        const response = await axios.post(
+            "/api/charge",
+            { token, product }
+        );
+        const { status } = response.data;
+        console.log("Response:", response.data);
+        if (status === "success") {
+            toast("Success! Check email for details", { type: "success" });
+        } else {
+            toast("Something went wrong", { type: "error" });
+        }
     }
 
 render() {
