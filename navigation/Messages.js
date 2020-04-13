@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import firebase from '../firebase/base';
+import firebase from '../base';
 import 'firebase/firestore';
 import {user} from './Login';
 
@@ -67,6 +67,7 @@ class Messages extends React.Component {
       }
     }
 
+    // stores message in firestore
     sendMessage(e) {
       e.preventDefault();
 
@@ -160,6 +161,7 @@ class Messages extends React.Component {
       }
     }
 
+    // view another user's profile
     viewUserProfile() {
       document.getElementById('otherAcctPage').style.display = "block";
       document.getElementById('msgsPage').style.display = "none";
@@ -189,6 +191,7 @@ class Messages extends React.Component {
       document.getElementById('selectUser').value = '';
     }
 
+    // inbox, buttons dynamically created from the chats that you have
     inboxMsgButton = () => {
       document.getElementById("chatsStarted").innerHTML = "";
       document.getElementById('searchUser').style.display = "none";
@@ -205,6 +208,7 @@ class Messages extends React.Component {
       }
     }
 
+    // opens the chat from inbox
     openChat = e => {
       document.getElementById("messages").innerHTML = "";
 

@@ -1,10 +1,8 @@
 import React from 'react';
-import { StyleSheet, Text, View, Image, Button, Alert } from 'react-native';
-import { Link } from 'react-router-dom';
-import fire from './firebase/base';
+import { StyleSheet, View } from 'react-native';
+import fire from './base';
 import Login from './navigation/Login';
 import Start from './navigation/Start';
-// import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
 class App extends React.Component {
   constructor() {

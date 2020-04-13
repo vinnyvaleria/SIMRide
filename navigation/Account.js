@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import firebase from '../firebase/base';
+import firebase from '../base';
 import 'firebase/firestore';
 import "firebase/storage";
 import {user} from './Login';
@@ -40,12 +40,14 @@ class Account extends React.Component {
       };
     }
 
+    // handles textbox change
     handleChange(e) {
       this.setState({
         [e.target.name]: e.target.value
       });
     }
 
+    // handles image change
     handleImgChange = e => {
       if (e.target.files[0]) {
         const image = e.target.files[0];
@@ -55,12 +57,13 @@ class Account extends React.Component {
       }
     };
 
+    // uplaods front license pic
     handleFrontUpload = () => {
       const {
         image
       } = this.state;
       if (image != null) {
-        const uploadTask = firebase.storage().ref().child(`license/${user[8]}/front`).put(image);
+        const uploadTask = firebase.storage().ref().child(`license/${user[9]}/front`).put(image);
         uploadTask.on(
           "state_changed",
           snapshot => {
@@ -84,7 +87,7 @@ class Account extends React.Component {
             document.getElementById('td_license').innerHTML = 'License Back:';
             document.getElementById('file').value = "";
             firebase.storage()
-              .ref("license/" + user[8])
+              .ref("license/" + user[9])
               .child("front")
               .getDownloadURL()
               .then(frontURL => {
@@ -99,12 +102,13 @@ class Account extends React.Component {
       }
     };
 
+    // uploads back license pic
     handleBackUpload = () => {
       const {
         image
       } = this.state;
       if (image != null) {
-        const uploadTask = firebase.storage().ref().child(`license/${user[8]}/back`).put(image);
+        const uploadTask = firebase.storage().ref().child(`license/${user[9]}/back`).put(image);
         uploadTask.on(
           "state_changed",
           snapshot => {
@@ -123,7 +127,7 @@ class Account extends React.Component {
             // complete function ...
             alert('Image is uploaded!')
             firebase.storage()
-              .ref("license/" + user[8])
+              .ref("license/" + user[9])
               .child("back")
               .getDownloadURL()
               .then(backURL => {
@@ -155,13 +159,16 @@ class Account extends React.Component {
             .then(function (snapshot) {
               var i = 0;
               snapshot.forEach(function (child) {
-                if (user[8] = child.key) {
+                if (user[9] = child.key) {
                   if (child.val().completed === "yes") {
                     document.getElementById('btnApplyDriver').disabled = "true";
                     document.getElementById('btnApplyDriver').style.display = "inline-block";
                     document.getElementById('btnApplyDriver').innerHTML = "Application sent";
                   } else {
                     document.getElementById('btnApplyDriver').style.display = "inline-block";
+                  }
+                  if (user[6].toLowerCase() === "yes") {
+                    document.getElementById('btnApplyDriver').style.display = "none";
                   }
                 } else {
                   document.getElementById('btnApplyDriver').style.display = "inline-block";
@@ -172,6 +179,7 @@ class Account extends React.Component {
       }
     }
 
+    // logout
     logout() {
       user[0] = '';
       user[1] = '';
@@ -182,11 +190,13 @@ class Account extends React.Component {
       user[6] = '';
       user[7] = '';
       user[8] = '';
+      user[9] = '';
 
       console.log(user.email);
       firebase.auth().signOut();
     }
 
+    // edit profile
     editProfile() {
       this.setState({
         firstName: user[0],
@@ -203,6 +213,7 @@ class Account extends React.Component {
       document.getElementById('submitDriverDetails').style.display = 'none';
     }
 
+    // submits the edited profile and updates the realtime db
     submitEditProfile(e) {
       e.preventDefault();
       if (this.state.firstName != "" && this.state.lastName != "" && this.state.phone != "") {
@@ -210,7 +221,7 @@ class Account extends React.Component {
         user[1] = this.state.lastName;
         user[4] = this.state.phone;
 
-        const accountsRef = firebase.database().ref('accounts/' + user[8]);
+        const accountsRef = firebase.database().ref('accounts/' + user[9]);
         accountsRef.orderByChild('email')
           .equalTo(user[3])
           .once('value')
@@ -225,8 +236,6 @@ class Account extends React.Component {
               phone: user[4]
             })
           });
-
-        //Util.updateProfile(user[3], user[0], user[1], user[8]);
       } else {
         alert("Account was not updated.")
       }
@@ -241,6 +250,7 @@ class Account extends React.Component {
       document.getElementById('editPhone').value = "";
     }
 
+    // goes back to profile page
     cancelEditProfile() {
       Util.profilePageReset();
 
@@ -256,6 +266,7 @@ class Account extends React.Component {
       document.getElementById('editPhone').value = "";
     }
 
+    // change password button
     changePassword() {
       document.getElementById('tblProfile').style.display = 'none';
       document.getElementById('tblPassword').style.display = 'block';
@@ -288,6 +299,7 @@ class Account extends React.Component {
       document.getElementById('editPhone').value = "";
     }
 
+    // submits password change and stores into realtime db
     submitPassword(e) {
       e.preventDefault();
 
@@ -309,6 +321,7 @@ class Account extends React.Component {
       }
     }
 
+    // goes back to profile page
     cancelPassword() {
       Util.profilePageReset();
 
@@ -323,6 +336,7 @@ class Account extends React.Component {
       document.getElementById('confirmNewPassword').value = "";
     }
 
+    // apply to be driver button
     applyDriver() {
       document.getElementById('tblProfile').style.display = 'none';
       document.getElementById('tblPassword').style.display = 'none';
@@ -348,6 +362,7 @@ class Account extends React.Component {
       document.getElementById('submitDriverDetails').style.display = 'inline-block';
     }
 
+    // cancel driver application button
     cancelApplyDriver() {
       Util.profilePageReset();
       document.getElementById('tblApplyDriver').style.display = 'none';
@@ -358,6 +373,7 @@ class Account extends React.Component {
       document.getElementById('submitDriverDetails').style.display = 'none';
     }
 
+    // submits driver details into realtime db
     submitDriverDetails() {
       var date = new Date;
       var m = date.getMonth();
@@ -367,7 +383,7 @@ class Account extends React.Component {
       var today = new Date(y, m, d);
 
       if (this.state.license != "" && this.state.carplate != "" && this.state.license.length == 9 && (this.state.license.charAt(0) === 'S' || this.state.license.charAt(0) === 'T') && today > issuedDate) {
-        const accountsRef = firebase.database().ref('driverDetails/' + user[8]);
+        const accountsRef = firebase.database().ref('driverDetails/' + user[9]);
         const driverDetails = {
           driverUname: user[2],
           carplate: this.state.carplate,

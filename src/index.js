@@ -1,21 +1,25 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Switch, Route, BrowserRouter } from 'react-router-dom';
-import registerServiceWorker from './util/registerServiceWorker';
+import registerServiceWorker from '../util/registerServiceWorker';
 import 'bootstrap/dist/css/bootstrap.css';
+import React from 'react'
+import ReactDOM from 'react-dom'
+import App from './components/App'
+import 'babel-polyfill'
 // import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
 //
-import App from './App';
-import Start from './navigation/Start';
-import Signup from './navigation/Wallet';
-import Login from './navigation/Login';
-import Home from './navigation/Home';
-import Account from './navigation/Account';
-import Booking from './navigation/Booking';
-import Rating from './navigation/Rating';
-import Messages from './navigation/Messages';
-import Wallet from './navigation/Wallet';
+import App from '../App';
+import Start from '../navigation/Start';
+import Signup from '../navigation/Wallet';
+import Login from '../navigation/Login';
+import Home from '../navigation/Home';
+import Account from '../navigation/Account';
+import Booking from '../navigation/Booking';
+import Rating from '../navigation/Rating';
+import Messages from '../navigation/Messages';
+import Wallet from '../navigation/Wallet';
 
 ReactDOM.render((
     <BrowserRouter>
@@ -41,4 +45,7 @@ const Main = () => {
   );
 }
 
-export default Main;
+const rootNode = document.querySelector('#root')
+ReactDOM.render( < App / > , rootNode)
+
+{/* export default Main; */}

@@ -1,10 +1,10 @@
 import React, { Component } from 'react';
 import { Text, View, Image, Button } from 'react-native';
 import logo from '../assets/logo.png';
-import firebase from '../firebase/base';
+import firebase from '../base';
 import { validate } from 'email-validator';
 
-var user = new Array(9); //fname, lname, uname, email, phone, isDriver, isAdmin, isBanned, id
+var user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
 var countArr = new Array(1); //account
 var unameArr = [];
 var emailArr = [];
@@ -16,6 +16,7 @@ class Login extends React.Component {
       this.login = this.login.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.signup = this.signup.bind(this);
+      this.submitForgotPassword = this.submitForgotPassword.bind(this);
       this.state = {
         firstName: '',
         lastName: '',
@@ -23,7 +24,8 @@ class Login extends React.Component {
         phone: '',
         email: '',
         password: '',
-        repassword: ''
+        repassword: '',
+        wallet: ''
       };
     }
 
@@ -34,6 +36,8 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
+      document.getElementById("signinemail").focus();
+
       // counts current total account registered
       firebase.database()
         .ref('admin')
@@ -62,7 +66,8 @@ class Login extends React.Component {
       console.log(emailArr, unameArr);
     }
 
-    checkEmail(e) {
+    // get all information from this account and stores into user
+    checkEmail = e => {
       user[3] = document.getElementById("signinemail").value;
       user[3] = user[3].toString().toLowerCase();
 
@@ -79,36 +84,57 @@ class Login extends React.Component {
             user[5] = child.val().isDriver;
             user[6] = child.val().isAdmin;
             user[7] = child.val().isBanned;
-            user[8] = child.key;
-            console.log(child.val().fname, child.val().email, user[8]);
+            user[8] = child.val().wallet;
+            user[9] = child.key;
+            console.log(child.val().fname, child.val().email, user[9]);
           });
         })
     }
 
+    forgotPass(e) {
+      document.getElementById("signinblock").style.display = "none";
+      document.getElementById("signupblock").style.display = "none";
+      document.getElementById("forgotpasswordblock").style.display = "block";
+    }
+
+    // reset password for user
+    submitForgotPassword(e) {
+      e.preventDefault();
+      firebase.auth().sendPasswordResetEmail(this.state.email).then(function () {
+        alert("Reset link has been sent to your email!")
+      }).catch(function (error) {
+        alert("Uh-oh! Something went wrong")
+      });
+    }
+
+    // login
     login(e) {
       e.preventDefault();
-      var i = 1;
-      var email = this.state.email.toString().toLowerCase();
 
-      if (!validate(email)) {
-        alert("Email not valid bro");
-      } else {
-        while (i < emailArr.length) {
-          console.log(emailArr[i], email);
-          if (emailArr[i].toString() === email) {
-            if (user[7].toString() === "yes") {
-              alert("Account is banned. Please contact administrator.")
+      if (typeof user[9] != 'undefined') {
+        var i = 0;
+        var email = this.state.email.toString().toLowerCase();
+
+        if (!validate(email)) {
+          alert("Email not valid bro");
+        } else {
+          while (i < emailArr.length) {
+            console.log(emailArr[i], email, i);
+            if (emailArr[i].toString() === email) {
+              if (user[7].toString() === "yes") {
+                alert("Account is banned. Please contact administrator.")
+              } else {
+                firebase.auth().signInWithEmailAndPassword(email, this.state.password).then((u) => {}).catch((error) => {
+                  alert(error.message)
+                })
+                break;
+              }
+            } else if (i == emailArr.length - 1) {
+              alert("Email not found yo");
+              i++;
             } else {
-              firebase.auth().signInWithEmailAndPassword(email, this.state.password).then((u) => {}).catch((error) => {
-                alert(error.message)
-              })
-              break;
+              i++;
             }
-          } else if (i == emailArr.length - 1) {
-            alert("Email not found yo");
-            i++;
-          } else {
-            i++;
           }
         }
       }
@@ -147,9 +173,11 @@ class Login extends React.Component {
                 email: this.state.email.toString().toLowerCase(),
                 isDriver: "no",
                 isAdmin: "no",
-                isBanned: "no"
+                isBanned: "no",
+                wallet: "0.00"
               }
 
+              // after signup, stores user data into user
               user[0] = account.fname;
               user[1] = account.lname;
               user[2] = account.uname;
@@ -158,7 +186,8 @@ class Login extends React.Component {
               user[5] = account.isDriver;
               user[6] = account.isAdmin;
               user[7] = account.isBanned;
-              user[8] = account.key;
+              user[8] = account.wallet;
+              user[9] = account.key;
 
               accountsRef.push(account);
               this.state = {
@@ -171,7 +200,8 @@ class Login extends React.Component {
                 repassword: '',
                 isDriver: '',
                 isAdmin: '',
-                isBanned: ''
+                isBanned: '',
+                wallet: ''
               };
 
               // writing
@@ -196,12 +226,14 @@ class Login extends React.Component {
       e.preventDefault();
       document.getElementById("signinblock").style.display = "none";
       document.getElementById("signupblock").style.display = "block";
+      document.getElementById("forgotpasswordblock").style.display = "none";
     }
 
     cancel(e) {
       e.preventDefault();
       document.getElementById("signinblock").style.display = "block";
       document.getElementById("signupblock").style.display = "none";
+      document.getElementById("forgotpasswordblock").style.display = "none";
     }
 
   render() {
@@ -209,19 +241,35 @@ class Login extends React.Component {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <Text style={{ color: '#fff', fontSize: 30, fontFamily: 'Helvetica', fontWeight: '600'}}>Welcome to SIMRide</Text>
         <Image source={logo} />
-        <br />
         <div>
           <form>
             <div id="signinblock">
-              <input id="signinemail" value={this.state.email} onChange={this.handleChange} type="email" name="email"
+              <br/>
+              <br/>
+              <input id="signinemail" value={this.state.email} onChange={this.handleChange} onBlur={this.checkEmail} type="email" name="email"
                 placeholder="E-Mail (test@this.com)" />
-              <input value={this.state.password} onChange={this.handleChange} onFocus={this.checkEmail} type="password"
+              <input value={this.state.password} onChange={this.handleChange} type="password"
                 name="password" placeholder="Password (shafiq)" style={{marginLeft: '15px'}} />
+              <br/>
+              <a onClick={this.forgotPass}>Forgot password?</a>
               <br />
               <br />
-              <div style={{textAlign: 'center'}}>
+              <div id="div_SubmitSignIn" style={{textAlign: 'center'}}>
                 <button type="submit" onClick={this.login}>Sign In</button>
                 <button onClick={this.extendsignup} style={{marginLeft: '25px'}}>Sign Up</button>
+              </div>
+            </div>
+
+            <div id="forgotpasswordblock" style={{display: 'none'}}>
+              <br/>
+              <br/>
+              <input id="forgotemail" value={this.state.email} onChange={this.handleChange} onBlur={this.checkEmail} type="email" name="email"
+                placeholder="E-Mail (test@this.com)" />
+              <br/>
+              <br/>
+              <div style={{textAlign: 'center'}}>
+                <button type="submit" onClick={this.submitForgotPassword}>Reset Password</button>
+                <button type="submit" onClick={this.cancel}>Back</button>
               </div>
             </div>
 

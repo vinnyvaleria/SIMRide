@@ -24,7 +24,7 @@ export default function Start() {
             <li>
               <Link to="/Account">Account</Link>
             </li>
-            <li>
+            <li id="Wallet">
               <Link to="/Wallet">Wallet</Link>
             </li>
           </ul>

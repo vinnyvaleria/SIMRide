@@ -1,0 +1,74 @@
+[debug] [2020-04-13T12:44:35.789Z] ----------------------------------------------------------------------
+[debug] [2020-04-13T12:44:35.790Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only functions
+[debug] [2020-04-13T12:44:35.791Z] CLI Version:   8.0.2
+[debug] [2020-04-13T12:44:35.791Z] Platform:      win32
+[debug] [2020-04-13T12:44:35.791Z] Node Version:  v12.14.1
+[debug] [2020-04-13T12:44:35.792Z] Time:          Mon Apr 13 2020 20:44:35 GMT+0800 (Singapore Standard Time)
+[debug] [2020-04-13T12:44:35.792Z] ----------------------------------------------------------------------
+[debug] [2020-04-13T12:44:35.792Z] 
+[debug] [2020-04-13T12:44:35.798Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-13T12:44:35.799Z] > authorizing via signed-in user
+[debug] [2020-04-13T12:44:35.799Z] [iam] checking project carpool-world-5uck5 for permissions ["firebase.projects.get"]
+[debug] [2020-04-13T12:44:35.801Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/carpool-world-5uck5:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-04-13T12:44:36.953Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 13 Apr 2020 12:44:37 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1113","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-13T12:44:36.954Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/carpool-world-5uck5  
+ 
+[debug] [2020-04-13T12:44:37.137Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 13 Apr 2020 12:44:37 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] !  Your functions directory does not specify a Node version.
+   - Learn more at https://firebase.google.com/docs/functions/manage-functions#set_runtime_options
+[info] +  functions: functions emulator started at http://localhost:5000
+[info] i  functions: Watching "d:\GitHub\SIMRide\functions" for Cloud Functions...
+[debug] [2020-04-13T12:44:39.159Z] [worker-pool] addWorker(~diagnostic~) 
+[debug] [2020-04-13T12:44:39.159Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 
+[debug] [2020-04-13T12:44:39.159Z] [worker-pool] submitWork(triggerId=) 
+[debug] [2020-04-13T12:44:39.159Z] [worker-~diagnostic~-7acbcd9d-93df-4c52-b445-c5b6f68cdc4b]: Assigning socketPath: \\?\pipe\d:\GitHub\SIMRide\functions\6848 
+[debug] [2020-04-13T12:44:39.159Z] [worker-~diagnostic~-7acbcd9d-93df-4c52-b445-c5b6f68cdc4b]: BUSY 
+[debug] [2020-04-13T12:44:39.463Z] [runtime-status] [6848] Functions runtime initialized. {"cwd":"d:\\GitHub\\SIMRide\\functions","node_version":"12.14.1"} 
+[debug] [2020-04-13T12:44:39.464Z] [runtime-status] [6848] Disabled runtime features: undefined 
+[debug] [2020-04-13T12:44:39.466Z] [runtime-status] [6848] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\node_modules\\firebase-admin\\lib\\index.js"} 
+[warn] !  The Cloud Functions emulator requires the module "firebase-functions" to be installed as a dependency. To fix this, run "npm install --save firebase-functions" in your functions directory.
+[info] i  functions: Your functions could not be parsed due to an issue with your node_modules (see above)
+[debug] [2020-04-13T12:44:39.487Z] [worker-~diagnostic~-7acbcd9d-93df-4c52-b445-c5b6f68cdc4b]: exited 
+[debug] [2020-04-13T12:44:39.487Z] [worker-~diagnostic~-7acbcd9d-93df-4c52-b445-c5b6f68cdc4b]: FINISHED 
+[debug] [2020-04-13T12:45:23.331Z] ----------------------------------------------------------------------
+[debug] [2020-04-13T12:45:23.333Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve
+[debug] [2020-04-13T12:45:23.334Z] CLI Version:   8.0.2
+[debug] [2020-04-13T12:45:23.334Z] Platform:      win32
+[debug] [2020-04-13T12:45:23.334Z] Node Version:  v12.14.1
+[debug] [2020-04-13T12:45:23.334Z] Time:          Mon Apr 13 2020 20:45:23 GMT+0800 (Singapore Standard Time)
+[debug] [2020-04-13T12:45:23.335Z] ----------------------------------------------------------------------
+[debug] [2020-04-13T12:45:23.335Z] 
+[debug] [2020-04-13T12:45:23.341Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-13T12:45:23.342Z] > authorizing via signed-in user
+[debug] [2020-04-13T12:45:23.342Z] [iam] checking project carpool-world-5uck5 for permissions ["firebase.projects.get"]
+[debug] [2020-04-13T12:45:23.345Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/carpool-world-5uck5:testIamPermissions  
+ {"permissions":["firebase.projects.get"]}
+[debug] [2020-04-13T12:45:24.468Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 13 Apr 2020 12:45:25 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1083","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-13T12:45:24.469Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/carpool-world-5uck5  
+ 
+[debug] [2020-04-13T12:45:24.677Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 13 Apr 2020 12:45:25 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Serving from 'd:\GitHub\SIMRide'...
+[info] 
+[debug] [2020-04-13T12:45:24.682Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/carpool-world-5uck5/webApps/-/config  
+ 
+[debug] [2020-04-13T12:45:25.487Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Mon, 13 Apr 2020 12:45:26 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  hosting: Serving hosting files from: Carpool-World
+[info] +  hosting: Local server: http://localhost:5000
+[warn] !  Your functions directory does not specify a Node version.
+   - Learn more at https://firebase.google.com/docs/functions/manage-functions#set_runtime_options
+[info] +  functions: functions emulator started at http://localhost:5001
+[info] i  functions: Watching "d:\GitHub\SIMRide\functions" for Cloud Functions...
+[debug] [2020-04-13T12:45:26.701Z] [worker-pool] addWorker(~diagnostic~) 
+[debug] [2020-04-13T12:45:26.701Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 
+[debug] [2020-04-13T12:45:26.701Z] [worker-pool] submitWork(triggerId=) 
+[debug] [2020-04-13T12:45:26.701Z] [worker-~diagnostic~-371ab288-bde7-4ee1-be84-ba1e60a4601e]: Assigning socketPath: \\?\pipe\d:\GitHub\SIMRide\functions\18580 
+[debug] [2020-04-13T12:45:26.702Z] [worker-~diagnostic~-371ab288-bde7-4ee1-be84-ba1e60a4601e]: BUSY 
+[debug] [2020-04-13T12:45:27.014Z] [runtime-status] [18580] Functions runtime initialized. {"cwd":"d:\\GitHub\\SIMRide\\functions","node_version":"12.14.1"} 
+[debug] [2020-04-13T12:45:27.014Z] [runtime-status] [18580] Disabled runtime features: undefined 
+[debug] [2020-04-13T12:45:27.017Z] [runtime-status] [18580] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\node_modules\\firebase-admin\\lib\\index.js"} 
+[warn] !  The Cloud Functions emulator requires the module "firebase-functions" to be installed as a dependency. To fix this, run "npm install --save firebase-functions" in your functions directory.
+[info] i  functions: Your functions could not be parsed due to an issue with your node_modules (see above)
+[debug] [2020-04-13T12:45:27.037Z] [worker-~diagnostic~-371ab288-bde7-4ee1-be84-ba1e60a4601e]: exited 
+[debug] [2020-04-13T12:45:27.037Z] [worker-~diagnostic~-371ab288-bde7-4ee1-be84-ba1e60a4601e]: FINISHED 
