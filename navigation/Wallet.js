@@ -60,6 +60,7 @@ class Wallet extends React.Component {
 
     }
 
+    // top up wallet button
     topUpWalletPage = () => {
         document.getElementById('div_WalletHome').style.display = "none";
         document.getElementById('div_WalletTopUp').style.display = "block";
@@ -67,6 +68,7 @@ class Wallet extends React.Component {
 
     }
 
+    // goes to transaction history page
     transactionsPage = () => {
         document.getElementById('div_WalletHome').style.display = "none";
         document.getElementById('div_WalletTopUp').style.display = "none";
@@ -75,10 +77,11 @@ class Wallet extends React.Component {
 
     }
 
+    // handles payment -> check firestripe for stripe cloud functiosn with firebase
     async handleToken(token) {
         let product = {price: this.state.amount, name: "Top-Up E-Wallet", decscription: "Top-Up"}
         const response = await axios.post(
-            "http://localhost:19006/checkout",
+            "http://localhost:19006/checkout", // by right when served onto staging server port will be 5000
             { token, product }
         );
         const { status } = response.data;
