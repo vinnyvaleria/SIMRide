@@ -30,6 +30,7 @@ class Wallet extends React.Component {
         });
     }
 
+    // sets amount in text box to two decimal places on blur and sets to this.state.amount
     setTwoNumberDecimal(e) {
         e.target.value = parseFloat(e.target.value).toFixed(2);
         this.setState({
@@ -47,6 +48,7 @@ class Wallet extends React.Component {
         }
     }
 
+    // to show amount left in wallet
     walletHomePage = () => {
         document.getElementById('div_WalletHome').style.display = "block";
         document.getElementById('div_WalletTopUp').style.display = "none";
@@ -76,20 +78,20 @@ class Wallet extends React.Component {
 
     }
 
-    async handleToken(token) {
-        let product = {price: this.state.amount, name: "Top-Up E-Wallet", decscription: "Top-Up"}
-        const response = await axios.post(
-            "http://localhost:19006/checkout",
-            { token, product }
-        );
-        const { status } = response.data;
-        console.log("Response:", response.data);
-        if (status === "success") {
-            toast("Success! Check email for details", { type: "success" });
-        } else {
-            toast("Something went wrong", { type: "error" });
-        }
-    }
+    // async handleToken(token) {
+    //     let product = {price: this.state.amount, name: "Top-Up E-Wallet", decscription: "Top-Up"}
+    //     const response = await axios.post(
+    //         "http://localhost:19006/checkout",
+    //         { token, product }
+    //     );
+    //     const { status } = response.data;
+    //     console.log("Response:", response.data);
+    //     if (status === "success") {
+    //         toast("Success! Check email for details", { type: "success" });
+    //     } else {
+    //         toast("Something went wrong", { type: "error" });
+    //     }
+    // }
 
 render() {
   return (

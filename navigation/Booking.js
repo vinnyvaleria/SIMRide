@@ -24,6 +24,7 @@ class Booking extends React.Component {
       }
     }
 
+    // handles change
     handleChange(e) {
       this.setState({
         [e.target.name]: e.target.value
@@ -39,7 +40,7 @@ class Booking extends React.Component {
       }
     }
 
-    // view all available bookings
+    // view all available bookings and displays in table
     viewAllBookings = () => {
       const self = this;
       document.getElementById('tb_AllBookings').innerHTML = '';
@@ -87,7 +88,7 @@ class Booking extends React.Component {
                 driver = key[1];
               }
             }
-
+            
             content += '<tr id=\'' + data.key + '\'>';
             content += '<td>' + area + '</td>'; //column1
             content += '<td>' + date + '</td>'; //column2
@@ -115,6 +116,7 @@ class Booking extends React.Component {
       });
     }
 
+    // view the booking clicked
     viewBooking = e => {
       document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML = null;
       document.getElementById('td_viewSelectedBooking_bookingID').innerHTML = null;
@@ -180,6 +182,8 @@ class Booking extends React.Component {
               document.getElementById('td_viewSelectedBooking_area').innerHTML = area;
               document.getElementById('td_viewSelectedBooking_meeting').innerHTML = meeting;
               document.getElementById('td_viewSelectedBooking_slotsLeft').innerHTML = slotsleft;
+
+              // checks if user already in booking or if booking is full
               if (ppl.length > 0) {
                 document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML = data.val().currPassengers;
                 document.getElementById('tr_viewSelectedBooking_currPassengers').style.visibility = "visible";
@@ -336,6 +340,7 @@ class Booking extends React.Component {
       });
     }
 
+    // display create booking information, binds area from db
     createBooking = () => {
       document.getElementById('div_availBookings').style.display = "none";
       document.getElementById('div_createBooking').style.display = "block";
@@ -363,6 +368,7 @@ class Booking extends React.Component {
       });
     }
 
+    // submits created booking into realtime db
     submitCreateBooking(e) {
       // // checks for duplicate username
       // var i = 0;

@@ -63,6 +63,7 @@ class Login extends React.Component {
       console.log(emailArr, unameArr);
     }
 
+    // get all information from this account and stores into user
     checkEmail(e) {
       user[3] = document.getElementById("signinemail").value;
       user[3] = user[3].toString().toLowerCase();
@@ -87,6 +88,7 @@ class Login extends React.Component {
         })
     }
 
+    // login
     login(e) {
       e.preventDefault();
       var i = 1;
@@ -153,6 +155,7 @@ class Login extends React.Component {
                 wallet: "0.00"
               }
 
+              // after signup, stores user data into user
               user[0] = account.fname;
               user[1] = account.lname;
               user[2] = account.uname;

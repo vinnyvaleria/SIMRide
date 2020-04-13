@@ -40,12 +40,14 @@ class Account extends React.Component {
       };
     }
 
+    // handles textbox change
     handleChange(e) {
       this.setState({
         [e.target.name]: e.target.value
       });
     }
 
+    // handles image change
     handleImgChange = e => {
       if (e.target.files[0]) {
         const image = e.target.files[0];
@@ -55,6 +57,7 @@ class Account extends React.Component {
       }
     };
 
+    // uplaods front license pic
     handleFrontUpload = () => {
       const {
         image
@@ -99,6 +102,7 @@ class Account extends React.Component {
       }
     };
 
+    // uploads back license pic
     handleBackUpload = () => {
       const {
         image
@@ -172,6 +176,7 @@ class Account extends React.Component {
       }
     }
 
+    // logout
     logout() {
       user[0] = '';
       user[1] = '';
@@ -188,6 +193,7 @@ class Account extends React.Component {
       firebase.auth().signOut();
     }
 
+    // edit profile
     editProfile() {
       this.setState({
         firstName: user[0],
@@ -204,6 +210,7 @@ class Account extends React.Component {
       document.getElementById('submitDriverDetails').style.display = 'none';
     }
 
+    // submits the edited profile and updates the realtime db
     submitEditProfile(e) {
       e.preventDefault();
       if (this.state.firstName != "" && this.state.lastName != "" && this.state.phone != "") {
@@ -226,8 +233,6 @@ class Account extends React.Component {
               phone: user[4]
             })
           });
-
-        //Util.updateProfile(user[3], user[0], user[1], user[9]);
       } else {
         alert("Account was not updated.")
       }
@@ -242,6 +247,7 @@ class Account extends React.Component {
       document.getElementById('editPhone').value = "";
     }
 
+    // goes back to profile page
     cancelEditProfile() {
       Util.profilePageReset();
 
@@ -257,6 +263,7 @@ class Account extends React.Component {
       document.getElementById('editPhone').value = "";
     }
 
+    // change password button
     changePassword() {
       document.getElementById('tblProfile').style.display = 'none';
       document.getElementById('tblPassword').style.display = 'block';
@@ -289,6 +296,7 @@ class Account extends React.Component {
       document.getElementById('editPhone').value = "";
     }
 
+    // submits password change and stores into realtime db
     submitPassword(e) {
       e.preventDefault();
 
@@ -310,6 +318,7 @@ class Account extends React.Component {
       }
     }
 
+    // goes back to profile page
     cancelPassword() {
       Util.profilePageReset();
 
@@ -324,6 +333,7 @@ class Account extends React.Component {
       document.getElementById('confirmNewPassword').value = "";
     }
 
+    // apply to be driver button
     applyDriver() {
       document.getElementById('tblProfile').style.display = 'none';
       document.getElementById('tblPassword').style.display = 'none';
@@ -349,6 +359,7 @@ class Account extends React.Component {
       document.getElementById('submitDriverDetails').style.display = 'inline-block';
     }
 
+    // cancel driver application button
     cancelApplyDriver() {
       Util.profilePageReset();
       document.getElementById('tblApplyDriver').style.display = 'none';
@@ -359,6 +370,7 @@ class Account extends React.Component {
       document.getElementById('submitDriverDetails').style.display = 'none';
     }
 
+    // submits driver details into realtime db
     submitDriverDetails() {
       var date = new Date;
       var m = date.getMonth();
