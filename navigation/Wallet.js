@@ -1,4 +1,4 @@
-import React, { Component } from 'react';
+import React from 'react';
 import { Text, View } from 'react-native';
 import firebase from '../base';
 import 'firebase/firestore';
@@ -42,6 +42,10 @@ class Wallet extends React.Component {
         }
         else {
             this.walletHomePage();
+            if (user[6].toLowerCase() === 'yes') {
+                document.getElementById("btnTopUpPage").style.display = "none";
+                document.getElementById("tbl_last5").style.display = "none";
+            }
         }
     }
 
@@ -115,7 +119,7 @@ render() {
                 </table>
                 <br/>
                 <br/>
-                <table>
+                <table id="tbl_last5">
                     <thead>
                         <tr rowSpan='3'>
                             <th>Last 5 Transactions</th>

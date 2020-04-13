@@ -167,6 +167,9 @@ class Account extends React.Component {
                   } else {
                     document.getElementById('btnApplyDriver').style.display = "inline-block";
                   }
+                  if (user[6].toLowerCase() === "yes") {
+                    document.getElementById('btnApplyDriver').style.display = "none";
+                  }
                 } else {
                   document.getElementById('btnApplyDriver').style.display = "inline-block";
                 }

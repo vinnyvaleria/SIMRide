@@ -37,6 +37,17 @@ class Booking extends React.Component {
       if (typeof user[3] === 'undefined') {
         firebase.auth().signOut();
       } else {
+        if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "no") { //isAdmin
+          document.getElementById('btnCreateBooking').style.display = "none";
+          document.getElementById('btnViewCreatedBooking').style.display = "none";
+        }
+
+        if (user[6].toLowerCase() === "yes") { //isAdmin
+          document.getElementById('btnViewMyBookings').style.display = "none";
+          document.getElementById('btnCreateBooking').style.display = "none";
+          document.getElementById('btnViewCreatedBooking').style.display = "none";
+        }
+        
         this.viewAllBookings();
       }
     }
@@ -203,6 +214,10 @@ class Booking extends React.Component {
                 document.getElementById('btnJoinBooking').style.display = "inline-block";
                 document.getElementById('btnCancelBooking').style.display = "none";
               }
+              if (user[6].toLowerCase() === "yes") {
+                document.getElementById('btnJoinBooking').style.display = "none";
+                document.getElementById('btnCancelBooking').style.display = "none";
+              }
             }
           });
         }
@@ -303,7 +318,7 @@ class Booking extends React.Component {
                 let date = data.val().date;
                 let time = data.val().time;
                 let ppl = [];
-                
+
                 if (data.val().currPassengers != "") {
                   ppl = data.val().currPassengers.split(',')
                 }
@@ -515,7 +530,7 @@ class Booking extends React.Component {
             <h1>This is the booking tab</h1>
           </div>
           <div>
-            <button id='btnViewAllBookings' onClick={ this.viewAllBookings }>Join A Ride</button>
+            <button id='btnViewAllBookings' onClick={ this.viewAllBookings }>View All Rides</button>
             <button id='btnViewMyBookings' onClick={ this.viewMyBookings }>View My Rides</button>
             <button id='btnCreateBooking' onClick={ this.createBooking }>Create A Ride</button>
             <button id='btnViewCreatedBooking' onClick={ this.viewCreatedBooking }>View My Created Rides</button>

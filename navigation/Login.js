@@ -4,7 +4,7 @@ import logo from '../assets/logo.png';
 import firebase from '../base';
 import { validate } from 'email-validator';
 
-var user = new Array(10); //fname, lname, uname, email, phone, isDriver, isAdmin, isBanned, wallet, id
+var user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
 var countArr = new Array(1); //account
 var unameArr = [];
 var emailArr = [];
@@ -35,6 +35,8 @@ class Login extends React.Component {
     }
 
     componentDidMount() {
+      document.getElementById("signinemail").focus();
+
       // counts current total account registered
       firebase.database()
         .ref('admin')
@@ -64,7 +66,7 @@ class Login extends React.Component {
     }
 
     // get all information from this account and stores into user
-    checkEmail(e) {
+    checkEmail = e => {
       user[3] = document.getElementById("signinemail").value;
       user[3] = user[3].toString().toLowerCase();
 
@@ -89,30 +91,33 @@ class Login extends React.Component {
     }
 
     // login
-    login(e) {
+    async login(e) {
       e.preventDefault();
-      var i = 1;
-      var email = this.state.email.toString().toLowerCase();
 
-      if (!validate(email)) {
-        alert("Email not valid bro");
-      } else {
-        while (i < emailArr.length) {
-          console.log(emailArr[i], email);
-          if (emailArr[i].toString() === email) {
-            if (user[7].toString() === "yes") {
-              alert("Account is banned. Please contact administrator.")
+      if (typeof user[9] != 'undefined') {
+        var i = 0;
+        var email = this.state.email.toString().toLowerCase();
+
+        if (!validate(email)) {
+          alert("Email not valid bro");
+        } else {
+          while (i < emailArr.length) {
+            console.log(emailArr[i], email, i);
+            if (emailArr[i].toString() === email) {
+              if (user[7].toString() === "yes") {
+                alert("Account is banned. Please contact administrator.")
+              } else {
+                firebase.auth().signInWithEmailAndPassword(email, this.state.password).then((u) => {}).catch((error) => {
+                  alert(error.message)
+                })
+                break;
+              }
+            } else if (i == emailArr.length - 1) {
+              alert("Email not found yo");
+              i++;
             } else {
-              firebase.auth().signInWithEmailAndPassword(email, this.state.password).then((u) => {}).catch((error) => {
-                alert(error.message)
-              })
-              break;
+              i++;
             }
-          } else if (i == emailArr.length - 1) {
-            alert("Email not found yo");
-            i++;
-          } else {
-            i++;
           }
         }
       }
@@ -221,9 +226,9 @@ class Login extends React.Component {
         <div>
           <form>
             <div id="signinblock">
-              <input id="signinemail" value={this.state.email} onChange={this.handleChange} type="email" name="email"
+              <input id="signinemail" value={this.state.email} onChange={this.handleChange} onBlur={this.checkEmail} type="email" name="email"
                 placeholder="E-Mail (test@this.com)" />
-              <input value={this.state.password} onChange={this.handleChange} onFocus={this.checkEmail} type="password"
+              <input value={this.state.password} onChange={this.handleChange} type="password"
                 name="password" placeholder="Password (shafiq)" style={{marginLeft: '15px'}} />
               <br />
               <br />
