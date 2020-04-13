@@ -1,12 +1,9 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import firebase from '../firebase/base';
+import firebase from '../base';
 import 'firebase/firestore';
 import {user} from './Login';
 import StripeCheckout from "react-stripe-checkout";
-import axios from "axios";
-import { toast } from "react-toastify";
-require('dotenv').config();
 
 class Wallet extends React.Component {
     constructor(props) {
@@ -78,20 +75,20 @@ class Wallet extends React.Component {
 
     }
 
-    // async handleToken(token) {
-    //     let product = {price: this.state.amount, name: "Top-Up E-Wallet", decscription: "Top-Up"}
-    //     const response = await axios.post(
-    //         "http://localhost:19006/checkout",
-    //         { token, product }
-    //     );
-    //     const { status } = response.data;
-    //     console.log("Response:", response.data);
-    //     if (status === "success") {
-    //         toast("Success! Check email for details", { type: "success" });
-    //     } else {
-    //         toast("Something went wrong", { type: "error" });
-    //     }
-    // }
+    async handleToken(token) {
+        let product = {price: this.state.amount, name: "Top-Up E-Wallet", decscription: "Top-Up"}
+        const response = await axios.post(
+            "http://localhost:19006/checkout",
+            { token, product }
+        );
+        const { status } = response.data;
+        console.log("Response:", response.data);
+        if (status === "success") {
+            toast("Success! Check email for details", { type: "success" });
+        } else {
+            toast("Something went wrong", { type: "error" });
+        }
+    }
 
 render() {
   return (

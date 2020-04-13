@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import { Text, View, Image, Button } from 'react-native';
 import logo from '../assets/logo.png';
-import firebase from '../firebase/base';
+import firebase from '../base';
 import { validate } from 'email-validator';
 
 var user = new Array(10); //fname, lname, uname, email, phone, isDriver, isAdmin, isBanned, wallet, id
