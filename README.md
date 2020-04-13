@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BOOKING: View created rides  [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**Split users into roles, and define what each role can see  [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 BOOKING: Filter - by area/time | BACKEND: Synced database to Firebase 
 API: Stripe API | USERS: Logging into SIMRide 
@@ -90,3 +90,4 @@ API: MapQuest Directions API | USERS: Apply to be driver: upload license image
 -- | BOOKING: View My Bookings
 -- | BOOKING: Cancel confirmed ride
 -- | WALLET: E-Wallet page
+-- | BOOKING: View created rides
