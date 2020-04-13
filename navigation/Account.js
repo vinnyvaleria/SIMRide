@@ -36,7 +36,9 @@ class Account extends React.Component {
         backURL: '',
         progress: 0,
         license: '',
-        carplate: ''
+        carplate: '',
+        status: '',
+        dateApplied: ''
       };
     }
 
@@ -104,6 +106,12 @@ class Account extends React.Component {
 
     // uploads back license pic
     handleBackUpload = () => {
+      var date = new Date;
+      var m = date.getMonth() + 1;
+      var d = date.getDate();
+      var y = date.getFullYear();
+      var today = new Date(y, m, d);
+
       const {
         image
       } = this.state;
@@ -137,7 +145,8 @@ class Account extends React.Component {
               });
 
             const driverDetails = {
-              completed: "yes"
+              completed: "yes",
+              dateApplied: today
             }
 
             accountsRef.update(driverDetails);
@@ -376,11 +385,13 @@ class Account extends React.Component {
     // submits driver details into realtime db
     submitDriverDetails() {
       var date = new Date;
-      var m = date.getMonth();
+      var m = date.getMonth()+1;
       var d = date.getDate();
       var y = date.getFullYear() - 2;
+      var yy = date.getFullYear();
       var issuedDate = new Date(document.getElementById('txtIssueDate').value);
       var today = new Date(y, m, d);
+      var now = new Date(yy, m, d)
 
       if (this.state.license != "" && this.state.carplate != "" && this.state.license.length == 9 && (this.state.license.charAt(0) === 'S' || this.state.license.charAt(0) === 'T') && today > issuedDate) {
         const accountsRef = firebase.database().ref('driverDetails/' + user[9]);
@@ -389,13 +400,17 @@ class Account extends React.Component {
           carplate: this.state.carplate,
           license: this.state.license,
           issueDate: document.getElementById('txtIssueDate').value,
-          completed: "no"
+          completed: "no",
+          status: "pending",
+          dateApplied: now
         }
 
         accountsRef.update(driverDetails);
         this.state = {
           carplate: '',
-          license: ''
+          license: '',
+          status: '',
+          dateApplied: ''
         };
 
         document.getElementById('tblDriverDetails').style.display = 'none';
