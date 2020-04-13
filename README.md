@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**USERS: Forgot password  [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**ADMIN: review driver application [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 BOOKING: Filter - by area/time | BACKEND: Synced database to Firebase 
 API: Stripe API | USERS: Logging into SIMRide 
@@ -81,7 +81,7 @@ USERS: Rate the driver and rider (not important) | CHAT: Live chat, store chat, 
 USERS: Transaction/booking history | USERS: View other profiles 
 ADMIN: Ban user (blacklist user) | USERS: Update password
 ADMIN: Audit/log (not important) | CHAT: Stored chat history 
-ADMIN: review driver application | CHAT: Retrieving chats
+-- | CHAT: Retrieving chats
 MAPS: Automatic route planning (fastest) | BOOKING: Create a Booking
 API: MapQuest Traffic API | BOOKING: Display list of available Booking
 API: MapQuest Directions API | USERS: Apply to be driver: upload license image
@@ -92,3 +92,4 @@ API: MapQuest Directions API | USERS: Apply to be driver: upload license image
 -- | WALLET: E-Wallet page
 -- | BOOKING: View created rides
 -- | PERMISSIONS: Split users into roles, and define what each role can see
+-- | USERS: Forgot password reset email
