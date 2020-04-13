@@ -81,11 +81,11 @@ USERS: Rate the driver and rider (not important) | CHAT: Live chat, store chat, 
 USERS: Transaction/booking history | USERS: View other profiles 
 ADMIN: Ban user (blacklist user) | USERS: Update password
 ADMIN: Audit/log (not important) | CHAT: Stored chat history 
--- | CHAT: Retrieving chats
+BOOKING: Cancel created booking | CHAT: Retrieving chats
 MAPS: Automatic route planning (fastest) | BOOKING: Create a Booking
 API: MapQuest Traffic API | BOOKING: Display list of available Booking
 API: MapQuest Directions API | USERS: Apply to be driver: upload license image
--- | USERS: Apply to be driver: add driver details
+USERS: Dashboard | USERS: Apply to be driver: add driver details
 -- | BOOKING: Join booking
 -- | BOOKING: View My Bookings
 -- | BOOKING: Cancel confirmed ride
