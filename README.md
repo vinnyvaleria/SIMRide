@@ -67,10 +67,10 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**API: Stripe API  [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BOOKING: View created rides  [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 BOOKING: Filter - by area/time | BACKEND: Synced database to Firebase 
--- | USERS: Logging into SIMRide 
+API: Stripe API | USERS: Logging into SIMRide 
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
