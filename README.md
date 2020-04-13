@@ -70,7 +70,7 @@ In-Progress | Done
 **ADMIN: review driver application [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 BOOKING: Filter - by area/time | BACKEND: Synced database to Firebase 
-API: Stripe API | USERS: Logging into SIMRide 
+BOOKING: Cancel created booking | USERS: Logging into SIMRide 
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
@@ -79,13 +79,13 @@ USERS: Report user | USERS: Edit Profile
 USERS: Weekly pickup scheduler (not important) | USERS: View Profile 
 USERS: Rate the driver and rider (not important) | CHAT: Live chat, store chat, select user to chat with 
 USERS: Transaction/booking history | USERS: View other profiles 
-ADMIN: Ban user (blacklist user) | USERS: Update password
+USERS: Dashboard | USERS: Update password
 ADMIN: Audit/log (not important) | CHAT: Stored chat history 
-BOOKING: Cancel created booking | CHAT: Retrieving chats
+ADMIN: Ban user (blacklist user) | CHAT: Retrieving chats
 MAPS: Automatic route planning (fastest) | BOOKING: Create a Booking
 API: MapQuest Traffic API | BOOKING: Display list of available Booking
 API: MapQuest Directions API | USERS: Apply to be driver: upload license image
-USERS: Dashboard | USERS: Apply to be driver: add driver details
+API: Stripe API | USERS: Apply to be driver: add driver details
 -- | BOOKING: Join booking
 -- | BOOKING: View My Bookings
 -- | BOOKING: Cancel confirmed ride
