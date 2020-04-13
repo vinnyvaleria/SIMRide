@@ -16,6 +16,7 @@ class Booking extends React.Component {
       this.viewMyBookings = this.viewMyBookings.bind(this);
       this.viewAllBookings = this.viewAllBookings.bind(this);
       this.viewBooking = this.viewBooking.bind(this);
+      this.viewCreatedBooking = this.viewCreatedBooking.bind(this);
       this.joinBooking = this.joinBooking.bind(this);
       this.cancelBooking = this.cancelBooking.bind(this);
       this.state = {
@@ -49,6 +50,7 @@ class Booking extends React.Component {
       document.getElementById('div_createBooking').style.display = "none";
       document.getElementById('div_myBookings').style.display = "none";
       document.getElementById('div_viewSelectedBooking').style.display = "none";
+      document.getElementById('div_viewCreatedBooking').style.display = "none";
 
       // get all accounts
       firebase.database().ref('accounts')
@@ -134,6 +136,7 @@ class Booking extends React.Component {
       document.getElementById('div_createBooking').style.display = "none";
       document.getElementById('div_myBookings').style.display = "none";
       document.getElementById('div_viewSelectedBooking').style.display = "block";
+      document.getElementById('div_viewCreatedBooking').style.display = "none";
 
       // get all accounts
       firebase.database().ref('accounts')
@@ -274,6 +277,7 @@ class Booking extends React.Component {
       document.getElementById('div_createBooking').style.display = "none";
       document.getElementById('div_myBookings').style.display = "block";
       document.getElementById('div_viewSelectedBooking').style.display = "none";
+      document.getElementById('div_viewCreatedBooking').style.display = "none";
 
       // get all accounts
       firebase.database().ref('accounts')
@@ -299,7 +303,10 @@ class Booking extends React.Component {
                 let date = data.val().date;
                 let time = data.val().time;
                 let ppl = [];
-                ppl = data.val().currPassengers.split(',')
+                
+                if (data.val().currPassengers != "") {
+                  ppl = data.val().currPassengers.split(',')
+                }
 
                 let passengers = ppl.length + "/" + data.val().maxPassengers;
                 let id = data.val().driverID;
@@ -340,12 +347,91 @@ class Booking extends React.Component {
       });
     }
 
+     // view created bookings by driver
+     viewCreatedBooking = () => {
+       const self = this;
+       document.getElementById('tb_CreatedBookings').innerHTML = '';
+
+       document.getElementById('div_availBookings').style.display = "none";
+       document.getElementById('div_createBooking').style.display = "none";
+       document.getElementById('div_myBookings').style.display = "none";
+       document.getElementById('div_viewSelectedBooking').style.display = "none";
+       document.getElementById('div_viewCreatedBooking').style.display = "block";
+
+
+       // get all accounts
+       firebase.database().ref('accounts')
+         .orderByChild('email')
+         .once('value')
+         .then(function (snapshot) {
+           let i = 0;
+           snapshot.forEach(function (child) {
+             userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+             i++;
+           })
+         });
+
+       const database = firebase.database().ref('bookings').orderByChild('date');
+       database.once('value', function (snapshot) {
+         if (snapshot.exists()) {
+           let content = '';
+           let rowCount = 0;
+           snapshot.forEach(function (data) {
+             if (data.val().driverID === user[9]) {
+                let area = data.val().area;
+                let date = data.val().date;
+                let time = data.val().time;
+                let ppl = [];
+                
+                if (data.val().currPassengers != "") {
+                  ppl = data.val().currPassengers.split(',')
+                }
+
+                let passengers = ppl.length + "/" + data.val().maxPassengers;
+                let id = data.val().driverID;
+                let driver = '';
+
+                for (let i = 0; i < userDetails.length; i++) {
+                  let key = [];
+                  key = userDetails[i].split(':');
+                  if (key[0] === id) {
+                    driver = key[1];
+                  }
+                }
+
+                 content += '<tr id=\'' + data.key + '\'>';
+                 content += '<td>' + area + '</td>'; //column1
+                 content += '<td>' + date + '</td>'; //column2
+                 content += '<td>' + time + '</td>';
+                 content += '<td>' + driver + '</td>';
+                 content += '<td>' + passengers + '</td>';
+                 content += '<td id=\'btnViewCreatedBooking' + rowCount + '\'></td>';
+                 content += '</tr>';
+
+                 rowCount++;
+              }
+            });
+
+           document.getElementById('tb_CreatedBookings').innerHTML += content;
+
+           for (let v = 0; v < rowCount; v++) {
+             let btn = document.createElement('input');
+             btn.setAttribute('type', 'button')
+             btn.setAttribute('value', 'View');
+             btn.onclick = self.viewBooking;
+             document.getElementById('btnViewCreatedBooking' + v).appendChild(btn);
+           }
+         }
+       });
+     }
+
     // display create booking information, binds area from db
     createBooking = () => {
       document.getElementById('div_availBookings').style.display = "none";
       document.getElementById('div_createBooking').style.display = "block";
       document.getElementById('div_myBookings').style.display = "none";
       document.getElementById('div_viewSelectedBooking').style.display = "none";
+      document.getElementById('div_viewCreatedBooking').style.display = "none";
 
       document.getElementById('driverID').innerHTML = user[9];
 
@@ -416,6 +502,8 @@ class Booking extends React.Component {
         document.getElementById('div_availBookings').style.display = "block";
         document.getElementById('div_createBooking').style.display = "none";
         document.getElementById('div_myBookings').style.display = "none";
+        document.getElementById('div_viewSelectedBooking').style.display = "none";
+        document.getElementById('div_viewCreatedBooking').style.display = "none";
       }
     }
 
@@ -430,6 +518,7 @@ class Booking extends React.Component {
             <button id='btnViewAllBookings' onClick={ this.viewAllBookings }>Join A Ride</button>
             <button id='btnViewMyBookings' onClick={ this.viewMyBookings }>View My Rides</button>
             <button id='btnCreateBooking' onClick={ this.createBooking }>Create A Ride</button>
+            <button id='btnViewCreatedBooking' onClick={ this.viewCreatedBooking }>View My Created Rides</button>
             <br />
             <br />
           </div>
@@ -446,6 +535,21 @@ class Booking extends React.Component {
                 </tr>
               </thead>
               <tbody id="tb_myBookings"></tbody>
+            </table>
+          </div>
+
+          <div id='div_viewCreatedBooking' style={{display: 'none'}}>
+            <table id="tbl_CreatedBookings">
+              <thead>
+                <tr>
+                  <th>Area</th>
+                  <th>Date</th>
+                  <th>Time</th>
+                  <th>Driver</th>
+                  <th>No. of Passengers</th>
+                </tr>
+              </thead>
+              <tbody id="tb_CreatedBookings"></tbody>
             </table>
           </div>
 
