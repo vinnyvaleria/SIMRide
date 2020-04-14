@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BOOKING: Cancel created booking [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**USERS: Dashboard [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 BOOKING: Filter - by area/time | BACKEND: Synced database to Firebase 
 -- | USERS: Logging into SIMRide 
@@ -79,7 +79,7 @@ USERS: Report user | USERS: Edit Profile
 USERS: Weekly pickup scheduler (not important) | USERS: View Profile 
 USERS: Rate the driver and rider (not important) | CHAT: Live chat, store chat, select user to chat with 
 USERS: Transaction/booking history | USERS: View other profiles 
-USERS: Dashboard | USERS: Update password
+-- | USERS: Update password
 ADMIN: Audit/log (not important) | CHAT: Stored chat history 
 ADMIN: Ban user (blacklist user) | CHAT: Retrieving chats
 MAPS: Automatic route planning (fastest) | BOOKING: Create a Booking
@@ -94,3 +94,4 @@ API: Stripe API | USERS: Apply to be driver: add driver details
 -- | PERMISSIONS: Split users into roles, and define what each role can see
 -- | USERS: Forgot password reset email
 -- | ADMIN: review driver application
+-- | BOOKING: Cancel created booking
