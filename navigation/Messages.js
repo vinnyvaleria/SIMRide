@@ -359,6 +359,12 @@ class Messages extends React.Component {
             <br />
             <br />
             <button onClick={this.report}>Report User</button>
+            <select id="ddReportReason" style={{width: '13em'}} required style={{display:'none'}}>
+              <option value="fake">I believe this is a fake profile</option>
+              <option value="safety">User has threatened my physical safety</option>
+              <option value="inappropriate">User has been behaving inappropriately towards me</option>
+              <option value="vulgar">User was uncivil, rude and/or vulgar</option>
+            </select>
             <button onClick={ this.back }>Back</button>
           </div>
           <br />
