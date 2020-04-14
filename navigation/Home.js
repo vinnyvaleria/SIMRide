@@ -30,7 +30,7 @@ class Home extends React.Component {
       }
       else{
         if (user[6].toLowerCase() === "no") {
-          document.getElementById("div_driverApplication").style.display = "none";
+          document.getElementById("adminDb").style.display = "none";
         }
         else {
           this.viewApplication();
@@ -38,6 +38,7 @@ class Home extends React.Component {
       }
     }
 
+    // view list of applicants
     viewApplication() {
       const self = this;
       document.getElementById('tb_driverApplication').innerHTML = '';
@@ -76,11 +77,14 @@ class Home extends React.Component {
       });
     }
 
+    // view applicant that applied to be driver
     viewApplicant = e => {
       var driverID = e.target.parentElement.parentElement.id;
       document.getElementById('div_ViewApplicant').style.display = "block";
+      document.getElementById('div_ViewReportedUser').style.display = "none";
       document.getElementById('div_driverApplication').style.display = "none";
-
+      document.getElementById('div_ReportedUsers').style.display = "none";
+      
       const database = firebase.database().ref('driverDetails').orderByChild('dateApplied');
       database.once('value', function (snapshot) {
         if (snapshot.exists()) {
@@ -123,6 +127,7 @@ class Home extends React.Component {
           });
     }
 
+    // approve applicants
     approveApplicant = () => {
       const driverID = document.getElementById('td_ViewApplicant_driverID').innerHTML;
       const accountsRef = firebase.database().ref('accounts/' + driverID);
@@ -149,6 +154,129 @@ class Home extends React.Component {
         document.getElementById('div_driverApplication').style.display = "block";
     }
 
+    // view reported users
+    viewReportedUsers() {
+      const self = this;
+      document.getElementById('tb_ReportedUsers').innerHTML = '';
+
+      const database = firebase.database().ref('reportedUsers').orderByChild('lastReportDate');
+      database.once('value', function (snapshot) {
+        if (snapshot.exists()) {
+          let content = '';
+          let rowCount = 0;
+          snapshot.forEach(function (data) {
+            let username = data.val().username;
+            let lastDate = data.val().lastReportDate;
+            let status = data.val().status;
+            console.log(driverUname, dateApplied);
+            content += '<tr id=\'' + data.key + '\'>';
+            content += '<td>' + username + '</td>'; //column1
+            content += '<td>' + lastDate + '</td>'; //column2
+            content += '<td>' + status + '</td>';
+            content += '<td id=\'btnViewApplicant' + rowCount + '\'></td>';
+            content += '</tr>';
+
+            rowCount++;
+            console.log(rowCount, content);
+          });
+
+          document.getElementById('tb_driverApplication').innerHTML += content;
+
+          for (let v = 0; v < rowCount; v++) {
+            let btn = document.createElement('input');
+            btn.setAttribute('type', 'button')
+            btn.setAttribute('value', 'View');
+            btn.onclick = self.viewReportedUser;
+            document.getElementById('btnViewReportedUser' + v).appendChild(btn);
+          }
+        }
+      });
+    }
+
+    // view the reported user
+    viewReportedUser = e => {
+      var userID = e.target.parentElement.parentElement.id;
+      document.getElementById('div_ViewApplicant').style.display = "none";
+      document.getElementById('div_ViewReportedUser').style.display = "block";
+      document.getElementById('div_driverApplication').style.display = "none";
+      document.getElementById('div_ReportedUsers').style.display = "none";
+
+      const database = firebase.database().ref('reportedUsers').orderByChild('lastReportDate');
+      database.once('value', function (snapshot) {
+        if (snapshot.exists()) {
+          snapshot.forEach(function (data) {
+            if (data.key === userID) {
+              let username = data.val().username;
+              let lastReportDate = data.val().lastReportDate;
+              let status = data.val().status;
+              let fake = data.val().fake;
+              let safety = data.val().safety;
+              let inappropriate = data.val().inappropriate;
+              let vulgar = data.val().vulgar;
+              console.log(username, lastReportDate);
+              
+              document.getElementById('td_ViewReportedUser_userID').innerHTML = data.key;
+              document.getElementById('td_ViewReportedUser_username').innerHTML = username;
+              document.getElementById('td_ViewReportedUser_status').innerHTML = status;
+              document.getElementById('td_ViewReportedUser_lastreport').innerHTML = lastReportDate;
+              document.getElementById('td_ViewReportedUser_fakeprofile').innerHTML = fake;
+              document.getElementById('td_ViewReportedUser_safety').innerHTML = safety;
+              document.getElementById('td_ViewReportedUser_inappropriate').innerHTML = inappropriate;
+              document.getElementById('td_ViewReportedUser_vulgar').innerHTML = vulgar;
+
+              if (status === "banned") {
+                document.getElementById('btnUnBanUser').style.display = "block";
+                document.getElementById('btnBanUser').style.display = "none"
+              }
+              else {
+                document.getElementById('btnUnBanUser').style.display = "none";
+                document.getElementById('btnBanUser').style.display = "block"
+              }
+            }
+          });
+        }
+      });
+    }
+
+    banUser() {
+      const userID = document.getElementById('td_ViewReportedUser_userID').innerHTML;
+      const accountsRef = firebase.database().ref('accounts/' + userID);
+      accountsRef.once('value')
+        .then(function (snapshot) {
+          snapshot.ref.update({
+            isBanned: "yes"
+          })
+        });
+
+      const reportedRef = firebase.database().ref('reportedUsers/' + userID);
+      reportedRef.once('value')
+        .then(function (snapshot) {
+          snapshot.ref.update({
+            status: "banned"
+          })
+        });
+    }
+
+    unBanUser() {
+      const userID = document.getElementById('td_ViewReportedUser_userID').innerHTML;
+      const accountsRef = firebase.database().ref('accounts/' + userID);
+      accountsRef.once('value')
+        .then(function (snapshot) {
+          snapshot.ref.update({
+            isBanned: "no"
+          })
+        });
+
+      const reportedRef = firebase.database().ref('reportedUsers/' + userID);
+      reportedRef.once('value')
+        .then(function (snapshot) {
+          snapshot.ref.update({
+            status: "not banned"
+          })
+        });
+    }
+
+    // back button
     back() {
       document.getElementById('div_ViewApplicant').style.display = "none";
       document.getElementById('div_driverApplication').style.display = "block";
@@ -161,57 +289,117 @@ class Home extends React.Component {
           <div>
             <h1>{"Welcome Home, " + user[0]}</h1>
           </div>
+          <div id="adminDb">
+            <div id="div_driverApplication">
+              <table>
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>Date Applied</th>
+                  </tr>
+                </thead>
+                <tbody id="tb_driverApplication">
+                </tbody>
+              </table>
+            </div>
 
-          <div id="div_driverApplication">
-            <table>
-              <thead>
-                <tr>
-                  <th>Username</th>
-                  <th>Date Applied</th>
-                </tr>
-              </thead>
-              <tbody id="tb_driverApplication">
-              </tbody>
-            </table>
-          </div>
+            <div id='div_ReportedUsers'>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Username</th>
+                    <th>Latest Reported Date</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody id="tb_ReportedUsers">
+                </tbody>
+              </table>
+            </div>
 
-          <div id='div_ViewApplicant' style={{display: 'none'}}>
-            <table id="tbl_ViewApplicant">
-              <tbody>
-                <tr id='uploadedFront'>
-                  <td>
-                    {this.state.frontURL && <img src={this.state.frontURL} height='150' width='200' />}
-                  </td>
-                  <td>
-                    {this.state.backURL && <img src={this.state.backURL} height='150' width='200' />}
-                  </td>
-                </tr>
-                <tr>
-                  <td>Driver ID:</td>
-                  <td id='td_ViewApplicant_driverID'></td>
-                </tr>
-                <tr>
-                  <td>Username:</td>
-                  <td id='td_ViewApplicant_username'></td>
-                </tr>
-                <tr>
-                  <td>Date Applied:</td>
-                  <td id='td_ViewApplicant_dateApplied'></td>
-                </tr>
-                <tr>
-                  <td>License no:</td>
-                  <td id='td_ViewApplicant_license'></td>
-                </tr>
-                <tr>
-                  <td>License Issued:</td>
-                  <td id='td_ViewApplicant_issuedDate'></td>
-                </tr>
-              </tbody>
-            </table>
-            <br />
-            <button onClick={ this.approveApplicant }>Approve Applicant</button>
-            <button onClick={ this.back }>Back</button>
+            <div id='div_ViewApplicant' style={{display: 'none'}}>
+              <table id="tbl_ViewApplicant">
+                <tbody>
+                  <tr id='uploadedFront'>
+                    <td>
+                      {this.state.frontURL && <img src={this.state.frontURL} height='150' width='200' />}
+                    </td>
+                    <td>
+                      {this.state.backURL && <img src={this.state.backURL} height='150' width='200' />}
+                    </td>
+                  </tr>
+                  <tr>
+                    <td>Driver ID:</td>
+                    <td id='td_ViewApplicant_driverID'></td>
+                  </tr>
+                  <tr>
+                    <td>Username:</td>
+                    <td id='td_ViewApplicant_username'></td>
+                  </tr>
+                  <tr>
+                    <td>Date Applied:</td>
+                    <td id='td_ViewApplicant_dateApplied'></td>
+                  </tr>
+                  <tr>
+                    <td>License no:</td>
+                    <td id='td_ViewApplicant_license'></td>
+                  </tr>
+                  <tr>
+                    <td>License Issued:</td>
+                    <td id='td_ViewApplicant_issuedDate'></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+              <button onClick={ this.approveApplicant }>Approve Applicant</button>
+              <button onClick={ this.back }>Back</button>
+            </div>
+
+            <div id='div_ViewReportedUser' style={{display: 'none'}}>
+              <table id="tbl_ViewReportedUser">
+                <tbody>
+                  <tr>
+                    <td>User ID:</td>
+                    <td id='td_ViewReportedUser_userID'></td>
+                  </tr>
+                  <tr>
+                    <td>Username:</td>
+                    <td id='td_ViewReportedUser_username'></td>
+                  </tr>
+                  <tr>
+                    <td>Status:</td>
+                    <td id='td_ViewReportedUser_status'></td>
+                  </tr>
+                  <tr>
+                    <td>Last Reported Date:</td>
+                    <td id='td_ViewReportedUser_lastreport'></td>
+                  </tr>
+                  <tr>
+                    <td>Fake Profile:</td>
+                    <td id='td_ViewReportedUser_fakeprofile'></td>
+                  </tr>
+                  <tr>
+                    <td>Threatened Safety:</td>
+                    <td id='td_ViewReportedUser_safety'></td>
+                  </tr>
+                  <tr>
+                    <td>Inappropriate Behaviour:</td>
+                    <td id='td_ViewReportedUser_inappropriate'></td>
+                  </tr>
+                  <tr>
+                    <td>Uncivil, Rude or Vulgar:</td>
+                    <td id='td_ViewReportedUser_vulgar'></td>
+                  </tr>
+                </tbody>
+              </table>
+              <br />
+              <button id="btnBanUser" onClick={ this.banUser }>Ban User</button>
+              <button id="btnUnBanUser" onClick={ this.unBanUser }>Un-Ban User</button>
+              <button onClick={ this.back }>Back</button>
+            </div>
+            
           </div>
+          
         </div>
       </View>
       );

@@ -22,10 +22,10 @@ export default function Start() {
               <Link to="/Messages">Messages</Link>
             </li>
             <li>
-              <Link to="/Account">Account</Link>
-            </li>
-            <li id="Wallet">
               <Link to="/Wallet">Wallet</Link>
+            </li>
+            <li>
+              <Link to="/Account">Account</Link>
             </li>
           </ul>
         </nav>

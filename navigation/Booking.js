@@ -19,6 +19,7 @@ class Booking extends React.Component {
       this.viewCreatedBooking = this.viewCreatedBooking.bind(this);
       this.joinBooking = this.joinBooking.bind(this);
       this.cancelBooking = this.cancelBooking.bind(this);
+      this.deleteBooking = this.deleteBooking.bind(this);
       this.state = {
         description: '',
         currPassengers: ''
@@ -184,7 +185,7 @@ class Booking extends React.Component {
                 let key = [];
                 key = userDetails[i].split(':');
                 if (key[0] === id) {
-                  driver = key[1]; //gets username
+                  driver = key[1]; // gets username
                 }
               }
 
@@ -204,19 +205,30 @@ class Booking extends React.Component {
               } else {
                 document.getElementById('tr_viewSelectedBooking_currPassengers').style.visibility = "hidden";
               }
-              if (slotsleft === 0 && !ppl.includes(user[2])) {
+              if (slotsleft === 0 && !ppl.includes(user[2]) && id != user[9]) { // if full, havent joined booking and not owner of booking
                 document.getElementById('btnJoinBooking').style.display = "none";
                 document.getElementById('btnCancelBooking').style.display = "none";
-              } else if (ppl.includes(user[2])) {
+                document.getElementById('btnDeleteBooking').style.display = "none";
+              } 
+              else if (slotsleft > 0 && ppl.includes(user[2]) && id != user[9]) { // if not full, already joined booking and not owner of booking
                 document.getElementById('btnJoinBooking').style.display = "none";
                 document.getElementById('btnCancelBooking').style.display = "inline-block";
-              } else {
-                document.getElementById('btnJoinBooking').style.display = "inline-block";
-                document.getElementById('btnCancelBooking').style.display = "none";
-              }
-              if (user[6].toLowerCase() === "yes") {
+                document.getElementById('btnDeleteBooking').style.display = "none";
+              } 
+              else if (id === user[9]) { // owner of booking
                 document.getElementById('btnJoinBooking').style.display = "none";
                 document.getElementById('btnCancelBooking').style.display = "none";
+                document.getElementById('btnDeleteBooking').style.display = "inline-block";
+              } 
+              else { // for riders
+                document.getElementById('btnJoinBooking').style.display = "inline-block";
+                document.getElementById('btnCancelBooking').style.display = "none";
+                document.getElementById('btnDeleteBooking').style.display = "none";
+              }
+              if (user[6].toLowerCase() === "yes") { // admin
+                document.getElementById('btnJoinBooking').style.display = "none";
+                document.getElementById('btnCancelBooking').style.display = "none";
+                document.getElementById('btnDeleteBooking').style.display = "none";
               }
             }
           });
@@ -282,6 +294,16 @@ class Booking extends React.Component {
       currPassengers = '';
       this.viewMyBookings();
     }
+
+     // delete booking
+     deleteBooking = () => {
+       const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
+
+       const accountsRef = firebase.database().ref('bookings/' + bookingID);
+       accountsRef.remove();
+
+       this.viewMyBookings();
+     }
 
     // view my bookings
     viewMyBookings = () => {
@@ -623,6 +645,7 @@ class Booking extends React.Component {
             <br />
             <button id='btnJoinBooking' onClick={ this.joinBooking }>Join Booking</button>
             <button id='btnCancelBooking' onClick={ this.cancelBooking }>Cancel Booking</button>
+            <button id='btnDeleteBooking' onClick={ this.deleteBooking }>Delete Booking</button>
           </div>
 
           <div id='div_createBooking' style={{display: 'none'}}>

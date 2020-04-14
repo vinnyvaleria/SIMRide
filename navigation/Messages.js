@@ -9,6 +9,7 @@ var allchats = [];
 var chats = [];
 var chatName;
 var clickedUser;
+var clickedUserID;
 
 class Messages extends React.Component {
     constructor(props) {
@@ -177,6 +178,7 @@ class Messages extends React.Component {
             lblotherEmail.innerHTML = child.val().email;
             lblotherDriver.innerHTML = child.val().isDriver;
             lblotherAdmin.innerHTML = child.val().isAdmin;
+            clickedUserID = child.key;
             console.log(child.val().fname, child.val().email);
           });
         })
@@ -231,6 +233,41 @@ class Messages extends React.Component {
       });
     }
 
+    report() {
+      const reportRef = firebase.database().ref('reportedUsers').child(clickedUserID);
+
+      reportRef.once('value', function (snapshot) {
+        if (snapshot.exists()) {
+          reportRef.set({
+            status: "not banned",
+            lastReportDate: firebase.database.ServerValue.TIMESTAMP,
+            username: clickedUser,
+            fake: snapshot.val().fake += 1,
+            vulgar: snapshot.val().vulgar += 1,
+            safety: snapshot.val().safety += 1,
+            inappropriate: snapshot.val().inappropriate += 1
+          });
+        }
+        else {
+          reportRef.set({
+            status: "not banned",
+            lastReportDate: firebase.database.ServerValue.TIMESTAMP,
+            username: clickedUser,
+            fake: 1,
+            vulgar: 1,
+            safety: 1,
+            inappropriate: 1
+          });
+        }
+      });
+    }
+
+    // back button
+    back() {
+      document.getElementById('otherAcctPage').style.display = "none";
+      document.getElementById('msgsPage').style.display = "block";
+    }
+
   render() { 
     return (
       <View>
@@ -244,7 +281,7 @@ class Messages extends React.Component {
             </div>
             <div id='msgOption'>
               <button id='inboxMsgButton' title="Inbox" onClick={ this.inboxMsgButton }>Inbox</button>
-              <button id='newMsgButton' title="newMessage" onClick={ this.newMsgButton }>New Message</button>
+              <button id='newMsgButton' title="newMessage" onClick={ this.newMsgButton }>Search User</button>
             </div>
             <br />
             <div id='inbox' style={{display: 'none'}}>
@@ -321,7 +358,8 @@ class Messages extends React.Component {
             </table>
             <br />
             <br />
-            <button onClick={this.logout}>Logout</button>
+            <button onClick={this.report}>Report User</button>
+            <button onClick={ this.back }>Back</button>
           </div>
           <br />
         </div>
