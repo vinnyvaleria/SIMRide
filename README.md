@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**USERS: Dashboard and ADMIN: Ban user (blacklist user) [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**USERS: Dashboard [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 BOOKING: Filter - by area/time | BACKEND: Synced database to Firebase 
 -- | USERS: Logging into SIMRide 
@@ -75,7 +75,7 @@ WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
 WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
-USERS: Report user | USERS: Edit Profile 
+-- | USERS: Edit Profile 
 USERS: Weekly pickup scheduler (not important) | USERS: View Profile 
 USERS: Rate the driver and rider (not important) | CHAT: Live chat, store chat, select user to chat with 
 USERS: Transaction/booking history | USERS: View other profiles 
@@ -95,3 +95,5 @@ API: Stripe API | USERS: Apply to be driver: add driver details
 -- | USERS: Forgot password reset email
 -- | ADMIN: review driver application
 -- | BOOKING: Cancel created booking
+-- | ADMIN: Ban user (blacklist user)
+-- | USERS: Report user
