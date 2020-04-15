@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-** [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BOOKING: Choose to pay by cash or wallet [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 BOOKING: Filter - by area/time | BACKEND: Synced database to Firebase 
 -- | USERS: Logging into SIMRide 
