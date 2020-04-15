@@ -190,6 +190,8 @@ class Account extends React.Component {
 
     // logout
     logout() {
+      console.log("signout " + user);
+
       user[0] = '';
       user[1] = '';
       user[2] = '';
@@ -201,7 +203,7 @@ class Account extends React.Component {
       user[8] = '';
       user[9] = '';
 
-      console.log(user.email);
+      console.log("signin " + user);
       firebase.auth().signOut();
     }
 

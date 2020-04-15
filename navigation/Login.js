@@ -4,7 +4,7 @@ import logo from '../assets/logo.png';
 import firebase from '../base';
 import { validate } from 'email-validator';
 
-var user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
+let user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
 var countArr = new Array(1); //account
 var unameArr = [];
 var emailArr = [];
@@ -68,6 +68,7 @@ class Login extends React.Component {
 
     // get all information from this account and stores into user
     checkEmail = e => {
+      user = [];
       user[3] = document.getElementById("signinemail").value;
       user[3] = user[3].toString().toLowerCase();
 
@@ -86,7 +87,6 @@ class Login extends React.Component {
             user[7] = child.val().isBanned;
             user[8] = child.val().wallet;
             user[9] = child.key;
-            console.log(child.val().fname, child.val().email, user[9]);
           });
         })
     }
@@ -176,7 +176,7 @@ class Login extends React.Component {
                 isBanned: "no",
                 wallet: "0.00"
               }
-
+              user = [];
               // after signup, stores user data into user
               user[0] = account.fname;
               user[1] = account.lname;

@@ -5,6 +5,7 @@ import 'firebase/firestore';
 import {user} from './Login';
 
 var userDetails = [];
+var payMethod;
 
 class Booking extends React.Component {
     constructor(props) {
@@ -19,9 +20,11 @@ class Booking extends React.Component {
       this.viewCreatedBooking = this.viewCreatedBooking.bind(this);
       this.joinBooking = this.joinBooking.bind(this);
       this.cancelBooking = this.cancelBooking.bind(this);
+      this.deleteBooking = this.deleteBooking.bind(this);
       this.state = {
         description: '',
-        currPassengers: ''
+        currPassengers: '',
+        payMethod: ''
       }
     }
 
@@ -47,7 +50,7 @@ class Booking extends React.Component {
           document.getElementById('btnCreateBooking').style.display = "none";
           document.getElementById('btnViewCreatedBooking').style.display = "none";
         }
-        
+
         this.viewAllBookings();
       }
     }
@@ -101,7 +104,7 @@ class Booking extends React.Component {
                 driver = key[1];
               }
             }
-            
+
             content += '<tr id=\'' + data.key + '\'>';
             content += '<td>' + area + '</td>'; //column1
             content += '<td>' + date + '</td>'; //column2
@@ -170,6 +173,7 @@ class Booking extends React.Component {
               let date = data.val().date;
               let time = data.val().time;
               let meeting = data.val().description;
+              payMethod = data.val().payMethod;
               let ppl = [];
 
               if (data.val().currPassengers != "") {
@@ -184,11 +188,11 @@ class Booking extends React.Component {
                 let key = [];
                 key = userDetails[i].split(':');
                 if (key[0] === id) {
-                  driver = key[1]; //gets username
+                  driver = key[1]; // gets username
                 }
               }
 
-              console.log(driver, area, date, time, meeting, slotsleft);
+              console.log(user[6].toLowerCase() === "yes", id, user[9], id === user[9], ppl.includes(user[2]), slotsleft > 0)
               document.getElementById('td_viewSelectedBooking_bookingID').innerHTML = bookingID;
               document.getElementById('td_viewSelectedBooking_driverName').innerHTML = driver;
               document.getElementById('td_viewSelectedBooking_date').innerHTML = date;
@@ -197,26 +201,43 @@ class Booking extends React.Component {
               document.getElementById('td_viewSelectedBooking_meeting').innerHTML = meeting;
               document.getElementById('td_viewSelectedBooking_slotsLeft').innerHTML = slotsleft;
 
-              // checks if user already in booking or if booking is full
+              if (user[6].toLowerCase() === "yes") { // admin
+                document.getElementById('btnJoinBooking').style.display = "none";
+                document.getElementById('btnCancelBooking').style.display = "none";
+                document.getElementById('btnDeleteBooking').style.display = "none";
+              }
+              else {
+                if (driver === user[2]) { // owner of booking and not admin
+                  document.getElementById('btnJoinBooking').style.display = "none";
+                  document.getElementById('btnCancelBooking').style.display = "none";
+                  document.getElementById('btnDeleteBooking').style.display = "inline-block";
+                }
+                else {
+                  if (ppl.includes(user[2])) { // if already joined booking, not owner of booking and not admin
+                    document.getElementById('btnJoinBooking').style.display = "none";
+                    document.getElementById('btnCancelBooking').style.display = "inline-block";
+                    document.getElementById('btnDeleteBooking').style.display = "none";
+                  }
+                  else {
+                    if (slotsleft > 0) { // if not full, not joined booking, not owner of booking and not admin
+                      document.getElementById('btnJoinBooking').style.display = "inline-block";
+                      document.getElementById('btnCancelBooking').style.display = "none";
+                      document.getElementById('btnDeleteBooking').style.display = "none";
+                    }
+                    else { // if full, not joined booking, not owner of booking and not admin
+                      document.getElementById('btnJoinBooking').style.display = "none";
+                      document.getElementById('btnCancelBooking').style.display = "none";
+                      document.getElementById('btnDeleteBooking').style.display = "none";
+                    }
+                  }
+                }
+              }
+
               if (ppl.length > 0) {
                 document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML = data.val().currPassengers;
                 document.getElementById('tr_viewSelectedBooking_currPassengers').style.visibility = "visible";
               } else {
                 document.getElementById('tr_viewSelectedBooking_currPassengers').style.visibility = "hidden";
-              }
-              if (slotsleft === 0 && !ppl.includes(user[2])) {
-                document.getElementById('btnJoinBooking').style.display = "none";
-                document.getElementById('btnCancelBooking').style.display = "none";
-              } else if (ppl.includes(user[2])) {
-                document.getElementById('btnJoinBooking').style.display = "none";
-                document.getElementById('btnCancelBooking').style.display = "inline-block";
-              } else {
-                document.getElementById('btnJoinBooking').style.display = "inline-block";
-                document.getElementById('btnCancelBooking').style.display = "none";
-              }
-              if (user[6].toLowerCase() === "yes") {
-                document.getElementById('btnJoinBooking').style.display = "none";
-                document.getElementById('btnCancelBooking').style.display = "none";
               }
             }
           });
@@ -224,11 +245,25 @@ class Booking extends React.Component {
       });
     }
 
+    extendJoinBooking() {
+      document.getElementById('btnSubmitJoinBooking').style.display = "inline-block";
+      document.getElementById('ddPayBy').style.display = "inline-block";
+      document.getElementById('btnJoinBooking').style.display = "none";
+    }
+
     // join booking
     joinBooking = () => {
       const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
       let currPassengers = document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML;
       console.log(currPassengers);
+
+      console.log(payMethod);
+
+      if (payMethod === ""){
+        payMethod += document.getElementById('ddPayBy').value;
+      } else{
+        payMethod += (", " + document.getElementById('ddPayBy').value);
+      }
 
       if (currPassengers === "") {
         currPassengers += user[2];
@@ -238,15 +273,20 @@ class Booking extends React.Component {
 
       const accountsRef = firebase.database().ref('bookings/' + bookingID);
       const bookingDetails = {
-        currPassengers: currPassengers
+        currPassengers: currPassengers,
+        payMethod: payMethod
       }
 
       accountsRef.update(bookingDetails);
       this.state = {
-        currPassengers: ''
+        currPassengers: '',
+        payMethod: ''
       };
 
       currPassengers = '';
+      payMethod = '';
+      document.getElementById('btnSubmitJoinBooking').style.display = "none";
+      document.getElementById('ddPayBy').style.display = "none";
       this.viewMyBookings();
     }
 
@@ -254,32 +294,71 @@ class Booking extends React.Component {
     cancelBooking = () => {
       const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
       let currPassengers = document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML;
-      console.log(currPassengers);
       let passengers = [];
-      passengers = currPassengers.split(", ");
+      passengers = currPassengers.split(', ');
+      let payby = [];
+      payby = payMethod.split(', ');
       let pos = passengers.indexOf(user[2]);
+      let payToPush = '';
+      let passengerToPush = '';
 
-      console.log(pos, passengers.length, passengers);
+      console.log(pos, payby, payby[pos]);
 
       if (pos === 0 && passengers.length === 1) {
         currPassengers = '';
-      } else if (pos === 0 && passengers.length > 1) {
-        currPassengers.replace(user[2], '');
-      } else if (pos > 0 && passengers.length > 1) {
-        currPassengers.replace(", " + user[2], '');
+        payMethod = '';
+      } 
+      else {
+        passengers[pos] = '';
+        let temppassengers = [];
+        passengers.forEach(function(p) {
+          if (p != '') {
+            temppassengers.push(p);
+          }
+        });
+
+        payby[pos] = '';
+        let temppay = [];
+        payby.forEach(function (p) {
+          if (p != '') {
+            temppay.push(p);
+          }
+        });
+
+        for (let p = 0; p < temppay.length; p++) {
+          if (temppay[p] != '') {
+            if (p != temppay.length - 1) {
+              payToPush += temppay[p] + ", ";
+              passengerToPush += temppassengers[p] + ", ";
+            } else {
+              payToPush += temppay[p];
+              passengerToPush += temppassengers[p];
+            }
+          }
+        }
       }
 
       const accountsRef = firebase.database().ref('bookings/' + bookingID);
       const bookingDetails = {
-        currPassengers: currPassengers
+        currPassengers: passengerToPush,
+        payMethod: payToPush
       }
 
       accountsRef.update(bookingDetails);
       this.state = {
-        currPassengers: ''
+        currPassengers: '',
+        payMethod: ''
       };
 
       currPassengers = '';
+      this.viewMyBookings();
+    }
+
+    // delete booking
+    deleteBooking = () => {
+      const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
+      const accountsRef = firebase.database().ref('bookings/' + bookingID);
+      accountsRef.remove();
       this.viewMyBookings();
     }
 
@@ -362,83 +441,83 @@ class Booking extends React.Component {
       });
     }
 
-     // view created bookings by driver
-     viewCreatedBooking = () => {
-       const self = this;
-       document.getElementById('tb_CreatedBookings').innerHTML = '';
+    // view created bookings by driver
+    viewCreatedBooking = () => {
+      const self = this;
+      document.getElementById('tb_CreatedBookings').innerHTML = '';
 
-       document.getElementById('div_availBookings').style.display = "none";
-       document.getElementById('div_createBooking').style.display = "none";
-       document.getElementById('div_myBookings').style.display = "none";
-       document.getElementById('div_viewSelectedBooking').style.display = "none";
-       document.getElementById('div_viewCreatedBooking').style.display = "block";
+      document.getElementById('div_availBookings').style.display = "none";
+      document.getElementById('div_createBooking').style.display = "none";
+      document.getElementById('div_myBookings').style.display = "none";
+      document.getElementById('div_viewSelectedBooking').style.display = "none";
+      document.getElementById('div_viewCreatedBooking').style.display = "block";
 
 
-       // get all accounts
-       firebase.database().ref('accounts')
-         .orderByChild('email')
-         .once('value')
-         .then(function (snapshot) {
-           let i = 0;
-           snapshot.forEach(function (child) {
-             userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
-             i++;
-           })
-         });
+      // get all accounts
+      firebase.database().ref('accounts')
+        .orderByChild('email')
+        .once('value')
+        .then(function (snapshot) {
+          let i = 0;
+          snapshot.forEach(function (child) {
+            userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+            i++;
+          })
+        });
 
-       const database = firebase.database().ref('bookings').orderByChild('date');
-       database.once('value', function (snapshot) {
-         if (snapshot.exists()) {
-           let content = '';
-           let rowCount = 0;
-           snapshot.forEach(function (data) {
-             if (data.val().driverID === user[9]) {
-                let area = data.val().area;
-                let date = data.val().date;
-                let time = data.val().time;
-                let ppl = [];
-                
-                if (data.val().currPassengers != "") {
-                  ppl = data.val().currPassengers.split(',')
-                }
+      const database = firebase.database().ref('bookings').orderByChild('date');
+      database.once('value', function (snapshot) {
+        if (snapshot.exists()) {
+          let content = '';
+          let rowCount = 0;
+          snapshot.forEach(function (data) {
+            if (data.val().driverID === user[9]) {
+              let area = data.val().area;
+              let date = data.val().date;
+              let time = data.val().time;
+              let ppl = [];
 
-                let passengers = ppl.length + "/" + data.val().maxPassengers;
-                let id = data.val().driverID;
-                let driver = '';
-
-                for (let i = 0; i < userDetails.length; i++) {
-                  let key = [];
-                  key = userDetails[i].split(':');
-                  if (key[0] === id) {
-                    driver = key[1];
-                  }
-                }
-
-                 content += '<tr id=\'' + data.key + '\'>';
-                 content += '<td>' + area + '</td>'; //column1
-                 content += '<td>' + date + '</td>'; //column2
-                 content += '<td>' + time + '</td>';
-                 content += '<td>' + driver + '</td>';
-                 content += '<td>' + passengers + '</td>';
-                 content += '<td id=\'btnViewCreatedBooking' + rowCount + '\'></td>';
-                 content += '</tr>';
-
-                 rowCount++;
+              if (data.val().currPassengers != "") {
+                ppl = data.val().currPassengers.split(',')
               }
-            });
 
-           document.getElementById('tb_CreatedBookings').innerHTML += content;
+              let passengers = ppl.length + "/" + data.val().maxPassengers;
+              let id = data.val().driverID;
+              let driver = '';
 
-           for (let v = 0; v < rowCount; v++) {
-             let btn = document.createElement('input');
-             btn.setAttribute('type', 'button')
-             btn.setAttribute('value', 'View');
-             btn.onclick = self.viewBooking;
-             document.getElementById('btnViewCreatedBooking' + v).appendChild(btn);
-           }
-         }
-       });
-     }
+              for (let i = 0; i < userDetails.length; i++) {
+                let key = [];
+                key = userDetails[i].split(':');
+                if (key[0] === id) {
+                  driver = key[1];
+                }
+              }
+
+              content += '<tr id=\'' + data.key + '\'>';
+              content += '<td>' + area + '</td>'; //column1
+              content += '<td>' + date + '</td>'; //column2
+              content += '<td>' + time + '</td>';
+              content += '<td>' + driver + '</td>';
+              content += '<td>' + passengers + '</td>';
+              content += '<td id=\'btnViewCreatedBooking' + rowCount + '\'></td>';
+              content += '</tr>';
+
+              rowCount++;
+            }
+          });
+
+          document.getElementById('tb_CreatedBookings').innerHTML += content;
+
+          for (let v = 0; v < rowCount; v++) {
+            let btn = document.createElement('input');
+            btn.setAttribute('type', 'button')
+            btn.setAttribute('value', 'View');
+            btn.onclick = self.viewBooking;
+            document.getElementById('btnViewCreatedBooking' + v).appendChild(btn);
+          }
+        }
+      });
+    }
 
     // display create booking information, binds area from db
     createBooking = () => {
@@ -497,7 +576,8 @@ class Booking extends React.Component {
           area: document.getElementById('ddArea').value,
           description: this.state.description,
           maxPassengers: document.getElementById('ddPassengers').value,
-          currPassengers: ''
+          currPassengers: '',
+          payMethod: ''
         }
         // user[0] = account.fname;
         // user[9] = account.key;
@@ -621,8 +701,14 @@ class Booking extends React.Component {
               </tbody>
             </table>
             <br />
-            <button id='btnJoinBooking' onClick={ this.joinBooking }>Join Booking</button>
+            <button id='btnJoinBooking' onClick={ this.extendJoinBooking }>Join Booking</button>
+            <select id="ddPayBy" style={{display: 'none'}} required>
+              <option value="wallet">Pay by E-Wallet</option>
+              <option value="cash">Pay by cash</option>
+            </select>
+            <button id='btnSubmitJoinBooking' onClick={ this.joinBooking } style={{display: 'none'}}>Join Booking</button>
             <button id='btnCancelBooking' onClick={ this.cancelBooking }>Cancel Booking</button>
+            <button id='btnDeleteBooking' onClick={ this.deleteBooking }>Delete Booking</button>
           </div>
 
           <div id='div_createBooking' style={{display: 'none'}}>
