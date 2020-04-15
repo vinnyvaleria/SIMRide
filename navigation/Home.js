@@ -10,6 +10,7 @@ class Home extends React.Component {
       super(props);
       this.handleChange = this.handleChange.bind(this);
       this.viewApplication = this.viewApplication.bind(this);
+      this.viewReportedUsers = this.viewReportedUsers.bind(this);
       this.approveApplicant = this.approveApplicant.bind(this);
       this.state = {
         frontURL: '',
@@ -34,6 +35,7 @@ class Home extends React.Component {
         }
         else {
           this.viewApplication();
+          this.viewReportedUsers()
         }
       }
     }
@@ -166,21 +168,21 @@ class Home extends React.Component {
           let rowCount = 0;
           snapshot.forEach(function (data) {
             let username = data.val().username;
-            let lastDate = data.val().lastReportDate;
+            let lastDate = new Date(data.val().lastReportDate * -1);
             let status = data.val().status;
-            console.log(driverUname, dateApplied);
+            console.log(username, lastDate);
             content += '<tr id=\'' + data.key + '\'>';
             content += '<td>' + username + '</td>'; //column1
-            content += '<td>' + lastDate + '</td>'; //column2
+            content += '<td>' + lastDate.getDate() + "-" + (lastDate.getMonth() + 1) + "-" + lastDate.getFullYear() + '</td>'; //column2
             content += '<td>' + status + '</td>';
-            content += '<td id=\'btnViewApplicant' + rowCount + '\'></td>';
+            content += '<td id=\'btnViewReportedUser' + rowCount + '\'></td>';
             content += '</tr>';
 
             rowCount++;
             console.log(rowCount, content);
           });
 
-          document.getElementById('tb_driverApplication').innerHTML += content;
+          document.getElementById('tb_ReportedUsers').innerHTML += content;
 
           for (let v = 0; v < rowCount; v++) {
             let btn = document.createElement('input');
@@ -207,7 +209,7 @@ class Home extends React.Component {
           snapshot.forEach(function (data) {
             if (data.key === userID) {
               let username = data.val().username;
-              let lastReportDate = data.val().lastReportDate;
+              let lastReportDate = new Date(data.val().lastReportDate * -1);
               let status = data.val().status;
               let fake = data.val().fake;
               let safety = data.val().safety;
@@ -218,19 +220,19 @@ class Home extends React.Component {
               document.getElementById('td_ViewReportedUser_userID').innerHTML = data.key;
               document.getElementById('td_ViewReportedUser_username').innerHTML = username;
               document.getElementById('td_ViewReportedUser_status').innerHTML = status;
-              document.getElementById('td_ViewReportedUser_lastreport').innerHTML = lastReportDate;
+              document.getElementById('td_ViewReportedUser_lastreport').innerHTML = lastReportDate.getDate() + "-" + (lastReportDate.getMonth() + 1) + "-" + lastReportDate.getFullYear();
               document.getElementById('td_ViewReportedUser_fakeprofile').innerHTML = fake;
               document.getElementById('td_ViewReportedUser_safety').innerHTML = safety;
               document.getElementById('td_ViewReportedUser_inappropriate').innerHTML = inappropriate;
               document.getElementById('td_ViewReportedUser_vulgar').innerHTML = vulgar;
 
               if (status === "banned") {
-                document.getElementById('btnUnBanUser').style.display = "block";
+                document.getElementById('btnUnBanUser').style.display = "inline-block";
                 document.getElementById('btnBanUser').style.display = "none"
               }
               else {
                 document.getElementById('btnUnBanUser').style.display = "none";
-                document.getElementById('btnBanUser').style.display = "block"
+                document.getElementById('btnBanUser').style.display = "inline-block"
               }
             }
           });
@@ -255,6 +257,13 @@ class Home extends React.Component {
             status: "banned"
           })
         });
+
+        alert("User has been banned");
+
+        document.getElementById('div_ViewApplicant').style.display = "none";
+        document.getElementById('div_ViewReportedUser').style.display = "none";
+        document.getElementById('div_driverApplication').style.display = "block";
+        document.getElementById('div_ReportedUsers').style.display = "block";
     }
 
     unBanUser() {
@@ -274,12 +283,21 @@ class Home extends React.Component {
             status: "not banned"
           })
         });
+
+        alert("User has been unbanned");
+
+        document.getElementById('div_ViewApplicant').style.display = "none";
+        document.getElementById('div_ViewReportedUser').style.display = "none";
+        document.getElementById('div_driverApplication').style.display = "block";
+        document.getElementById('div_ReportedUsers').style.display = "block";
     }
 
     // back button
     back() {
-      document.getElementById('div_ViewApplicant').style.display = "none";
-      document.getElementById('div_driverApplication').style.display = "block";
+       document.getElementById('div_ViewApplicant').style.display = "none";
+       document.getElementById('div_ViewReportedUser').style.display = "none";
+       document.getElementById('div_driverApplication').style.display = "block";
+       document.getElementById('div_ReportedUsers').style.display = "block";
     }
 
   render() {

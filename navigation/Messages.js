@@ -19,6 +19,7 @@ class Messages extends React.Component {
       this.searchUsername = this.searchUsername.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.openChat = this.openChat.bind(this);
+      this.back = this.back.bind(this);
       this.state = {
         firstName: '',
         lastName: '',
@@ -234,32 +235,136 @@ class Messages extends React.Component {
     }
 
     report() {
-      const reportRef = firebase.database().ref('reportedUsers').child(clickedUserID);
+      document.getElementById('btnShowReport').style.display = 'none';
+      document.getElementById('btnSubmitReport').style.display = 'inline-block';
+      document.getElementById('ddReportReason').style.display = 'block';
+    }
 
-      reportRef.once('value', function (snapshot) {
-        if (snapshot.exists()) {
-          reportRef.set({
-            status: "not banned",
-            lastReportDate: firebase.database.ServerValue.TIMESTAMP,
-            username: clickedUser,
-            fake: snapshot.val().fake += 1,
-            vulgar: snapshot.val().vulgar += 1,
-            safety: snapshot.val().safety += 1,
-            inappropriate: snapshot.val().inappropriate += 1
-          });
-        }
-        else {
-          reportRef.set({
-            status: "not banned",
-            lastReportDate: firebase.database.ServerValue.TIMESTAMP,
-            username: clickedUser,
-            fake: 1,
-            vulgar: 1,
-            safety: 1,
-            inappropriate: 1
-          });
-        }
-      });
+    submitReport() {
+      const date = new Date();
+      let m = date.getMonth() + 1;
+      let d = date.getDate();
+      let y = date.getFullYear();
+      const today = new Date(y, m, d);
+      
+      if (document.getElementById('ddReportReason').value === "fake"){
+        const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+        reportRef.once('value', function (snapshot) {
+          if (snapshot.exists()) {
+            reportRef.set({
+              status: "not banned",
+              lastReportDate: today * -1,
+              username: clickedUser,
+              fake: snapshot.val().fake += 1,
+              safety: snapshot.val().safety += 0,
+              vulgar: snapshot.val().vulgar += 0,
+              inappropriate: snapshot.val().inappropriate += 0
+              
+            });
+          } else {
+            const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+            reportRef.set({
+              username: clickedUser,
+              status: "not banned",
+              lastReportDate: today * -1,
+              fake: 1,
+              safety: 0,
+              vulgar: 0,
+              inappropriate: 0
+            });
+          }
+        });
+      }
+      else if (document.getElementById('ddReportReason').value === "safety") {
+        const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+        reportRef.once('value', function (snapshot) {
+          if (snapshot.exists()) {
+            reportRef.set({
+              status: "not banned",
+              lastReportDate: today * -1,
+              username: clickedUser,
+              fake: snapshot.val().fake += 0,
+              safety: snapshot.val().safety += 1,
+              vulgar: snapshot.val().vulgar += 0,
+              inappropriate: snapshot.val().inappropriate += 0
+            });
+          } 
+          
+          else {
+            const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+            reportRef.set({
+              username: clickedUser,
+              status: "not banned",
+              lastReportDate: today * -1,
+              fake: 0,
+              safety: 1,
+              vulgar: 0,
+              inappropriate: 0
+            });
+          }
+        });
+      }
+      else if (document.getElementById('ddReportReason').value === "vulgar") {
+        const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+        reportRef.once('value', function (snapshot) {
+          if (snapshot.exists()) {
+            reportRef.set({
+              status: "not banned",
+              lastReportDate: today * -1,
+              username: clickedUser,
+              fake: snapshot.val().fake += 0,
+              safety: snapshot.val().safety += 0,
+              vulgar: snapshot.val().vulgar += 1,
+              inappropriate: snapshot.val().inappropriate += 0
+            });
+          } 
+          
+          else {
+            reportRef.set({
+              username: clickedUser,
+              status: "not banned",
+              lastReportDate: today * -1,
+              fake: 0,
+              safety: 0,
+              vulgar: 1,
+              inappropriate: 0
+            });
+          }
+        });
+      }
+
+      else if (document.getElementById('ddReportReason').value === "inappropriate") {
+        const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+        reportRef.once('value', function (snapshot) {
+          if (snapshot.exists()) {
+            reportRef.set({
+              status: "not banned",
+              lastReportDate: today * -1,
+              username: clickedUser,
+              fake: snapshot.val().fake += 0,
+              safety: snapshot.val().safety += 0,
+              vulgar: snapshot.val().vulgar += 0,
+              inappropriate: snapshot.val().inappropriate += 1
+            });
+          } 
+          
+          else {
+            reportRef.set({
+              username: clickedUser,
+              status: "not banned",
+              lastReportDate: today * -1,
+              fake: 0,
+              safety: 0,
+              vulgar: 0,
+              inappropriate: 1
+            });
+          }
+        });
+      }
+
+      alert("Report has been sent");
+      document.getElementById('otherAcctPage').style.display = "none";
+      document.getElementById('msgsPage').style.display = "block";
     }
 
     // back button
@@ -358,13 +463,14 @@ class Messages extends React.Component {
             </table>
             <br />
             <br />
-            <button onClick={this.report}>Report User</button>
+            <button id='btnShowReport' onClick={this.report}>Report User</button>
             <select id="ddReportReason" style={{width: '13em'}} required style={{display:'none'}}>
               <option value="fake">I believe this is a fake profile</option>
               <option value="safety">User has threatened my physical safety</option>
               <option value="inappropriate">User has been behaving inappropriately towards me</option>
-              <option value="vulgar">User was uncivil, rude and/or vulgar</option>
+              <option value="vulgar ">User was uncivil, rude and/or vulgar</option>
             </select>
+            <button id='btnSubmitReport' onClick={this.submitReport} style={{display:'none'}}>Submit</button>
             <button onClick={ this.back }>Back</button>
           </div>
           <br />
