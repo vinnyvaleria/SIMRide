@@ -67,10 +67,10 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BOOKING: Choose to pay by cash or wallet [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**Find a datetime picker to allow datetime comparisons in database [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 BOOKING: Filter - by area/time | BACKEND: Synced database to Firebase 
-WALLET: Set up wallet for all users | USERS: Logging into SIMRide 
+-- | USERS: Logging into SIMRide 
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
@@ -98,3 +98,5 @@ API: Stripe API | USERS: Apply to be driver: add driver details
 -- | ADMIN: Ban user (blacklist user)
 -- | USERS: Report user
 -- | USERS: Dashboard (Maybe will add wallet balance)
+-- | BOOKING: Choose to pay by cash or wallet
+-- | WALLET: Set up wallet for all users
