@@ -70,12 +70,12 @@ In-Progress | Done
 **BOOKING: Choose to pay by cash or wallet [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 BOOKING: Filter - by area/time | BACKEND: Synced database to Firebase 
--- | USERS: Logging into SIMRide 
+WALLET: Set up wallet for all users | USERS: Logging into SIMRide 
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
 WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
--- | USERS: Edit Profile 
+WALLET: Check for wallet balance when booking ride | USERS: Edit Profile 
 USERS: Weekly pickup scheduler (not important) | USERS: View Profile 
 USERS: Rate the driver and rider (not important) | CHAT: Live chat, store chat, select user to chat with 
 USERS: Transaction/booking history | USERS: View other profiles 
