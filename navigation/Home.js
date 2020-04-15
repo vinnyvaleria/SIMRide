@@ -4,6 +4,8 @@ import firebase from '../base';
 import 'firebase/firestore';
 import {user} from './Login';
 
+var userDetails = [];
+
 class Home extends React.Component {
     constructor(props) {
 
@@ -12,6 +14,8 @@ class Home extends React.Component {
       this.viewApplication = this.viewApplication.bind(this);
       this.viewReportedUsers = this.viewReportedUsers.bind(this);
       this.approveApplicant = this.approveApplicant.bind(this);
+      this.viewCreatedBooking = this.viewCreatedBooking.bind(this);
+      this.viewMyBookings = this.viewMyBookings.bind(this);
       this.state = {
         frontURL: '',
         backURL: ''
@@ -30,12 +34,19 @@ class Home extends React.Component {
         firebase.auth().signOut();
       }
       else{
-        if (user[6].toLowerCase() === "no") {
-          document.getElementById("adminDb").style.display = "none";
-        }
-        else {
+        if (user[6].toLowerCase() === "yes") { // admin
+          document.getElementById("adminDB").style.display = "block";
           this.viewApplication();
-          this.viewReportedUsers()
+          this.viewReportedUsers();
+        }
+        else if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "yes") { // driver
+          document.getElementById("driverDB").style.display = "block";
+          this.viewCreatedBooking();
+          this.viewMyBookings('tb_DriverUpcomingRides');
+        }
+        else if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "no") { // normal users
+          document.getElementById("riderDB").style.display = "block";
+          this.viewMyBookings('tb_RiderUpcomingRides');
         }
       }
     }
@@ -173,7 +184,7 @@ class Home extends React.Component {
             console.log(username, lastDate);
             content += '<tr id=\'' + data.key + '\'>';
             content += '<td>' + username + '</td>'; //column1
-            content += '<td>' + lastDate.getDate() + "-" + (lastDate.getMonth() + 1) + "-" + lastDate.getFullYear() + '</td>'; //column2
+            content += '<td>' + lastDate.toDateString() + '</td>'; //column2
             content += '<td>' + status + '</td>';
             content += '<td id=\'btnViewReportedUser' + rowCount + '\'></td>';
             content += '</tr>';
@@ -220,7 +231,7 @@ class Home extends React.Component {
               document.getElementById('td_ViewReportedUser_userID').innerHTML = data.key;
               document.getElementById('td_ViewReportedUser_username').innerHTML = username;
               document.getElementById('td_ViewReportedUser_status').innerHTML = status;
-              document.getElementById('td_ViewReportedUser_lastreport').innerHTML = lastReportDate.getDate() + "-" + (lastReportDate.getMonth() + 1) + "-" + lastReportDate.getFullYear();
+              document.getElementById('td_ViewReportedUser_lastreport').innerHTML = lastReportDate.toDateString();
               document.getElementById('td_ViewReportedUser_fakeprofile').innerHTML = fake;
               document.getElementById('td_ViewReportedUser_safety').innerHTML = safety;
               document.getElementById('td_ViewReportedUser_inappropriate').innerHTML = inappropriate;
@@ -292,6 +303,127 @@ class Home extends React.Component {
         document.getElementById('div_ReportedUsers').style.display = "block";
     }
 
+    viewMyBookings = (tb) => {
+      document.getElementById(tb).innerHTML = '';
+
+      // get all accounts
+      firebase.database().ref('accounts')
+        .orderByChild('email')
+        .once('value')
+        .then(function (snapshot) {
+          let i = 0;
+          snapshot.forEach(function (child) {
+            userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+            i++;
+          })
+        });
+
+      let date = new Date();
+      date.setDate(date.getDate()-1);
+
+      const database = firebase.database().ref('bookings').orderByChild('date').limitToFirst(3).startAt(date.toISOString());
+      database.once('value', function (snapshot) {
+        if (snapshot.exists()) {
+          let content = '';
+          snapshot.forEach(function (data) {
+            if (data.val().currPassengers != "") {
+              if (data.val().currPassengers.includes(user[2])) {
+                let area = data.val().area;
+                let date = data.val().date;
+                let time = data.val().time;
+                let ppl = [];
+
+                if (data.val().currPassengers != "") {
+                  ppl = data.val().currPassengers.split(',')
+                }
+
+                let passengers = ppl.length + "/" + data.val().maxPassengers;
+                let id = data.val().driverID;
+                let driver = '';
+
+                for (let i = 0; i < userDetails.length; i++) {
+                  let key = [];
+                  key = userDetails[i].split(':');
+                  if (key[0] === id) {
+                    driver = key[1];
+                  }
+                }
+
+                content += '<tr id=\'' + data.key + '\'>';
+                content += '<td>' + area + '</td>'; //column1
+                content += '<td>' + date + '</td>'; //column2
+                content += '<td>' + time + '</td>';
+                content += '<td>' + driver + '</td>';
+                content += '<td>' + passengers + '</td>';
+                content += '</tr>';
+              }
+            }
+          });
+          document.getElementById(tb).innerHTML += content;
+        }
+      });
+    }
+
+    // view created bookings by driver
+    viewCreatedBooking = () => {
+      document.getElementById('tb_DriverUpcomingRides').innerHTML = '';
+
+      // get all accounts
+      firebase.database().ref('accounts')
+        .orderByChild('email')
+        .once('value')
+        .then(function (snapshot) {
+          let i = 0;
+          snapshot.forEach(function (child) {
+            userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+            i++;
+          })
+        });
+
+      let date = new Date();
+      date.setDate(date.getDate() - 1);
+
+      const database = firebase.database().ref('bookings').orderByChild('date').limitToFirst(3).equalTo(date.toISOString());
+      database.on('value', function (snapshot) {
+        if (snapshot.exists()) {
+          let content = '';
+          snapshot.forEach(function (data) {
+            if (data.val().driverID === user[9]) {
+              let area = data.val().area;
+              let date = data.val().date;
+              let time = data.val().time;
+              let ppl = [];
+
+              if (data.val().currPassengers != "") {
+                ppl = data.val().currPassengers.split(',')
+              }
+
+              let passengers = ppl.length + "/" + data.val().maxPassengers;
+              let id = data.val().driverID;
+              let driver = '';
+
+              for (let i = 0; i < userDetails.length; i++) {
+                let key = [];
+                key = userDetails[i].split(':');
+                if (key[0] === id) {
+                  driver = key[1];
+                }
+              }
+
+              content += '<tr id=\'' + data.key + '\'>';
+              content += '<td>' + area + '</td>'; //column1
+              content += '<td>' + date + '</td>'; //column2
+              content += '<td>' + time + '</td>';
+              content += '<td>' + driver + '</td>';
+              content += '<td>' + passengers + '</td>';
+              content += '</tr>';
+            }
+          });
+          document.getElementById('tb_DriverUpcomingRides').innerHTML += content;
+        }
+      });
+    }
+
     // back button
     back() {
        document.getElementById('div_ViewApplicant').style.display = "none";
@@ -307,8 +439,9 @@ class Home extends React.Component {
           <div>
             <h1>{"Welcome Home, " + user[0]}</h1>
           </div>
-          <div id="adminDb">
+          <div id="adminDB" style={{display: 'none'}}>
             <div id="div_driverApplication">
+              <h4>Driver Applicants List</h4>
               <table>
                 <thead>
                   <tr>
@@ -322,6 +455,7 @@ class Home extends React.Component {
             </div>
 
             <div id='div_ReportedUsers'>
+              <h4>Reported User List</h4>
               <table>
                 <thead>
                   <tr>
@@ -417,7 +551,55 @@ class Home extends React.Component {
             </div>
             
           </div>
-          
+          <div id="driverDB" style={{display: 'none'}}>
+            <div id='div_DriverUpcomingRides'>
+              <h4>Today's Rides</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Area</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Driver</th>
+                    <th>No. of Passengers</th>
+                  </tr>
+                </thead>
+                <tbody id="tb_DriverUpcomingRides"></tbody>
+              </table>
+            </div>
+            <div id='div_DriverUpcomingDrives'>
+              <h4>Upcoming Drives</h4>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Area</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Driver</th>
+                    <th>No. of Passengers</th>
+                  </tr>
+                </thead>
+                <tbody id="tb_DriverUpcomingDrives"></tbody>
+              </table>
+            </div>
+          </div>
+          <div id="riderDB" style={{display: 'none'}}>
+            <h4>Today's Rides</h4>
+            <div id='div_RiderUpcomingRides'>
+              <table>
+                <thead>
+                  <tr>
+                    <th>Area</th>
+                    <th>Date</th>
+                    <th>Time</th>
+                    <th>Driver</th>
+                    <th>No. of Passengers</th>
+                  </tr>
+                </thead>
+                <tbody id="tb_RiderUpcomingRides"></tbody>
+              </table>
+            </div>
+          </div>
         </div>
       </View>
       );
