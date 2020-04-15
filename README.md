@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**USERS: Dashboard [Shafiq doing now]** | BACKEND: Connected to Firebase 
+** [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 BOOKING: Filter - by area/time | BACKEND: Synced database to Firebase 
 -- | USERS: Logging into SIMRide 
@@ -97,3 +97,4 @@ API: Stripe API | USERS: Apply to be driver: add driver details
 -- | BOOKING: Cancel created booking
 -- | ADMIN: Ban user (blacklist user)
 -- | USERS: Report user
+-- | USERS: Dashboard (Maybe will add wallet balance)
