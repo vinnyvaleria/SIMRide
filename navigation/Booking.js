@@ -3,6 +3,8 @@ import { Text, View } from 'react-native';
 import firebase from '../base';
 import 'firebase/firestore';
 import {user} from './Login';
+import * as Datetime from "react-datetime";
+var moment = require('moment');
 
 var userDetails = [];
 var payMethod;
@@ -24,9 +26,14 @@ class Booking extends React.Component {
       this.state = {
         description: '',
         currPassengers: '',
-        payMethod: ''
+        payMethod: '',
+        date: Datetime.moment()
       }
     }
+
+    onChange = date => this.setState({
+      date
+    })
 
     // handles change
     handleChange(e) {
@@ -34,6 +41,11 @@ class Booking extends React.Component {
         [e.target.name]: e.target.value
       });
     }
+
+    valid = (current) => {
+      let yesterday = Datetime.moment().subtract(1, 'day');
+      return current.isAfter(yesterday);
+    };
 
     // goes back to login page if stumble upon another page by accident without logging in
     componentDidMount() {
@@ -78,15 +90,14 @@ class Booking extends React.Component {
           })
         });
 
-      const database = firebase.database().ref('bookings').orderByChild('date');
+      const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
       database.once('value', function (snapshot) {
         if (snapshot.exists()) {
           let content = '';
           let rowCount = 0;
           snapshot.forEach(function (data) {
             let area = data.val().area;
-            let date = data.val().date;
-            let time = data.val().time;
+            let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
             let ppl = [];
 
             if (data.val().currPassengers != "") {
@@ -108,7 +119,6 @@ class Booking extends React.Component {
             content += '<tr id=\'' + data.key + '\'>';
             content += '<td>' + area + '</td>'; //column1
             content += '<td>' + date + '</td>'; //column2
-            content += '<td>' + time + '</td>';
             content += '<td>' + driver + '</td>';
             content += '<td>' + passengers + '</td>';
             content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
@@ -138,7 +148,6 @@ class Booking extends React.Component {
       document.getElementById('td_viewSelectedBooking_bookingID').innerHTML = null;
       document.getElementById('td_viewSelectedBooking_driverName').innerHTML = null;
       document.getElementById('td_viewSelectedBooking_date').innerHTML = null;
-      document.getElementById('td_viewSelectedBooking_time').innerHTML = null;
       document.getElementById('td_viewSelectedBooking_area').innerHTML = null;
       document.getElementById('td_viewSelectedBooking_meeting').innerHTML = null;
       document.getElementById('td_viewSelectedBooking_slotsLeft').innerHTML = null;
@@ -170,8 +179,7 @@ class Booking extends React.Component {
           snapshot.forEach(function (data) {
             if (data.key === bookingID) {
               let area = data.val().area;
-              let date = data.val().date;
-              let time = data.val().time;
+              let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
               let meeting = data.val().description;
               payMethod = data.val().payMethod;
               let ppl = [];
@@ -196,7 +204,6 @@ class Booking extends React.Component {
               document.getElementById('td_viewSelectedBooking_bookingID').innerHTML = bookingID;
               document.getElementById('td_viewSelectedBooking_driverName').innerHTML = driver;
               document.getElementById('td_viewSelectedBooking_date').innerHTML = date;
-              document.getElementById('td_viewSelectedBooking_time').innerHTML = time;
               document.getElementById('td_viewSelectedBooking_area').innerHTML = area;
               document.getElementById('td_viewSelectedBooking_meeting').innerHTML = meeting;
               document.getElementById('td_viewSelectedBooking_slotsLeft').innerHTML = slotsleft;
@@ -394,8 +401,7 @@ class Booking extends React.Component {
             if (data.val().currPassengers != "") {
               if (data.val().currPassengers.includes(user[2])) {
                 let area = data.val().area;
-                let date = data.val().date;
-                let time = data.val().time;
+                let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                 let ppl = [];
 
                 if (data.val().currPassengers != "") {
@@ -417,7 +423,6 @@ class Booking extends React.Component {
                 content += '<tr id=\'' + data.key + '\'>';
                 content += '<td>' + area + '</td>'; //column1
                 content += '<td>' + date + '</td>'; //column2
-                content += '<td>' + time + '</td>';
                 content += '<td>' + driver + '</td>';
                 content += '<td>' + passengers + '</td>';
                 content += '<td id=\'btnViewMyBooking' + rowCount + '\'></td>';
@@ -465,7 +470,7 @@ class Booking extends React.Component {
           })
         });
 
-      const database = firebase.database().ref('bookings').orderByChild('date');
+      const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
       database.once('value', function (snapshot) {
         if (snapshot.exists()) {
           let content = '';
@@ -473,8 +478,7 @@ class Booking extends React.Component {
           snapshot.forEach(function (data) {
             if (data.val().driverID === user[9]) {
               let area = data.val().area;
-              let date = data.val().date;
-              let time = data.val().time;
+              let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
               let ppl = [];
 
               if (data.val().currPassengers != "") {
@@ -496,7 +500,6 @@ class Booking extends React.Component {
               content += '<tr id=\'' + data.key + '\'>';
               content += '<td>' + area + '</td>'; //column1
               content += '<td>' + date + '</td>'; //column2
-              content += '<td>' + time + '</td>';
               content += '<td>' + driver + '</td>';
               content += '<td>' + passengers + '</td>';
               content += '<td id=\'btnViewCreatedBooking' + rowCount + '\'></td>';
@@ -571,8 +574,7 @@ class Booking extends React.Component {
         const bookingsRef = firebase.database().ref('bookings');
         const booking = {
           driverID: user[9],
-          date: document.getElementById('txtDate').value,
-          time: document.getElementById('ddMeetTime').value,
+          date: Date.parse((this.state.date)),
           area: document.getElementById('ddArea').value,
           description: this.state.description,
           maxPassengers: document.getElementById('ddPassengers').value,
@@ -585,13 +587,11 @@ class Booking extends React.Component {
         bookingsRef.push(booking);
         this.state = {
           description: '',
-          currPassengers: ''
+          currPassengers: '',
+          date: Datetime.moment()
         };
-        document.getElementById('txtDate').selectedIndex = "0";
-        document.getElementById('ddMeetTime').selectedIndex = "0";
         document.getElementById('ddArea').selectedIndex = "0";
         document.getElementById('ddPassengers').selectedIndex = "0";
-        document.getElementById('txtDate').value = "";
         document.getElementById('txtDescription').value = "";
 
         document.getElementById('div_availBookings').style.display = "block";
@@ -623,8 +623,7 @@ class Booking extends React.Component {
               <thead>
                 <tr>
                   <th>Area</th>
-                  <th>Date</th>
-                  <th>Time</th>
+                  <th>Date & Time</th>
                   <th>Driver</th>
                   <th>No. of Passengers</th>
                 </tr>
@@ -638,8 +637,7 @@ class Booking extends React.Component {
               <thead>
                 <tr>
                   <th>Area</th>
-                  <th>Date</th>
-                  <th>Time</th>
+                  <th>Date & Time</th>
                   <th>Driver</th>
                   <th>No. of Passengers</th>
                 </tr>
@@ -653,8 +651,7 @@ class Booking extends React.Component {
               <thead>
                 <tr>
                   <th>Area</th>
-                  <th>Date</th>
-                  <th>Time</th>
+                  <th>Date & Time</th>
                   <th>Driver</th>
                   <th>No. of Passengers</th>
                 </tr>
@@ -675,12 +672,8 @@ class Booking extends React.Component {
                   <td id='td_viewSelectedBooking_driverName'></td>
                 </tr>
                 <tr>
-                  <td>Date:</td>
+                  <td>Date & Time:</td>
                   <td id='td_viewSelectedBooking_date'></td>
-                </tr>
-                <tr>
-                  <td>Time:</td>
-                  <td id='td_viewSelectedBooking_time'></td>
                 </tr>
                 <tr>
                   <td>Area:</td>
@@ -719,52 +712,8 @@ class Booking extends React.Component {
                   <td><label id="driverID" /></td>
                 </tr>
                 <tr>
-                  <td>Date</td>
-                  <td><input id="txtDate" onChange={this.handleChange} type="date" style={{width: '12.6em'}} required />
-                  </td>
-                </tr>
-                <tr>
-                  <td>Meet-Up Time</td>
-                  <td>
-                    <select id="ddMeetTime" style={{width: '13em'}} required>
-                      <option value="06:30">06:30</option>
-                      <option value="07:00">07:00</option>
-                      <option value="07:30">07:30</option>
-                      <option value="08:00">08:00</option>
-                      <option value="08:30">08:30</option>
-                      <option value="09:00">09:00</option>
-                      <option value="09:30">09:30</option>
-                      <option value="10:00">10:00</option>
-                      <option value="10:30">10:30</option>
-                      <option value="11:00">11:00</option>
-                      <option value="11:30">11:30</option>
-                      <option value="12:00">12:00</option>
-                      <option value="12:30">12:30</option>
-                      <option value="13:00">13:00</option>
-                      <option value="13:30">13:30</option>
-                      <option value="14:00">14:00</option>
-                      <option value="14:30">14:30</option>
-                      <option value="15:00">15:00</option>
-                      <option value="15:30">15:30</option>
-                      <option value="16:00">16:00</option>
-                      <option value="16:30">16:30</option>
-                      <option value="17:00">17:00</option>
-                      <option value="17:30">17:30</option>
-                      <option value="18:00">18:00</option>
-                      <option value="18:30">18:30</option>
-                      <option value="19:00">19:00</option>
-                      <option value="19:30">19:30</option>
-                      <option value="20:00">20:00</option>
-                      <option value="20:30">20:30</option>
-                      <option value="21:00">21:00</option>
-                      <option value="21:30">21:30</option>
-                      <option value="22:00">22:00</option>
-                      <option value="22:30">22:30</option>
-                      <option value="23:00">23:00</option>
-                      <option value="23:30">23:30</option>
-                      <option value="00:00">00:00</option>
-                    </select>
-                  </td>
+                  <td>Date & Time</td>
+                  <Datetime isValidDate={this.valid} locale="en-sg" id='datepicker' onChange={this.onChange} value={this.state.date} required />
                 </tr>
                 <tr>
                   <td>Area</td>
