@@ -318,10 +318,7 @@ class Home extends React.Component {
           })
         });
 
-      let date = new Date();
-      date.setDate(date.getDate()-1);
-
-      const database = firebase.database().ref('bookings').orderByChild('date').limitToFirst(3).startAt(date.toISOString());
+      const database = firebase.database().ref('bookings').orderByChild('date').limitToFirst(3).startAt(Date.now());
       database.once('value', function (snapshot) {
         if (snapshot.exists()) {
           let content = '';
@@ -329,8 +326,7 @@ class Home extends React.Component {
             if (data.val().currPassengers != "") {
               if (data.val().currPassengers.includes(user[2])) {
                 let area = data.val().area;
-                let date = data.val().date;
-                let time = data.val().time;
+                let date = Date.parse(data.val().date).toLocaleString();
                 let ppl = [];
 
                 if (data.val().currPassengers != "") {
@@ -352,7 +348,6 @@ class Home extends React.Component {
                 content += '<tr id=\'' + data.key + '\'>';
                 content += '<td>' + area + '</td>'; //column1
                 content += '<td>' + date + '</td>'; //column2
-                content += '<td>' + time + '</td>';
                 content += '<td>' + driver + '</td>';
                 content += '<td>' + passengers + '</td>';
                 content += '</tr>';
@@ -366,7 +361,7 @@ class Home extends React.Component {
 
     // view created bookings by driver
     viewCreatedBooking = () => {
-      document.getElementById('tb_DriverUpcomingRides').innerHTML = '';
+      document.getElementById('tb_DriverUpcomingDrives').innerHTML = '';
 
       // get all accounts
       firebase.database().ref('accounts')
@@ -383,15 +378,14 @@ class Home extends React.Component {
       let date = new Date();
       date.setDate(date.getDate() - 1);
 
-      const database = firebase.database().ref('bookings').orderByChild('date').limitToFirst(3).equalTo(date.toISOString());
+      const database = firebase.database().ref('bookings').orderByChild('date').limitToFirst(3).startAt(Date.now());
       database.on('value', function (snapshot) {
         if (snapshot.exists()) {
           let content = '';
           snapshot.forEach(function (data) {
             if (data.val().driverID === user[9]) {
               let area = data.val().area;
-              let date = data.val().date;
-              let time = data.val().time;
+              let date = Date.parse(data.val().date).toLocaleString();
               let ppl = [];
 
               if (data.val().currPassengers != "") {
@@ -413,13 +407,12 @@ class Home extends React.Component {
               content += '<tr id=\'' + data.key + '\'>';
               content += '<td>' + area + '</td>'; //column1
               content += '<td>' + date + '</td>'; //column2
-              content += '<td>' + time + '</td>';
               content += '<td>' + driver + '</td>';
               content += '<td>' + passengers + '</td>';
               content += '</tr>';
             }
           });
-          document.getElementById('tb_DriverUpcomingRides').innerHTML += content;
+          document.getElementById('tb_DriverUpcomingDrives').innerHTML += content;
         }
       });
     }
@@ -553,13 +546,12 @@ class Home extends React.Component {
           </div>
           <div id="driverDB" style={{display: 'none'}}>
             <div id='div_DriverUpcomingRides'>
-              <h4>Today's Rides</h4>
+              <h4>Upcoming Rides</h4>
               <table>
                 <thead>
                   <tr>
                     <th>Area</th>
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th>Date & Time</th>
                     <th>Driver</th>
                     <th>No. of Passengers</th>
                   </tr>
@@ -573,8 +565,7 @@ class Home extends React.Component {
                 <thead>
                   <tr>
                     <th>Area</th>
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th>Date & Time</th>
                     <th>Driver</th>
                     <th>No. of Passengers</th>
                   </tr>
@@ -584,14 +575,13 @@ class Home extends React.Component {
             </div>
           </div>
           <div id="riderDB" style={{display: 'none'}}>
-            <h4>Today's Rides</h4>
+            <h4>Upcoming Rides</h4>
             <div id='div_RiderUpcomingRides'>
               <table>
                 <thead>
                   <tr>
                     <th>Area</th>
-                    <th>Date</th>
-                    <th>Time</th>
+                    <th>Date & Time</th>
                     <th>Driver</th>
                     <th>No. of Passengers</th>
                   </tr>
