@@ -7,9 +7,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import App from './components/App'
 import 'babel-polyfill'
-// import { Router, Route, Link, browserHistory, IndexRoute } from 'react-router'
 
-//
 import App from '../App';
 import Start from '../navigation/Start';
 import Signup from '../navigation/Wallet';

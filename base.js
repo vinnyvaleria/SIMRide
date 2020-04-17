@@ -1,5 +1,5 @@
 import firebase from 'firebase'
-var config = {
+const config = {
   apiKey: "AIzaSyAkRw3HDKHsLemsSX_Lt7yg7nrKbyHinYw",
   authDomain: "carpool-world-5uck5.firebaseapp.com",
   databaseURL: "https://carpool-world-5uck5.firebaseio.com",

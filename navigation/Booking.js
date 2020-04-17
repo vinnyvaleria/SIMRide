@@ -180,7 +180,6 @@ class Booking extends React.Component {
             if (data.key === bookingID) {
               let area = data.val().area;
               let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
-              let meeting = data.val().description;
               payMethod = data.val().payMethod;
               let ppl = [];
 
@@ -576,7 +575,6 @@ class Booking extends React.Component {
           driverID: user[9],
           date: Date.parse((this.state.date)),
           area: document.getElementById('ddArea').value,
-          description: this.state.description,
           maxPassengers: document.getElementById('ddPassengers').value,
           currPassengers: '',
           payMethod: ''
@@ -600,6 +598,100 @@ class Booking extends React.Component {
         document.getElementById('div_viewSelectedBooking').style.display = "none";
         document.getElementById('div_viewCreatedBooking').style.display = "none";
       }
+    }
+
+    filterChange = () => {
+      const self = this;
+      let areaNames = [];
+      document.getElementById('tb_AllBookings').innerHTML = '';
+
+      document.getElementById('div_availBookings').style.display = "block";
+      document.getElementById('div_createBooking').style.display = "none";
+      document.getElementById('div_myBookings').style.display = "none";
+      document.getElementById('div_viewSelectedBooking').style.display = "none";
+      document.getElementById('div_viewCreatedBooking').style.display = "none";
+
+      // get all accounts
+      firebase.database().ref('accounts')
+        .orderByChild('email')
+        .once('value')
+        .then(function (snapshot) {
+          var i = 0;
+          snapshot.forEach(function (child) {
+            userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+            i++;
+          })
+        });
+
+      // get all area
+      const areadatabase = firebase.database().ref().child('admin/area');
+      areadatabase.once('value', function (snapshot) {
+        if (snapshot.exists()) {
+          snapshot.forEach(function (child) {
+            let newarea = [];
+            newarea = child.val().split(',');
+            if (document.getElementById('ddFilterArea').value === newarea[1]) {
+              areaNames.push(newarea[0]);
+            }
+          });
+        }
+      });
+
+      console.log(areaNames);
+
+      const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
+      database.once('value', function (snapshot) {
+        if (snapshot.exists()) {
+          let content = '';
+          let rowCount = 0;
+          snapshot.forEach(function (data) {
+            for (var v = 0; v < areaNames.length; v++) {
+              if (areaNames[v] === data.val().area) {
+                let area = data.val().area;
+                let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
+                let ppl = [];
+
+                if (data.val().currPassengers != "") {
+                  ppl = data.val().currPassengers.split(',')
+                }
+
+                let passengers = ppl.length + "/" + data.val().maxPassengers;
+                let id = data.val().driverID;
+                let driver = '';
+
+                for (let i = 0; i < userDetails.length; i++) {
+                  let key = [];
+                  key = userDetails[i].split(':');
+                  if (key[0] === id) {
+                    driver = key[1];
+                  }
+                }
+                content += '<tr id=\'' + data.key + '\'>';
+                content += '<td>' + area + '</td>'; //column1
+                content += '<td>' + date + '</td>'; //column2
+                content += '<td>' + driver + '</td>';
+                content += '<td>' + passengers + '</td>';
+                content += '<td id=\'btnViewBooking' + rowCount + '\'></td>';
+                content += '</tr>';
+
+                rowCount++;
+              }
+            }
+          });
+
+          document.getElementById('tb_AllBookings').innerHTML += content;
+
+          for (let v = 0; v < rowCount; v++) {
+            let btn = document.createElement('input');
+            btn.setAttribute('type', 'button')
+            btn.setAttribute('value', 'View');
+            btn.onclick = self.viewBooking;
+            document.getElementById('btnViewBooking' + v).appendChild(btn);
+
+            console.log(btn);
+          }
+        }
+      });
     }
 
   render() {
@@ -647,6 +739,15 @@ class Booking extends React.Component {
           </div>
 
           <div id='div_availBookings'>
+            <select id="ddFilterArea" onChange={this.filterChange} style={{width: '5em'}} required>
+              <option>North</option>
+              <option>South</option>
+              <option>East</option>
+              <option>West</option>
+              <option>Central</option>
+            </select>  
+            <br/>
+            <br/>
             <table id="tbl_AllBookings">
               <thead>
                 <tr>
@@ -678,10 +779,6 @@ class Booking extends React.Component {
                 <tr>
                   <td>Area:</td>
                   <td id='td_viewSelectedBooking_area'></td>
-                </tr>
-                <tr>
-                  <td>Meeting place:</td>
-                  <td id='td_viewSelectedBooking_meeting'></td>
                 </tr>
                 <tr>
                   <td>Slots left:</td>
@@ -719,13 +816,6 @@ class Booking extends React.Component {
                   <td>Area</td>
                   <td>
                     <select id="ddArea" style={{width: '13em'}} required></select>
-                  </td>
-                </tr>
-                <tr>
-                  <td>Description</td>
-                  <td>
-                    <input id="txtDescription" value={this.state.description} onChange={this.handleChange} type="text"
-                      name="description" placeholder="Description/zipcode of area" style={{width: '12.6em'}} />
                   </td>
                 </tr>
                 <tr>
