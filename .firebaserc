@@ -1,5 +1,6 @@
 {
   "projects": {
-    "main": "carpool-world-5uck5"
+    "main": "carpool-world-5uck5",
+    "default": "carpool-world-5uck5"
   }
 }

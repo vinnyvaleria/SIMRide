@@ -3,6 +3,8 @@ import { Text, View } from 'react-native';
 import firebase from '../base';
 import 'firebase/firestore';
 import {user} from './Login';
+import * as Datetime from "react-datetime";
+var moment = require('moment');
 
 var userDetails = [];
 
@@ -326,7 +328,7 @@ class Home extends React.Component {
             if (data.val().currPassengers != "") {
               if (data.val().currPassengers.includes(user[2])) {
                 let area = data.val().area;
-                let date = Date.parse(data.val().date).toLocaleString();
+                let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                 let ppl = [];
 
                 if (data.val().currPassengers != "") {
@@ -385,7 +387,7 @@ class Home extends React.Component {
           snapshot.forEach(function (data) {
             if (data.val().driverID === user[9]) {
               let area = data.val().area;
-              let date = Date.parse(data.val().date).toLocaleString();
+              let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
               let ppl = [];
 
               if (data.val().currPassengers != "") {

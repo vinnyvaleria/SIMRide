@@ -4,6 +4,7 @@ import firebase from '../base';
 import 'firebase/firestore';
 import {user} from './Login';
 import StripeCheckout from "react-stripe-checkout";
+import axios from "axios";
 
 class Wallet extends React.Component {
     constructor(props) {
@@ -85,7 +86,7 @@ class Wallet extends React.Component {
     async handleToken(token) {
         let product = {price: this.state.amount, name: "Top-Up E-Wallet", decscription: "Top-Up"}
         const response = await axios.post(
-            "http://localhost:19006/checkout", // by right when served onto staging server port will be 5000
+            "http://localhost:19006/charge", // by right when served onto staging server port will be 5000
             { token, product }
         );
         const { status } = response.data;
