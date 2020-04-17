@@ -69,27 +69,27 @@ In-Progress | Done
 ----------- | -----------
 **BOOKING: Filter - by area/time [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
-USER: Set where they stay when joining the app | BACKEND: Synced database to Firebase 
-BOOKING: Remove area from create a booking, add to when users join | USERS: Logging into SIMRide 
+**API: Google Maps API [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
+MAPS: Automatic route planning (fastest) | USERS: Logging into SIMRide 
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
 WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
 WALLET: Check for wallet balance when booking ride | USERS: Edit Profile 
 BOOKING: Weekly pickup scheduler (not important) | USERS: View Profile 
-USERS: Rate the driver and rider (not important) | CHAT: Live chat, store chat, select user to chat with 
-USERS: Transaction/booking history | USERS: View other profiles 
--- | USERS: Update password
-ADMIN: Audit/log (not important) | CHAT: Stored chat history 
--- | CHAT: Retrieving chats
-MAPS: Automatic route planning (fastest) | BOOKING: Create a Booking
-API: MapQuest Traffic API | BOOKING: Display list of available Booking
-API: MapQuest Directions API | USERS: Apply to be driver: upload license image
+BOOKING: Remove area from create a booking, add to when users join | CHAT: Live chat, store chat, select user to chat with 
+BOOKING: Passengers set meeting area by plotting position on map | USERS: View other profiles 
+DRIVER: When starting the drive, get all passengers meeting area | USERS: Update password
+DRIVER: Plot the meeting area on the map | CHAT: Stored chat history 
+DRIVER: Get directions to area and lastly to school | CHAT: Retrieving chats
+DRIVER: Create hidden driver page to view map | BOOKING: Create a Booking
+BOOKING: Mark drive as done as driver | BOOKING: Display list of available Booking
+BOOKING: Mark ride as done as passenger | USERS: Apply to be driver: upload license image
 API: Stripe API | USERS: Apply to be driver: add driver details
--- | BOOKING: Join booking
--- | BOOKING: View My Bookings
--- | BOOKING: Cancel confirmed ride
--- | WALLET: E-Wallet page
+USERS: Rate the driver and rider (not important) | BOOKING: Join booking
+USERS: Transaction/booking history | BOOKING: View My Bookings
+USERS: Set where they stay when joining the app | BOOKING: Cancel confirmed ride
+ADMIN: Audit/log (not important) | WALLET: E-Wallet page
 -- | BOOKING: View created rides
 -- | PERMISSIONS: Split users into roles, and define what each role can see
 -- | USERS: Forgot password reset email
