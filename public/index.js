@@ -9,15 +9,15 @@ import App from './components/App'
 import 'babel-polyfill'
 
 import App from '../App';
-import Start from '../navigation/Start';
-import Signup from '../navigation/Wallet';
-import Login from '../navigation/Login';
-import Home from '../navigation/Home';
-import Account from '../navigation/Account';
-import Booking from '../navigation/Booking';
-import Rating from '../navigation/Rating';
-import Messages from '../navigation/Messages';
-import Wallet from '../navigation/Wallet';
+import Start from './navigation/Start';
+import Signup from './navigation/Wallet';
+import Login from './navigation/Login';
+import Home from './navigation/Home';
+import Account from './navigation/Account';
+import Booking from './navigation/Booking';
+import Rating from './navigation/Rating';
+import Messages from './navigation/Messages';
+import Wallet from './navigation/Wallet';
 
 ReactDOM.render((
     <BrowserRouter>

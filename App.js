@@ -1,8 +1,8 @@
 import React from 'react';
 import { StyleSheet, View } from 'react-native';
 import fire from './base';
-import Login from './navigation/Login';
-import Start from './navigation/Start';
+import Login from './public/navigation/Login';
+import Start from './public/navigation/Start';
 
 class App extends React.Component {
   constructor() {
