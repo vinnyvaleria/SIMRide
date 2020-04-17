@@ -77,7 +77,7 @@ WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages
 WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
 WALLET: Check for wallet balance when booking ride | USERS: Edit Profile 
 BOOKING: Weekly pickup scheduler (not important) | USERS: View Profile 
-BOOKING: Add to when users join | CHAT: Live chat, store chat, select user to chat with 
+BOOKING: Request area when users join | CHAT: Live chat, store chat, select user to chat with 
 BOOKING: Passengers set meeting area by plotting position on map | USERS: View other profiles 
 DRIVER: When starting the drive, get all passengers meeting area | USERS: Update password
 DRIVER: Plot the meeting area on the map | CHAT: Stored chat history 
