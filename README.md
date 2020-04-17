@@ -67,17 +67,17 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BOOKING: Filter - by area/time [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**WALLET: Top-up E-Wallet [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **API: Google Maps API [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 MAPS: Automatic route planning (fastest) | USERS: Logging into SIMRide 
-WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
+-- | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
 WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
 WALLET: Check for wallet balance when booking ride | USERS: Edit Profile 
 BOOKING: Weekly pickup scheduler (not important) | USERS: View Profile 
-BOOKING: Remove area from create a booking, add to when users join | CHAT: Live chat, store chat, select user to chat with 
+BOOKING: Add to when users join | CHAT: Live chat, store chat, select user to chat with 
 BOOKING: Passengers set meeting area by plotting position on map | USERS: View other profiles 
 DRIVER: When starting the drive, get all passengers meeting area | USERS: Update password
 DRIVER: Plot the meeting area on the map | CHAT: Stored chat history 
@@ -88,7 +88,7 @@ BOOKING: Mark ride as done as passenger | USERS: Apply to be driver: upload lice
 API: Stripe API | USERS: Apply to be driver: add driver details
 USERS: Rate the driver and rider (not important) | BOOKING: Join booking
 USERS: Transaction/booking history | BOOKING: View My Bookings
-USERS: Set where they stay when joining the app | BOOKING: Cancel confirmed ride
+-- | BOOKING: Cancel confirmed ride
 ADMIN: Audit/log (not important) | WALLET: E-Wallet page
 -- | BOOKING: View created rides
 -- | PERMISSIONS: Split users into roles, and define what each role can see
@@ -101,3 +101,5 @@ ADMIN: Audit/log (not important) | WALLET: E-Wallet page
 -- | BOOKING: Choose to pay by cash or wallet
 -- | WALLET: Set up wallet for all users
 -- | BACKEND: Find a datetime picker to allow datetime comparisons in database
+-- | BOOKING: Filter - by area
+-- | BOOKING: Remove area from create a booking
