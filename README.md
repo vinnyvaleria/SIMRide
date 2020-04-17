@@ -69,8 +69,8 @@ In-Progress | Done
 ----------- | -----------
 **BOOKING: Filter - by area/time [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
--- | BACKEND: Synced database to Firebase 
--- | USERS: Logging into SIMRide 
+USER: Set where they stay when joining the app | BACKEND: Synced database to Firebase 
+BOOKING: Remove area from create a booking, add to when users join | USERS: Logging into SIMRide 
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
