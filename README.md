@@ -76,7 +76,7 @@ WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
 WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
 WALLET: Check for wallet balance when booking ride | USERS: Edit Profile 
-USERS: Weekly pickup scheduler (not important) | USERS: View Profile 
+BOOKING: Weekly pickup scheduler (not important) | USERS: View Profile 
 USERS: Rate the driver and rider (not important) | CHAT: Live chat, store chat, select user to chat with 
 USERS: Transaction/booking history | USERS: View other profiles 
 -- | USERS: Update password
