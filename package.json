@@ -1,11 +1,8 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
-    "start": "expo start",
-    "android": "expo start --android",
-    "ios": "expo start --ios",
-    "web": "expo start --web",
-    "eject": "expo eject"
+    "predeploy": "expo build:web",
+    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^1.1.2",
@@ -20,6 +17,7 @@
     "ejs": "^3.0.1",
     "email-validator": "^2.0.4",
     "expo": "~36.0.0",
+    "expo-firebase-app": "^2.0.0",
     "express": "^4.17.1",
     "firebase": "^7.14.0",
     "firebase-admin": "^8.10.0",
@@ -48,8 +46,10 @@
     "uuid": "^7.0.3"
   },
   "devDependencies": {
+    "@babel/core": "^7.0.0",
+    "@babel/preset-env": "^7.9.5",
     "babel-preset-expo": "~8.0.0",
-    "@babel/core": "^7.0.0"
+    "webpack-cli": "^3.3.11"
   },
   "private": true,
   "name": "SIMRide",

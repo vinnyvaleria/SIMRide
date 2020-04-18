@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import firebase from '../../base';
+import firebase from '../base';
 import 'firebase/firestore';
 import {user} from './Login';
 

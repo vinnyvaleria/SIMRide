@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import firebase from '../../base';
+import firebase from '../base';
 import 'firebase/firestore';
 import "firebase/storage";
 import {user} from './Login';
 import { getPlaneDetection } from 'expo/build/AR';
 
-var Util = require('../../util/Util');
+var Util = require('../util/Util');
 
 class Account extends React.Component {
     constructor(props) {

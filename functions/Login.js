@@ -1,14 +1,13 @@
 import React, { Component } from 'react';
 import { Text, View, Image, Button } from 'react-native';
-import logo from '../../assets/logo.png';
-import firebase from '../../base';
+import logo from '../assets/logo.png';
+import firebase from '../base';
 import { validate } from 'email-validator';
 
 let user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
 var countArr = new Array(1); //account
 var unameArr = [];
 var emailArr = [];
-var Util = require('../../util/Util');
 
 class Login extends React.Component {
     constructor(props) {
