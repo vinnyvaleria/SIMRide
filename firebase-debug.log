@@ -1,119 +1,214 @@
-[debug] [2020-04-18T11:37:23.808Z] ----------------------------------------------------------------------
-[debug] [2020-04-18T11:37:23.810Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js serve --only functions
-[debug] [2020-04-18T11:37:23.810Z] CLI Version:   8.1.0
-[debug] [2020-04-18T11:37:23.810Z] Platform:      win32
-[debug] [2020-04-18T11:37:23.810Z] Node Version:  v12.14.1
-[debug] [2020-04-18T11:37:23.811Z] Time:          Sat Apr 18 2020 19:37:23 GMT+0800 (Singapore Standard Time)
-[debug] [2020-04-18T11:37:23.811Z] ----------------------------------------------------------------------
-[debug] [2020-04-18T11:37:23.811Z] 
-[debug] [2020-04-18T11:37:23.817Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
-[debug] [2020-04-18T11:37:23.818Z] > authorizing via signed-in user
-[debug] [2020-04-18T11:37:23.818Z] [iam] checking project carpool-world-5uck5 for permissions ["firebase.projects.get"]
-[debug] [2020-04-18T11:37:23.820Z] > refreshing access token with scopes: ["email","https://www.googleapis.com/auth/cloud-platform","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","openid"]
-[debug] [2020-04-18T11:37:23.820Z] >>> HTTP REQUEST POST https://www.googleapis.com/oauth2/v3/token  
- <request body omitted>
-[debug] [2020-04-18T11:37:23.922Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=utf-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 11:37:24 GMT","server":"scaffolding on HTTPServer2","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
-[debug] [2020-04-18T11:37:23.931Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/carpool-world-5uck5:testIamPermissions  
- {"permissions":["firebase.projects.get"]}
-[debug] [2020-04-18T11:37:25.164Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 11:37:26 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1181","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
-[debug] [2020-04-18T11:37:25.165Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/carpool-world-5uck5  
+[debug] [2020-04-18T17:16:23.846Z] ----------------------------------------------------------------------
+[debug] [2020-04-18T17:16:23.848Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\Shafiq\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy
+[debug] [2020-04-18T17:16:23.848Z] CLI Version:   8.1.0
+[debug] [2020-04-18T17:16:23.848Z] Platform:      win32
+[debug] [2020-04-18T17:16:23.848Z] Node Version:  v12.14.1
+[debug] [2020-04-18T17:16:23.849Z] Time:          Sun Apr 19 2020 01:16:23 GMT+0800 (Singapore Standard Time)
+[debug] [2020-04-18T17:16:23.849Z] ----------------------------------------------------------------------
+[debug] [2020-04-18T17:16:23.849Z] 
+[debug] [2020-04-18T17:16:23.855Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2020-04-18T17:16:23.856Z] > authorizing via signed-in user
+[debug] [2020-04-18T17:16:23.856Z] [iam] checking project carpool-world-5uck5 for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]
+[debug] [2020-04-18T17:16:23.858Z] >>> HTTP REQUEST POST https://cloudresourcemanager.googleapis.com/v1/projects/carpool-world-5uck5:testIamPermissions  
+ {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","datastore.indexes.create","datastore.indexes.delete","datastore.indexes.list","datastore.indexes.update","firebase.projects.get","firebasedatabase.instances.update","firebasehosting.sites.update","firebaserules.releases.create","firebaserules.releases.update","firebaserules.rulesets.create"]}
+[debug] [2020-04-18T17:16:25.107Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:26 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","server-timing":"gfet4t7; dur=1167","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:25.108Z] >>> HTTP REQUEST POST https://iam.googleapis.com/v1/projects/carpool-world-5uck5/serviceAccounts/carpool-world-5uck5@appspot.gserviceaccount.com:testIamPermissions  
+ {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2020-04-18T17:16:26.654Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:28 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:26.655Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/carpool-world-5uck5  
  
-[debug] [2020-04-18T11:37:25.470Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 11:37:26 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
-[warn] !  Your requested "node" version "8" doesn't match your global version "12"
-[info] +  functions: functions emulator started at http://localhost:5000
-[info] i  functions: Watching "d:\GitHub\SIMRide\functions" for Cloud Functions...
-[debug] [2020-04-18T11:37:27.492Z] [worker-pool] addWorker(~diagnostic~) 
-[debug] [2020-04-18T11:37:27.492Z] [worker-pool] Adding worker with key ~diagnostic~, total=1 
-[debug] [2020-04-18T11:37:27.493Z] [worker-pool] submitWork(triggerId=) 
-[debug] [2020-04-18T11:37:27.493Z] [worker-~diagnostic~-618227cf-8909-4c9d-ada8-1459f42f0860]: Assigning socketPath: \\?\pipe\d:\GitHub\SIMRide\functions\13764 
-[debug] [2020-04-18T11:37:27.493Z] [worker-~diagnostic~-618227cf-8909-4c9d-ada8-1459f42f0860]: BUSY 
-[debug] [2020-04-18T11:37:27.793Z] [runtime-status] [13764] Functions runtime initialized. {"cwd":"d:\\GitHub\\SIMRide\\functions","node_version":"12.14.1"} 
-[debug] [2020-04-18T11:37:27.794Z] [runtime-status] [13764] Disabled runtime features: undefined 
-[debug] [2020-04-18T11:37:27.796Z] [runtime-status] [13764] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
-[debug] [2020-04-18T11:37:27.797Z] [runtime-status] [13764] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:37:27.798Z] [runtime-status] [13764] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] 
-[debug] [2020-04-18T11:37:27.828Z] [runtime-status] [13764] Checked functions.config() {"config":{}} 
-[debug] [2020-04-18T11:37:27.828Z] [runtime-status] [13764] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:37:27.829Z] [runtime-status] [13764] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
-[debug] [2020-04-18T11:37:27.830Z] [runtime-status] [13764] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:37:27.830Z] [runtime-status] [13764] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"}} 
-[info] +  functions[api]: http function initialized (http://localhost:5000/carpool-world-5uck5/us-central1/api).
-[debug] [2020-04-18T11:37:27.904Z] [worker-~diagnostic~-618227cf-8909-4c9d-ada8-1459f42f0860]: IDLE 
-[debug] [2020-04-18T11:39:16.053Z] [work-queue] {"queueLength":1,"workRunningCount":0}
-[debug] [2020-04-18T11:39:16.054Z] [work-queue] {"queueLength":0,"workRunningCount":1}
-[debug] [2020-04-18T11:39:16.054Z] Accepted request GET /carpool-world-5uck5/us-central1/api --> api
-[debug] [2020-04-18T11:39:16.057Z] [worker-pool] addWorker(api) 
-[debug] [2020-04-18T11:39:16.057Z] [worker-pool] Adding worker with key api, total=1 
-[debug] [2020-04-18T11:39:16.057Z] [worker-pool] submitWork(triggerId=api) 
-[debug] [2020-04-18T11:39:16.057Z] [worker-api-a70a569f-d7bd-43b1-a666-6d77001ca65f]: Assigning socketPath: \\?\pipe\d:\GitHub\SIMRide\functions\6508 
-[debug] [2020-04-18T11:39:16.057Z] [worker-api-a70a569f-d7bd-43b1-a666-6d77001ca65f]: BUSY 
-[debug] [2020-04-18T11:39:16.359Z] [runtime-status] [6508] Functions runtime initialized. {"cwd":"d:\\GitHub\\SIMRide\\functions","node_version":"12.14.1"} 
-[debug] [2020-04-18T11:39:16.360Z] [runtime-status] [6508] Disabled runtime features: undefined 
-[debug] [2020-04-18T11:39:16.363Z] [runtime-status] [6508] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
-[debug] [2020-04-18T11:39:16.364Z] [runtime-status] [6508] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:39:16.365Z] [runtime-status] [6508] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] 
-[debug] [2020-04-18T11:39:16.395Z] [runtime-status] [6508] Checked functions.config() {"config":{}} 
-[debug] [2020-04-18T11:39:16.396Z] [runtime-status] [6508] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:39:16.396Z] [runtime-status] [6508] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
-[debug] [2020-04-18T11:39:16.397Z] [runtime-status] [6508] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:39:16.397Z] [runtime-status] [6508] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"}} 
-[debug] [2020-04-18T11:39:16.469Z] [runtime-status] [6508] Trigger "api" has been found, beginning invocation! 
-[info] i  functions: Beginning execution of "api"
-[debug] [2020-04-18T11:39:16.470Z] [runtime-status] [6508] triggerDefinition {"httpsTrigger":{},"name":"api","entryPoint":"api"} 
-[debug] [2020-04-18T11:39:16.470Z] [runtime-status] [6508] Running api in mode HTTPS 
-[debug] [2020-04-18T11:39:16.472Z] [runtime-status] [6508] Attempting to listen to socketPath: \\?\pipe\d:\GitHub\SIMRide\functions\6508 
-[debug] [2020-04-18T11:39:16.475Z] [functions] Runtime ready! Sending request! 
-[debug] [2020-04-18T11:39:16.481Z] [runtime-status] [6508] Ephemeral server handling GET request 
-[debug] [2020-04-18T11:39:16.487Z] [runtime-status] [6508] Ephemeral server survived. 
-[info] i  functions: Finished "api" in ~1s
-[debug] [2020-04-18T11:39:16.493Z] [worker-api-a70a569f-d7bd-43b1-a666-6d77001ca65f]: IDLE 
-[debug] [2020-04-18T11:39:16.493Z] [work-queue] {"queueLength":0,"workRunningCount":0}
-[debug] [2020-04-18T11:40:07.471Z] File d:\GitHub\SIMRide\functions\index.js changed, reloading triggers 
-[debug] [2020-04-18T11:40:08.471Z] [worker-pool] Shutting down IDLE worker (~diagnostic~) 
-[debug] [2020-04-18T11:40:08.472Z] [worker-~diagnostic~-618227cf-8909-4c9d-ada8-1459f42f0860]: FINISHING 
-[debug] [2020-04-18T11:40:08.472Z] [worker-pool] Shutting down IDLE worker (api) 
-[debug] [2020-04-18T11:40:08.472Z] [worker-api-a70a569f-d7bd-43b1-a666-6d77001ca65f]: FINISHING 
-[debug] [2020-04-18T11:40:08.476Z] [worker-pool] addWorker(~diagnostic~) 
-[debug] [2020-04-18T11:40:08.476Z] [worker-pool] Adding worker with key ~diagnostic~, total=2 
-[debug] [2020-04-18T11:40:08.476Z] [worker-pool] submitWork(triggerId=) 
-[debug] [2020-04-18T11:40:08.477Z] [worker-~diagnostic~-809a820c-faef-4a40-8d0f-bdc0b095ba04]: Assigning socketPath: \\?\pipe\d:\GitHub\SIMRide\functions\8252 
-[debug] [2020-04-18T11:40:08.477Z] [worker-~diagnostic~-809a820c-faef-4a40-8d0f-bdc0b095ba04]: BUSY 
-[debug] [2020-04-18T11:40:08.478Z] [worker-~diagnostic~-618227cf-8909-4c9d-ada8-1459f42f0860]: exited 
-[debug] [2020-04-18T11:40:08.478Z] [worker-~diagnostic~-618227cf-8909-4c9d-ada8-1459f42f0860]: FINISHED 
-[debug] [2020-04-18T11:40:08.479Z] [worker-api-a70a569f-d7bd-43b1-a666-6d77001ca65f]: exited 
-[debug] [2020-04-18T11:40:08.479Z] [worker-api-a70a569f-d7bd-43b1-a666-6d77001ca65f]: FINISHED 
-[debug] [2020-04-18T11:40:08.819Z] [runtime-status] [8252] Functions runtime initialized. {"cwd":"d:\\GitHub\\SIMRide\\functions","node_version":"12.14.1"} 
-[debug] [2020-04-18T11:40:08.820Z] [runtime-status] [8252] Disabled runtime features: undefined 
-[debug] [2020-04-18T11:40:08.822Z] [runtime-status] [8252] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
-[debug] [2020-04-18T11:40:08.824Z] [runtime-status] [8252] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:40:08.825Z] [runtime-status] [8252] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] 
-[debug] [2020-04-18T11:40:08.857Z] [runtime-status] [8252] Checked functions.config() {"config":{}} 
-[debug] [2020-04-18T11:40:08.858Z] [runtime-status] [8252] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:40:08.860Z] [runtime-status] [8252] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
-[debug] [2020-04-18T11:40:08.860Z] [runtime-status] [8252] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:40:08.861Z] [runtime-status] [8252] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"}} 
-[info] +  functions[router]: http function initialized (http://localhost:5000/carpool-world-5uck5/us-central1/router).
-[debug] [2020-04-18T11:40:08.952Z] [worker-~diagnostic~-809a820c-faef-4a40-8d0f-bdc0b095ba04]: IDLE 
-[debug] [2020-04-18T11:40:20.516Z] File d:\GitHub\SIMRide\functions\package.json changed, reloading triggers 
-[debug] [2020-04-18T11:40:21.517Z] [worker-pool] Shutting down IDLE worker (~diagnostic~) 
-[debug] [2020-04-18T11:40:21.518Z] [worker-~diagnostic~-809a820c-faef-4a40-8d0f-bdc0b095ba04]: FINISHING 
-[debug] [2020-04-18T11:40:21.518Z] [worker-pool] Cleaned up workers for ~diagnostic~: 2 --> 1 
-[debug] [2020-04-18T11:40:21.518Z] [worker-pool] Cleaned up workers for api: 1 --> 0 
-[debug] [2020-04-18T11:40:21.522Z] [worker-pool] addWorker(~diagnostic~) 
-[debug] [2020-04-18T11:40:21.522Z] [worker-pool] Adding worker with key ~diagnostic~, total=2 
-[debug] [2020-04-18T11:40:21.522Z] [worker-pool] submitWork(triggerId=) 
-[debug] [2020-04-18T11:40:21.522Z] [worker-~diagnostic~-aae6ad71-1966-4eff-a97e-5bc3bb964ee2]: Assigning socketPath: \\?\pipe\d:\GitHub\SIMRide\functions\9468 
-[debug] [2020-04-18T11:40:21.523Z] [worker-~diagnostic~-aae6ad71-1966-4eff-a97e-5bc3bb964ee2]: BUSY 
-[debug] [2020-04-18T11:40:21.528Z] [worker-~diagnostic~-809a820c-faef-4a40-8d0f-bdc0b095ba04]: exited 
-[debug] [2020-04-18T11:40:21.528Z] [worker-~diagnostic~-809a820c-faef-4a40-8d0f-bdc0b095ba04]: FINISHED 
-[debug] [2020-04-18T11:40:21.949Z] [runtime-status] [9468] Functions runtime initialized. {"cwd":"d:\\GitHub\\SIMRide\\functions","node_version":"12.14.1"} 
-[debug] [2020-04-18T11:40:21.951Z] [runtime-status] [9468] Disabled runtime features: undefined 
-[debug] [2020-04-18T11:40:21.955Z] [runtime-status] [9468] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
-[debug] [2020-04-18T11:40:21.958Z] [runtime-status] [9468] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:40:21.960Z] [runtime-status] [9468] Outgoing network have been stubbed. [{"name":"http","status":"mocked"},{"name":"http","status":"mocked"},{"name":"https","status":"mocked"},{"name":"https","status":"mocked"},{"name":"net","status":"mocked"}] 
-[debug] [2020-04-18T11:40:22.010Z] [runtime-status] [9468] Checked functions.config() {"config":{}} 
-[debug] [2020-04-18T11:40:22.011Z] [runtime-status] [9468] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:40:22.012Z] [runtime-status] [9468] Resolved module firebase-admin {"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"} 
-[debug] [2020-04-18T11:40:22.013Z] [runtime-status] [9468] Resolved module firebase-functions {"declared":true,"installed":true,"version":"3.6.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-functions\\lib\\index.js"} 
-[debug] [2020-04-18T11:40:22.013Z] [runtime-status] [9468] firebase-admin has been stubbed. {"adminResolution":{"declared":true,"installed":true,"version":"8.10.0","resolution":"d:\\GitHub\\SIMRide\\functions\\node_modules\\firebase-admin\\lib\\index.js"}} 
-[debug] [2020-04-18T11:40:22.102Z] [worker-~diagnostic~-aae6ad71-1966-4eff-a97e-5bc3bb964ee2]: IDLE 
+[debug] [2020-04-18T17:16:26.847Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:28 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] 
+[info] === Deploying to 'carpool-world-5uck5'...
+[info] 
+[info] i  deploying database, storage, firestore, functions, hosting
+[info] Running command: npm --prefix "%RESOURCE_DIR%" run lint
+[info] +  functions: Finished running predeploy script.
+[info] i  database: checking rules syntax...
+[debug] [2020-04-18T17:16:31.371Z] >>> HTTP REQUEST PUT https://carpool-world-5uck5.firebaseio.com/.settings/rules.json?dryRun=true  
+ {
+  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+  "rules": {
+    ".read": true,
+    ".write": true,
+    "bookings": {
+      ".indexOn": "date"
+    }
+  }
+}
+
+[debug] [2020-04-18T17:16:32.316Z] <<< HTTP RESPONSE 200 {"server":"nginx","date":"Sat, 18 Apr 2020 17:16:33 GMT","content-type":"application/json; charset=utf-8","content-length":"15","connection":"keep-alive","access-control-allow-origin":"*","cache-control":"no-cache","strict-transport-security":"max-age=31556926; includeSubDomains; preload"}
+[info] +  database: rules syntax for database carpool-world-5uck5 is valid
+[debug] [2020-04-18T17:16:32.318Z] >>> HTTP REQUEST GET https://appengine.googleapis.com/v1/apps/carpool-world-5uck5  
+ 
+[debug] [2020-04-18T17:16:33.771Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:35 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  firebase.storage: checking storage.rules for compilation errors...
+[debug] [2020-04-18T17:16:33.774Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/carpool-world-5uck5:test  
+ {"source":{"files":[{"name":"storage.rules","content":"service firebase.storage {\n  match /b/{bucket}/o {\n    match /{allPaths=**} {\n      allow read, write: if request.auth!=null;\n    }\n  }\n}\n"}]}}
+[debug] [2020-04-18T17:16:35.189Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:36 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] !  [W] undefined:undefined - Ruleset uses old version (version [1]). Please update to the latest version (version [2]).
+[info] +  firebase.storage: rules file storage.rules compiled successfully
+[info] i  firestore: reading indexes from firestore.indexes.json...
+[info] i  cloud.firestore: checking firestore.rules for compilation errors...
+[debug] [2020-04-18T17:16:35.194Z] >>> HTTP REQUEST POST https://firebaserules.googleapis.com/v1/projects/carpool-world-5uck5:test  
+ {"source":{"files":[{"name":"firestore.rules","content":"service cloud.firestore {\r\n  match /databases/{database}/documents {\r\n    match /{document=**} {\r\n      allow read, write;\r\n    }\r\n    match /chat/{anything=**} {\r\n      allow read, write: if true;\r\n    }\r\n  }\r\n}"}]}}
+[debug] [2020-04-18T17:16:36.621Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:38 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[warn] !  [W] undefined:undefined - Ruleset uses old version (version [1]). Please update to the latest version (version [2]).
+[info] +  cloud.firestore: rules file firestore.rules compiled successfully
+[debug] [2020-04-18T17:16:36.623Z] > [functions] package.json contents: {
+  "name": "functions",
+  "description": "Cloud Functions for Firebase",
+  "scripts": {
+    "lint": "eslint .",
+    "serve": "firebase emulators:start --only functions",
+    "shell": "firebase functions:shell",
+    "start": "npm run shell",
+    "deploy": "firebase deploy --only functions",
+    "logs": "firebase functions:log"
+  },
+  "engines": {
+    "node": "8"
+  },
+  "dependencies": {
+    "consolidate": "^0.15.1",
+    "cors": "^2.8.5",
+    "express": "^4.16.4",
+    "firebase-admin": "^8.10.0",
+    "firebase-functions": "^3.6.0",
+    "handlebars": "^4.7.6",
+    "helmet": "^3.22.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.12.0",
+    "eslint-plugin-promise": "^4.0.1",
+    "firebase-functions-test": "^0.2.0"
+  },
+  "private": true
+}
+[info] i  functions: ensuring required API cloudfunctions.googleapis.com is enabled...
+[debug] [2020-04-18T17:16:38.040Z] [functions] runtime dependency check dates: warning: 2020-05-05T00:00:00.000Z error: 2020-06-05T00:00:00.000Z
+[debug] [2020-04-18T17:16:38.041Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/carpool-world-5uck5/services/cloudfunctions.googleapis.com  
+ 
+[debug] [2020-04-18T17:16:38.041Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/carpool-world-5uck5/services/runtimeconfig.googleapis.com  
+ 
+[debug] [2020-04-18T17:16:39.482Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:41 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] +  functions: required API cloudfunctions.googleapis.com is enabled
+[debug] [2020-04-18T17:16:39.509Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:41 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:39.509Z] >>> HTTP REQUEST GET https://firebase.googleapis.com/v1beta1/projects/carpool-world-5uck5/adminSdkConfig  
+ 
+[debug] [2020-04-18T17:16:39.791Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:41 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:39.792Z] >>> HTTP REQUEST POST https://firebasehosting.googleapis.com/v1beta1/sites/carpool-world-5uck5/versions  
+ {"config":{"rewrites":[{"glob":"**","function":"app"}]},"labels":{"deployment-tool":"cli-firebase"}}
+[debug] [2020-04-18T17:16:41.547Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:43 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:41.549Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/carpool-world-5uck5/releases?pageSize=10&pageToken=  
+ 
+[debug] [2020-04-18T17:16:42.979Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:44 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:42.980Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/carpool-world-5uck5/rulesets/612aab29-7164-42b1-a166-f1b0ab03f550  
+ 
+[debug] [2020-04-18T17:16:44.408Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:45 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  storage: latest version of storage.rules already up to date, skipping upload...
+[debug] [2020-04-18T17:16:44.412Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/carpool-world-5uck5/releases?pageSize=10&pageToken=  
+ 
+[debug] [2020-04-18T17:16:44.412Z] >>> HTTP REQUEST GET https://firestore.googleapis.com/v1beta2/projects/carpool-world-5uck5/databases/(default)/collectionGroups/-/indexes  
+ 
+[debug] [2020-04-18T17:16:45.167Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:46 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:45.167Z] >>> HTTP REQUEST GET https://firestore.googleapis.com/v1beta2/projects/carpool-world-5uck5/databases/(default)/collectionGroups/-/fields?filter=indexConfig.usesAncestorConfig=false  
+ 
+[debug] [2020-04-18T17:16:45.866Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:47 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:45.866Z] >>> HTTP REQUEST GET https://firebaserules.googleapis.com/v1/projects/carpool-world-5uck5/rulesets/5763ef41-1472-4ead-a705-b52a4f03f651  
+ 
+[debug] [2020-04-18T17:16:45.942Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:47 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:45.943Z] Skipping existing index: {"collectionGroup":"messages","queryScope":"COLLECTION","fields":[{"fieldPath":"from","order":"ASCENDING"},{"fieldPath":"timestamp","order":"ASCENDING"}]}
+[debug] [2020-04-18T17:16:45.943Z] Skipping existing index: {"collectionGroup":"messages","queryScope":"COLLECTION","fields":[{"fieldPath":"from","order":"ASCENDING"},{"fieldPath":"to","order":"ASCENDING"},{"fieldPath":"timestamp","order":"ASCENDING"}]}
+[info] +  firestore: deployed indexes in firestore.indexes.json successfully
+[debug] [2020-04-18T17:16:47.291Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:48 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  firestore: latest version of firestore.rules already up to date, skipping upload...
+[info] i  functions: preparing functions directory for uploading...
+[debug] [2020-04-18T17:16:47.294Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/carpool-world-5uck5/configs  
+ 
+[debug] [2020-04-18T17:16:48.966Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:50 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:48.967Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/carpool-world-5uck5/configs/stripe/variables  
+ 
+[debug] [2020-04-18T17:16:49.277Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:50 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:49.277Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/carpool-world-5uck5/configs/stripe/variables/currency  
+ 
+[debug] [2020-04-18T17:16:49.278Z] >>> HTTP REQUEST GET https://runtimeconfig.googleapis.com/v1beta1/projects/carpool-world-5uck5/configs/stripe/variables/token  
+ 
+[debug] [2020-04-18T17:16:49.561Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:51 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:50.686Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:52 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[info] i  functions: packaged functions (70.54 KB) for uploading
+[debug] [2020-04-18T17:16:50.956Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/projects/carpool-world-5uck5/locations/-/functions  
+ 
+[debug] [2020-04-18T17:16:51.414Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:53 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:51.416Z] >>> HTTP REQUEST POST https://cloudfunctions.googleapis.com/v1/projects/carpool-world-5uck5/locations/us-central1/functions:generateUploadUrl  
+ 
+[debug] [2020-04-18T17:16:52.070Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:53 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:52.070Z] >>> HTTP REQUEST PUT https://storage.googleapis.com/gcf-upload-us-central1-3c2de67a-f0b9-4c3b-98db-48c096a0bf80/dcba7c9f-5de2-49ac-8d80-e9b45d2472db.zip?GoogleAccessId=service-815758834423@gcf-admin-robot.iam.gserviceaccount.com&Expires=1587232013&Signature=PSf6Ep32CuSa6b2eNpZMZy9G5WskQ0eJjBEF333bzaIVJQFyEtQHIRca48v2cgsWi9w6xVFeGPJUvfVzq63SGdE8SK9xX3WNEBB5MyuK3is2c6jVfpC7etWYLU4RBAEJg9tCykqAfR4QvdAZdp8EvCprwDRqIv9ZkkkA%2BneHaRzArdc5MZ6tF9dxKcBmDsnthvJR15V69SHtQFCopgE6PlOoL%2BvYdl7UWXQF1aPiznrjpJIHnTsXX7VI1Ua%2Bl7VXVHBU%2Bn9KM%2BBoUqrHNVaIc4kBGAMbJITseX7uuDwAqFBceLOJhQOBVo8oIJqmf2yrvMIflZGt3V0GVjEJ1T2cHQ%3D%3D  
+ <request body omitted>
+[debug] [2020-04-18T17:16:53.370Z] <<< HTTP RESPONSE 200 {"x-guploader-uploadid":"AAANsUk27QW4HWwS90BHJvZZjCqga6NtFuYjd9nne9yo6MqEE_wgflDRFNbeWxJM2JTzgEuWIadcRTM2tLSsXiEpoA","etag":"\"a399af64fa3ccd2d40328717995eef54\"","x-goog-generation":"1587230214929363","x-goog-metageneration":"1","x-goog-hash":"crc32c=NDgr0Q==, md5=o5mvZPo8zS1AMocXmV7vVA==","x-goog-stored-content-length":"72228","x-goog-stored-content-encoding":"identity","vary":"Origin","content-length":"0","date":"Sat, 18 Apr 2020 17:16:55 GMT","server":"UploadServer","content-type":"text/html; charset=UTF-8","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000"}
+[info] +  functions: functions folder uploaded successfully
+[info] i  hosting[carpool-world-5uck5]: beginning deploy...
+[info] i  hosting[carpool-world-5uck5]: found 0 files in public
+[info] +  hosting[carpool-world-5uck5]: file upload complete
+[debug] [2020-04-18T17:16:53.376Z] [hosting] deploy completed after 4ms
+[info] i  database: releasing rules...
+[debug] [2020-04-18T17:16:53.445Z] >>> HTTP REQUEST PUT https://carpool-world-5uck5.firebaseio.com/.settings/rules.json  
+ {
+  /* Visit https://firebase.google.com/docs/database/security to learn more about security rules. */
+  "rules": {
+    ".read": true,
+    ".write": true,
+    "bookings": {
+      ".indexOn": "date"
+    }
+  }
+}
+
+[debug] [2020-04-18T17:16:54.263Z] <<< HTTP RESPONSE 200 {"server":"nginx","date":"Sat, 18 Apr 2020 17:16:55 GMT","content-type":"application/json; charset=utf-8","content-length":"15","connection":"keep-alive","access-control-allow-origin":"*","cache-control":"no-cache","strict-transport-security":"max-age=31556926; includeSubDomains; preload"}
+[info] +  database: rules for database carpool-world-5uck5 released successfully
+[debug] [2020-04-18T17:16:54.265Z] [rules] releasing firebase.storage/carpool-world-5uck5.appspot.com with ruleset projects/carpool-world-5uck5/rulesets/612aab29-7164-42b1-a166-f1b0ab03f550
+[debug] [2020-04-18T17:16:54.265Z] >>> HTTP REQUEST PATCH https://firebaserules.googleapis.com/v1/projects/carpool-world-5uck5/releases/firebase.storage/carpool-world-5uck5.appspot.com  
+ {"release":{"name":"projects/carpool-world-5uck5/releases/firebase.storage/carpool-world-5uck5.appspot.com","rulesetName":"projects/carpool-world-5uck5/rulesets/612aab29-7164-42b1-a166-f1b0ab03f550"}}
+[debug] [2020-04-18T17:16:55.717Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:57 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:55.717Z] [rules] updated release projects/carpool-world-5uck5/releases/firebase.storage/carpool-world-5uck5.appspot.com
+[info] +  storage: released rules storage.rules to firebase.storage
+[debug] [2020-04-18T17:16:55.719Z] [rules] releasing cloud.firestore with ruleset projects/carpool-world-5uck5/rulesets/5763ef41-1472-4ead-a705-b52a4f03f651
+[debug] [2020-04-18T17:16:55.719Z] >>> HTTP REQUEST PATCH https://firebaserules.googleapis.com/v1/projects/carpool-world-5uck5/releases/cloud.firestore  
+ {"release":{"name":"projects/carpool-world-5uck5/releases/cloud.firestore","rulesetName":"projects/carpool-world-5uck5/rulesets/5763ef41-1472-4ead-a705-b52a4f03f651"}}
+[debug] [2020-04-18T17:16:56.191Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:57 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:56.191Z] [rules] updated release projects/carpool-world-5uck5/releases/cloud.firestore
+[info] +  firestore: released rules firestore.rules to cloud.firestore
+[info] i  functions: updating Node.js 8 function app(us-central1)...
+[debug] [2020-04-18T17:16:56.194Z] Trigger is:  {"httpsTrigger":{}}
+[debug] [2020-04-18T17:16:56.195Z] >>> HTTP REQUEST GET https://serviceusage.googleapis.com/v1/projects/carpool-world-5uck5/services/cloudscheduler.googleapis.com  
+ 
+[debug] [2020-04-18T17:16:57.703Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:59 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:57.704Z] >>> HTTP REQUEST PATCH https://cloudfunctions.googleapis.com/v1/projects/carpool-world-5uck5/locations/us-central1/functions/app {"updateMask":"sourceUploadUrl,name,labels,runtime,httpsTrigger"} 
+ {"sourceUploadUrl":"https://storage.googleapis.com/gcf-upload-us-central1-3c2de67a-f0b9-4c3b-98db-48c096a0bf80/dcba7c9f-5de2-49ac-8d80-e9b45d2472db.zip?GoogleAccessId=service-815758834423@gcf-admin-robot.iam.gserviceaccount.com&Expires=1587232013&Signature=PSf6Ep32CuSa6b2eNpZMZy9G5WskQ0eJjBEF333bzaIVJQFyEtQHIRca48v2cgsWi9w6xVFeGPJUvfVzq63SGdE8SK9xX3WNEBB5MyuK3is2c6jVfpC7etWYLU4RBAEJg9tCykqAfR4QvdAZdp8EvCprwDRqIv9ZkkkA%2BneHaRzArdc5MZ6tF9dxKcBmDsnthvJR15V69SHtQFCopgE6PlOoL%2BvYdl7UWXQF1aPiznrjpJIHnTsXX7VI1Ua%2Bl7VXVHBU%2Bn9KM%2BBoUqrHNVaIc4kBGAMbJITseX7uuDwAqFBceLOJhQOBVo8oIJqmf2yrvMIflZGt3V0GVjEJ1T2cHQ%3D%3D","name":"projects/carpool-world-5uck5/locations/us-central1/functions/app","labels":{"deployment-tool":"cli-firebase"},"httpsTrigger":{},"runtime":"nodejs8"}
+[debug] [2020-04-18T17:16:58.093Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:16:59 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:58.094Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/projects/carpool-world-5uck5/locations/-/functions  
+ 
+[debug] [2020-04-18T17:16:58.809Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:17:00 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:16:58.810Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/Y2FycG9vbC13b3JsZC01dWNrNS91cy1jZW50cmFsMS9hcHAvT3lCdk1wVXVDVUk  
+ 
+[debug] [2020-04-18T17:16:59.424Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:17:01 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:17:01.425Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/Y2FycG9vbC13b3JsZC01dWNrNS91cy1jZW50cmFsMS9hcHAvT3lCdk1wVXVDVUk  
+ 
+[debug] [2020-04-18T17:17:02.025Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:17:03 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:17:04.024Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/Y2FycG9vbC13b3JsZC01dWNrNS91cy1jZW50cmFsMS9hcHAvT3lCdk1wVXVDVUk  
+ 
+[debug] [2020-04-18T17:17:04.315Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:17:05 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:17:06.316Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/Y2FycG9vbC13b3JsZC01dWNrNS91cy1jZW50cmFsMS9hcHAvT3lCdk1wVXVDVUk  
+ 
+[debug] [2020-04-18T17:17:06.606Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:17:08 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:17:08.608Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/Y2FycG9vbC13b3JsZC01dWNrNS91cy1jZW50cmFsMS9hcHAvT3lCdk1wVXVDVUk  
+ 
+[debug] [2020-04-18T17:17:09.180Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:17:10 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:17:11.181Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/Y2FycG9vbC13b3JsZC01dWNrNS91cy1jZW50cmFsMS9hcHAvT3lCdk1wVXVDVUk  
+ 
+[debug] [2020-04-18T17:17:11.537Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:17:13 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:17:13.537Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/Y2FycG9vbC13b3JsZC01dWNrNS91cy1jZW50cmFsMS9hcHAvT3lCdk1wVXVDVUk  
+ 
+[debug] [2020-04-18T17:17:14.106Z] <<< HTTP RESPONSE 200 {"content-type":"application/json; charset=UTF-8","vary":"X-Origin, Referer, Origin,Accept-Encoding","date":"Sat, 18 Apr 2020 17:17:15 GMT","server":"ESF","cache-control":"private","x-xss-protection":"0","x-frame-options":"SAMEORIGIN","x-content-type-options":"nosniff","alt-svc":"quic=\":443\"; ma=2592000; v=\"46,43\",h3-Q050=\":443\"; ma=2592000,h3-Q049=\":443\"; ma=2592000,h3-Q048=\":443\"; ma=2592000,h3-Q046=\":443\"; ma=2592000,h3-Q043=\":443\"; ma=2592000,h3-T050=\":443\"; ma=2592000","accept-ranges":"none","transfer-encoding":"chunked"}
+[debug] [2020-04-18T17:17:16.106Z] >>> HTTP REQUEST GET https://cloudfunctions.googleapis.com/v1/operations/Y2FycG9vbC13b3JsZC01dWNrNS91cy1jZW50cmFsMS9hcHAvT3lCdk1wVXVDVUk  
+ 

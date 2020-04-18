@@ -1,3 +1,5 @@
+/* eslint-disable callback-return */
+/* eslint-disable no-path-concat */
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 // import React from 'react';
@@ -49,20 +51,41 @@
 
 const functions = require('firebase-functions');
 const express = require('express');
-const router = express.Router();
+const engines = require('consolidate');
+const helmet = require('helmet')
+const app = express();
 
-router.get('/', (req, res) => {
-  res.set('Cache-control', 'public, max-age=300, s-maxage=600');
-  res.render('index');
+app.engine('hbs', engines.handlebars);
+app.set('views', './views');
+app.set('view engine', 'hbs');
+
+function ignoreFavicon(req, res, next) {
+  if (req.originalUrl === '/favicon.ico') {
+    res.status(204).json({
+      nope: true
+    });
+  } else {
+    next();
+  }
+}
+
+app.use(ignoreFavicon);
+
+app.use(helmet.contentSecurityPolicy({
+  directives: {
+    defaultSrc: ["'self'"],
+    styleSrc: ["'self'"],
+    imgSrc: ["'self'"]
+  }
+}))
+
+app.get('/', (req, res, next) => {
+  let data = {
+    message: 'fuck shafiq'
+  };
+  res,set('Cache-Control', 'public, max-age=300, s-maxage=600');
+  this.response.render('index')
+  res.status(200).send(data);
 });
 
-// router.get('/latest', (req, res) => {
-
-// });
-
-// router.get('/search/:q', (req, res) => {
-//   imgur.getImage(req.params.q, req.query.offset).then(ans => {
-//     res.json(ans);
-//   }); 
-// });
-exports.router = functions.https.onRequest(router);
+exports.app = functions.https.onRequest(app);
