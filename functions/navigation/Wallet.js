@@ -1,6 +1,6 @@
 import React from 'react';
 import { Text, View } from 'react-native';
-import firebase from '../base';
+import firebase from '../../base';
 import 'firebase/firestore';
 import {user} from './Login';
 import StripeCheckout from "react-stripe-checkout";
@@ -51,7 +51,7 @@ class Wallet extends React.Component {
     }
 
     // to show amount left in wallet
-    walletHomePage = () => {
+    walletHomePage() {
         document.getElementById('div_WalletHome').style.display = "block";
         document.getElementById('div_WalletTopUp').style.display = "none";
         document.getElementById('div_WalletHistory').style.display = "none";
@@ -59,14 +59,14 @@ class Wallet extends React.Component {
         document.getElementById('td_WalletAmount').innerHTML = "$" + user[8];
     }
 
-    topupWallet = () => {
+    topupWallet() {
         
 
 
     }
 
     // top up wallet button
-    topUpWalletPage = () => {
+    topUpWalletPage() {
         document.getElementById('div_WalletHome').style.display = "none";
         document.getElementById('div_WalletTopUp').style.display = "block";
         document.getElementById('div_WalletHistory').style.display = "none";
@@ -74,7 +74,7 @@ class Wallet extends React.Component {
     }
 
     // goes to transaction history page
-    transactionsPage = () => {
+    transactionsPage() {
         document.getElementById('div_WalletHome').style.display = "none";
         document.getElementById('div_WalletTopUp').style.display = "none";
         document.getElementById('div_WalletHistory').style.display = "block";

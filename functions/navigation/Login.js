@@ -1,7 +1,12 @@
+/* eslint-disable no-loop-func */
+/* eslint-disable promise/no-nesting */
+/* eslint-disable promise/catch-or-return */
+/* eslint-disable no-alert */
+/* eslint-disable promise/always-return */
 import React, { Component } from 'react';
 import { Text, View, Image, Button } from 'react-native';
-import logo from '../assets/logo.png';
-import firebase from '../base';
+import logo from '../../assets/logo.png';
+import firebase from '../../base';
 import { validate } from 'email-validator';
 
 let user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
@@ -12,6 +17,7 @@ var emailArr = [];
 class Login extends React.Component {
     constructor(props) {
       super(props);
+      this.checkEmail = this.checkEmail.bind(this);
       this.login = this.login.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.signup = this.signup.bind(this);
@@ -42,8 +48,8 @@ class Login extends React.Component {
         .ref('admin')
         .orderByChild('acct')
         .once('value')
-        .then(function (snapshot) {
-          snapshot.forEach(function (child) {
+        .then((snapshot) => {
+          snapshot.forEach((child) => {
             countArr[0] = child.val().acct;
           })
         });
@@ -52,9 +58,9 @@ class Login extends React.Component {
       firebase.database().ref('accounts')
         .orderByChild('email')
         .once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           var i = 0;
-          snapshot.forEach(function (child) {
+          snapshot.forEach((child) => {
             unameArr[i] = child.val().uname;
             emailArr[i] = child.val().email;
             i++;
@@ -66,7 +72,7 @@ class Login extends React.Component {
     }
 
     // get all information from this account and stores into user
-    checkEmail = e => {
+    checkEmail(e) {
       user = [];
       user[3] = document.getElementById("signinemail").value;
       user[3] = user[3].toString().toLowerCase();
@@ -75,8 +81,8 @@ class Login extends React.Component {
       accountsRef.orderByChild('email')
         .equalTo(user[3])
         .once('value')
-        .then(function (snapshot) {
-          snapshot.forEach(function (child) {
+        .then((snapshot) => {
+          snapshot.forEach((child) => {
             user[0] = child.val().fname;
             user[1] = child.val().lname;
             user[2] = child.val().uname;
@@ -99,9 +105,9 @@ class Login extends React.Component {
     // reset password for user
     submitForgotPassword(e) {
       e.preventDefault();
-      firebase.auth().sendPasswordResetEmail(this.state.email).then(function () {
+      firebase.auth().sendPasswordResetEmail(this.state.email).then(() => {
         alert("Reset link has been sent to your email!")
-      }).catch(function (error) {
+      }).catch((error) => {
         alert("Uh-oh! Something went wrong")
       });
     }
@@ -110,7 +116,7 @@ class Login extends React.Component {
     login(e) {
       e.preventDefault();
 
-      if (typeof user[9] != 'undefined') {
+      if (typeof user[9] !== 'undefined') {
         var i = 0;
         var email = this.state.email.toString().toLowerCase();
 
@@ -128,7 +134,7 @@ class Login extends React.Component {
                 })
                 break;
               }
-            } else if (i == emailArr.length - 1) {
+            } else if (i === emailArr.length - 1) {
               alert("Email not found yo");
               i++;
             } else {
@@ -157,7 +163,7 @@ class Login extends React.Component {
       }
 
       // checks confirm password
-      if (this.state.password != this.state.repassword) {
+      if (this.state.password !== this.state.repassword) {
         alert("Passwords do not match");
       } else {
         console.log(unameCheck);
@@ -206,7 +212,7 @@ class Login extends React.Component {
               // writing
               firebase.database().ref('admin/counter')
                 .once('value')
-                .then(function (snapshot) {
+                .then((snapshot) => {
                   countArr[0] = emailArr.length+1;
                   console.log("rewrite: ", countArr[0]);
                   snapshot.ref.update({

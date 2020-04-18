@@ -1,12 +1,15 @@
+/* eslint-disable promise/always-return */
+/* eslint-disable promise/catch-or-return */
+/* eslint-disable no-alert */
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import firebase from '../base';
+import firebase from '../../base';
 import 'firebase/firestore';
 import "firebase/storage";
 import {user} from './Login';
 import { getPlaneDetection } from 'expo/build/AR';
 
-var Util = require('../util/Util');
+var Util = require('../../util/Util');
 
 class Account extends React.Component {
     constructor(props) {
@@ -20,6 +23,8 @@ class Account extends React.Component {
       this.applyDriver = this.applyDriver.bind(this);
       this.handleChange = this.handleChange.bind(this);
       this.handleImgChange = this.handleImgChange.bind(this);
+      this.handleFrontUpload = this.handleFrontUpload.bind(this);
+      this.handleBackUpload = this.handleBackUpload.bind(this);
       this.state = {
         firstName: '',
         lastName: '',
@@ -50,21 +55,21 @@ class Account extends React.Component {
     }
 
     // handles image change
-    handleImgChange = e => {
+    handleImgChange(e) {
       if (e.target.files[0]) {
         const image = e.target.files[0];
         this.setState(() => ({
           image
         }));
       }
-    };
+    }
 
     // uplaods front license pic
-    handleFrontUpload = () => {
+    handleFrontUpload() {
       const {
         image
       } = this.state;
-      if (image != null) {
+      if (image !== null) {
         const uploadTask = firebase.storage().ref().child(`license/${user[9]}/front`).put(image);
         uploadTask.on(
           "state_changed",
@@ -78,7 +83,7 @@ class Account extends React.Component {
           },
           error => {
             // Error function ...
-            alert('Error: ' + error)
+            alert('Error: ' + error);
             console.log(error);
           },
           () => {
@@ -102,10 +107,10 @@ class Account extends React.Component {
       } else {
         alert('Error: No file selected');
       }
-    };
+    }
 
     // uploads back license pic
-    handleBackUpload = () => {
+    handleBackUpload() {
       var date = new Date;
       var m = date.getMonth() + 1;
       var d = date.getDate();
@@ -115,7 +120,7 @@ class Account extends React.Component {
       const {
         image
       } = this.state;
-      if (image != null) {
+      if (image !== null) {
         const uploadTask = firebase.storage().ref().child(`license/${user[9]}/back`).put(image);
         uploadTask.on(
           "state_changed",
@@ -155,7 +160,7 @@ class Account extends React.Component {
       } else {
         alert('Error: No file selected');
       }
-    };
+    }
 
     // goes back to login page if stumble upon another page by accident without logging in
     componentDidMount() {
@@ -165,10 +170,10 @@ class Account extends React.Component {
         if (user[5].toString().toLowerCase() === "no") {
           firebase.database().ref('driverDetails')
             .once('value')
-            .then(function (snapshot) {
+            .then((snapshot) => {
               var i = 0;
-              snapshot.forEach(function (child) {
-                if (user[9] = child.key) {
+              snapshot.forEach((child) => {
+                if (user[9] === child.key) {
                   if (child.val().completed === "yes") {
                     document.getElementById('btnApplyDriver').disabled = "true";
                     document.getElementById('btnApplyDriver').style.display = "inline-block";
@@ -227,7 +232,7 @@ class Account extends React.Component {
     // submits the edited profile and updates the realtime db
     submitEditProfile(e) {
       e.preventDefault();
-      if (this.state.firstName != "" && this.state.lastName != "" && this.state.phone != "") {
+      if (this.state.firstName !== "" && this.state.lastName !== "" && this.state.phone !== "") {
         user[0] = this.state.firstName;
         user[1] = this.state.lastName;
         user[4] = this.state.phone;
@@ -236,7 +241,7 @@ class Account extends React.Component {
         accountsRef.orderByChild('email')
           .equalTo(user[3])
           .once('value')
-          .then(function (snapshot) {
+          .then((snapshot) => {
             snapshot.ref.update({
               fname: user[0]
             })
@@ -317,9 +322,9 @@ class Account extends React.Component {
       if (this.state.newPassword === this.state.confirmPassword) {
         var user = firebase.auth().currentUser;
 
-        user.updatePassword(this.state.confirmPassword).then(function () {
+        user.updatePassword(this.state.confirmPassword).then(() => {
           alert("Password updated successfully!");
-        }).catch(function (error) {
+        }).catch((error) => {
           alert(error);
         });
 
@@ -395,7 +400,7 @@ class Account extends React.Component {
       var today = new Date(y, m, d);
       var now = new Date(yy, m, d)
 
-      if (this.state.license != "" && this.state.carplate != "" && this.state.license.length == 9 && (this.state.license.charAt(0) === 'S' || this.state.license.charAt(0) === 'T') && today > issuedDate) {
+      if (this.state.license !== "" && this.state.carplate !== "" && this.state.license.length === 9 && (this.state.license.charAt(0) === 'S' || this.state.license.charAt(0) === 'T') && today > issuedDate) {
         const accountsRef = firebase.database().ref('driverDetails/' + user[9]);
         const driverDetails = {
           driverUname: user[2],
@@ -421,9 +426,9 @@ class Account extends React.Component {
         document.getElementById('btnImgBackUpload').style.display = 'none';
         document.getElementById('submitDriverDetails').style.display = 'none';
       } else {
-        if (this.state.license == "" || this.state.carplate == "") {
+        if (this.state.license === "" || this.state.carplate === "") {
           alert('One or more fields are empty');
-        } else if (this.state.license.length != 9 || (this.state.license.charAt(0) != 'S' && this.state.license.charAt(0) != 'T')) {
+        } else if (this.state.license.length !== 9 || (this.state.license.charAt(0) !== 'S' && this.state.license.charAt(0) !== 'T')) {
           alert('Please enter a valid license number');
         } else if (issuedDate > today) {
           alert('You must be a driver for at least 2 years');
