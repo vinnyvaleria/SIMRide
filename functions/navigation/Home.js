@@ -1,6 +1,9 @@
+/* eslint-disable no-alert */
+/* eslint-disable promise/always-return */
+/* eslint-disable promise/catch-or-return */
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import firebase from '../base';
+import firebase from '../../base';
 import 'firebase/firestore';
 import {user} from './Login';
 import * as Datetime from "react-datetime";
@@ -59,11 +62,11 @@ class Home extends React.Component {
       document.getElementById('tb_driverApplication').innerHTML = '';
       
       const database = firebase.database().ref('driverDetails').orderByChild('dateApplied');
-      database.once('value', function (snapshot) {
+      database.once('value', (snapshot) => {
         if (snapshot.exists()) {
           let content = '';
           let rowCount = 0;
-          snapshot.forEach(function (data) {
+          snapshot.forEach((data) => {
             if (data.val().status === "pending" && data.val().completed === "yes") {
               let driverUname = data.val().driverUname;
               let dateApplied = data.val().dateApplied;
@@ -93,7 +96,7 @@ class Home extends React.Component {
     }
 
     // view applicant that applied to be driver
-    viewApplicant = e => {
+    viewApplicant(e) {
       var driverID = e.target.parentElement.parentElement.id;
       document.getElementById('div_ViewApplicant').style.display = "block";
       document.getElementById('div_ViewReportedUser').style.display = "none";
@@ -101,9 +104,9 @@ class Home extends React.Component {
       document.getElementById('div_ReportedUsers').style.display = "none";
       
       const database = firebase.database().ref('driverDetails').orderByChild('dateApplied');
-      database.once('value', function (snapshot) {
+      database.once('value', (snapshot) => {
         if (snapshot.exists()) {
-          snapshot.forEach(function (data) {
+          snapshot.forEach((data) => {
             if (data.key === driverID) {
               let driverUname = data.val().driverUname;
               let dateApplied = data.val().dateApplied;
@@ -143,12 +146,12 @@ class Home extends React.Component {
     }
 
     // approve applicants
-    approveApplicant = () => {
+    approveApplicant() {
       const driverID = document.getElementById('td_ViewApplicant_driverID').innerHTML;
       const accountsRef = firebase.database().ref('accounts/' + driverID);
       accountsRef.orderByChild('email')
         .once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           snapshot.ref.update({
             isDriver: "yes"
           })
@@ -157,7 +160,7 @@ class Home extends React.Component {
       const driverRef = firebase.database().ref('driverDetails/' + driverID);
       driverRef.orderByChild('dateApplied')
         .once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           snapshot.ref.update({
             status: "approved"
           })
@@ -175,11 +178,11 @@ class Home extends React.Component {
       document.getElementById('tb_ReportedUsers').innerHTML = '';
 
       const database = firebase.database().ref('reportedUsers').orderByChild('lastReportDate');
-      database.once('value', function (snapshot) {
+      database.once('value', (snapshot) => {
         if (snapshot.exists()) {
           let content = '';
           let rowCount = 0;
-          snapshot.forEach(function (data) {
+          snapshot.forEach((data) => {
             let username = data.val().username;
             let lastDate = new Date(data.val().lastReportDate * -1);
             let status = data.val().status;
@@ -209,7 +212,7 @@ class Home extends React.Component {
     }
 
     // view the reported user
-    viewReportedUser = e => {
+    viewReportedUser(e) {
       var userID = e.target.parentElement.parentElement.id;
       document.getElementById('div_ViewApplicant').style.display = "none";
       document.getElementById('div_ViewReportedUser').style.display = "block";
@@ -217,9 +220,9 @@ class Home extends React.Component {
       document.getElementById('div_ReportedUsers').style.display = "none";
 
       const database = firebase.database().ref('reportedUsers').orderByChild('lastReportDate');
-      database.once('value', function (snapshot) {
+      database.once('value', (snapshot) => {
         if (snapshot.exists()) {
-          snapshot.forEach(function (data) {
+          snapshot.forEach((data) => {
             if (data.key === userID) {
               let username = data.val().username;
               let lastReportDate = new Date(data.val().lastReportDate * -1);
@@ -257,7 +260,7 @@ class Home extends React.Component {
       const userID = document.getElementById('td_ViewReportedUser_userID').innerHTML;
       const accountsRef = firebase.database().ref('accounts/' + userID);
       accountsRef.once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           snapshot.ref.update({
             isBanned: "yes"
           })
@@ -265,7 +268,7 @@ class Home extends React.Component {
 
       const reportedRef = firebase.database().ref('reportedUsers/' + userID);
       reportedRef.once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           snapshot.ref.update({
             status: "banned"
           })
@@ -283,7 +286,7 @@ class Home extends React.Component {
       const userID = document.getElementById('td_ViewReportedUser_userID').innerHTML;
       const accountsRef = firebase.database().ref('accounts/' + userID);
       accountsRef.once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           snapshot.ref.update({
             isBanned: "no"
           })
@@ -291,7 +294,7 @@ class Home extends React.Component {
 
       const reportedRef = firebase.database().ref('reportedUsers/' + userID);
       reportedRef.once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           snapshot.ref.update({
             status: "not banned"
           })
@@ -305,33 +308,33 @@ class Home extends React.Component {
         document.getElementById('div_ReportedUsers').style.display = "block";
     }
 
-    viewMyBookings = (tb) => {
+    viewMyBookings(tb) {
       document.getElementById(tb).innerHTML = '';
 
       // get all accounts
       firebase.database().ref('accounts')
         .orderByChild('email')
         .once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           let i = 0;
-          snapshot.forEach(function (child) {
+          snapshot.forEach((child) => {
             userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
             i++;
           })
         });
 
       const database = firebase.database().ref('bookings').orderByChild('date').limitToFirst(3).startAt(Date.now());
-      database.once('value', function (snapshot) {
+      database.once('value', (snapshot) => {
         if (snapshot.exists()) {
           let content = '';
-          snapshot.forEach(function (data) {
-            if (data.val().currPassengers != "") {
+          snapshot.forEach((data) => {
+            if (data.val().currPassengers !== "") {
               if (data.val().currPassengers.includes(user[2])) {
                 let area = data.val().area;
                 let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                 let ppl = [];
 
-                if (data.val().currPassengers != "") {
+                if (data.val().currPassengers !== "") {
                   ppl = data.val().currPassengers.split(',')
                 }
 
@@ -362,16 +365,16 @@ class Home extends React.Component {
     }
 
     // view created bookings by driver
-    viewCreatedBooking = () => {
+    viewCreatedBooking() {
       document.getElementById('tb_DriverUpcomingDrives').innerHTML = '';
 
       // get all accounts
       firebase.database().ref('accounts')
         .orderByChild('email')
         .once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           let i = 0;
-          snapshot.forEach(function (child) {
+          snapshot.forEach((child) => {
             userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
             i++;
           })
@@ -381,16 +384,16 @@ class Home extends React.Component {
       date.setDate(date.getDate() - 1);
 
       const database = firebase.database().ref('bookings').orderByChild('date').limitToFirst(3).startAt(Date.now());
-      database.on('value', function (snapshot) {
+      database.on('value', (snapshot) => {
         if (snapshot.exists()) {
           let content = '';
-          snapshot.forEach(function (data) {
+          snapshot.forEach((data) => {
             if (data.val().driverID === user[9]) {
               let area = data.val().area;
               let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
               let ppl = [];
 
-              if (data.val().currPassengers != "") {
+              if (data.val().currPassengers !== "") {
                 ppl = data.val().currPassengers.split(',')
               }
 

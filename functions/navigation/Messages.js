@@ -1,6 +1,10 @@
+/* eslint-disable no-alert */
+/* eslint-disable promise/no-nesting */
+/* eslint-disable promise/always-return */
+/* eslint-disable promise/catch-or-return */
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import firebase from '../base';
+import firebase from '../../base';
 import 'firebase/firestore';
 import {user} from './Login';
 
@@ -15,6 +19,8 @@ class Messages extends React.Component {
     constructor(props) {
 
       super(props);
+      this.inboxMsgButton = this.inboxMsgButton.bind(this);
+      this.newMsgButton = this.newMsgButton.bind(this);
       this.sendMessage = this.sendMessage.bind(this);
       this.searchUsername = this.searchUsername.bind(this);
       this.handleChange = this.handleChange.bind(this);
@@ -52,9 +58,9 @@ class Messages extends React.Component {
           .ref('accounts')
           .orderByChild('email')
           .once('value')
-          .then(function (snapshot) {
+          .then((snapshot) => {
             var i = 0;
-            snapshot.forEach(function (child) {
+            snapshot.forEach((child) => {
               unameArr[i] = child.val().uname;
               i++;
             })
@@ -83,7 +89,7 @@ class Messages extends React.Component {
               to: this.state.to,
               text: this.state.message,
               timestamp: new Date()
-            }).catch(function (error) {
+            }).catch((error) => {
               alert('Error sending message.', error);
             });
 
@@ -98,7 +104,7 @@ class Messages extends React.Component {
               to: this.state.to,
               text: this.state.message,
               timestamp: new Date()
-            }).catch(function (error) {
+            }).catch((error) => {
               alert('Error sending message.', error);
             });
 
@@ -116,7 +122,7 @@ class Messages extends React.Component {
     searchUsername(e) {
       e.preventDefault();
 
-      var i = 0;
+      let i = 0;
 
       // creates chat based on usernames
       while (i < unameArr.length + 1) {
@@ -127,7 +133,7 @@ class Messages extends React.Component {
 
           //creates chat based on username length
           chatName;
-          if (user[2].length != this.state.to.length) {
+          if (user[2].length !== this.state.to.length) {
             if (user[2].length < this.state.to.length) {
               chatName = (user[2] + "-" + this.state.to)
             } else {
@@ -136,16 +142,16 @@ class Messages extends React.Component {
           }
           // if same length compare by alphabets
           else {
-            var i = 0;
-            while (i < user[2].length) {
-              if (user[2][i] != this.state.to[i]) {
-                if (user[2][i] < this.state.to[i]) {
+            let j = 0;
+            while (j < user[2].length) {
+              if (user[2][j] !== this.state.to[j]) {
+                if (user[2][j] < this.state.to[j]) {
                   chatName = (user[2] + "-" + this.state.to)
                 } else {
                   chatName = (this.state.to + "-" + user[2])
                 }
               } else {
-                i++;
+                j++;
               }
             }
           }
@@ -172,8 +178,8 @@ class Messages extends React.Component {
       accountsRef.orderByChild('uname')
         .equalTo(clickedUser)
         .once('value')
-        .then(function (snapshot) {
-          snapshot.forEach(function (child) {
+        .then((snapshot) => {
+          snapshot.forEach((child) => {
             lblotherfName.innerHTML = child.val().fname;
             lblotherlName.innerHTML = child.val().lname;
             lblotherEmail.innerHTML = child.val().email;
@@ -186,7 +192,7 @@ class Messages extends React.Component {
     }
 
     // new msg button
-    newMsgButton = () => {
+    newMsgButton() {
       document.getElementById('inbox').style.display = "none";
       document.getElementById('searchUser').style.display = "block";
       document.getElementById('sendNewMessage').style.display = "none";
@@ -195,7 +201,7 @@ class Messages extends React.Component {
     }
 
     // inbox, buttons dynamically created from the chats that you have
-    inboxMsgButton = () => {
+    inboxMsgButton() {
       document.getElementById("chatsStarted").innerHTML = "";
       document.getElementById('searchUser').style.display = "none";
       document.getElementById('inbox').style.display = "block";
@@ -212,7 +218,7 @@ class Messages extends React.Component {
     }
 
     // opens the chat from inbox
-    openChat = e => {
+    openChat(e) {
       document.getElementById("messages").innerHTML = "";
 
       chatName = chats[e.target.id];
@@ -249,7 +255,7 @@ class Messages extends React.Component {
       
       if (document.getElementById('ddReportReason').value === "fake"){
         const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
-        reportRef.once('value', function (snapshot) {
+        reportRef.once('value', (snapshot) => {
           if (snapshot.exists()) {
             reportRef.set({
               status: "not banned",
@@ -277,7 +283,7 @@ class Messages extends React.Component {
       }
       else if (document.getElementById('ddReportReason').value === "safety") {
         const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
-        reportRef.once('value', function (snapshot) {
+        reportRef.once('value', (snapshot) => {
           if (snapshot.exists()) {
             reportRef.set({
               status: "not banned",
@@ -306,7 +312,7 @@ class Messages extends React.Component {
       }
       else if (document.getElementById('ddReportReason').value === "vulgar") {
         const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
-        reportRef.once('value', function (snapshot) {
+        reportRef.once('value', (snapshot) => {
           if (snapshot.exists()) {
             reportRef.set({
               status: "not banned",
@@ -335,7 +341,7 @@ class Messages extends React.Component {
 
       else if (document.getElementById('ddReportReason').value === "inappropriate") {
         const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
-        reportRef.once('value', function (snapshot) {
+        reportRef.once('value', (snapshot) => {
           if (snapshot.exists()) {
             reportRef.set({
               status: "not banned",

@@ -1,8 +1,9 @@
 {
   "main": "node_modules/expo/AppEntry.js",
   "scripts": {
+    "lint": "",
     "predeploy": "expo build:web",
-    "deploy-hosting": "npm run predeploy && firebase deploy --only hosting"
+    "deploy-hosting": "npm run predeploy && firebase deploy --only functions,hosting"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^1.1.2",

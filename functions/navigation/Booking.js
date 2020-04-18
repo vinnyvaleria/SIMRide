@@ -1,6 +1,9 @@
+/* eslint-disable no-alert */
+/* eslint-disable promise/always-return */
+/* eslint-disable promise/catch-or-return */
 import React, { Component } from 'react';
 import { Text, View } from 'react-native';
-import firebase from '../base';
+import firebase from '../../base';
 import 'firebase/firestore';
 import {user} from './Login';
 import * as Datetime from "react-datetime";
@@ -13,7 +16,9 @@ class Booking extends React.Component {
     constructor(props) {
 
       super(props);
+      this.valid = this.valid.bind(this);
       this.handleChange = this.handleChange.bind(this);
+      this.onChange = this.onChange.bind(this);
       this.createBooking = this.createBooking.bind(this);
       this.submitCreateBooking = this.submitCreateBooking.bind(this);
       this.viewMyBookings = this.viewMyBookings.bind(this);
@@ -23,6 +28,7 @@ class Booking extends React.Component {
       this.joinBooking = this.joinBooking.bind(this);
       this.cancelBooking = this.cancelBooking.bind(this);
       this.deleteBooking = this.deleteBooking.bind(this);
+      this.filterChange = this.filterChange.bind(this);
       this.state = {
         description: '',
         currPassengers: '',
@@ -31,9 +37,9 @@ class Booking extends React.Component {
       }
     }
 
-    onChange = date => this.setState({
-      date
-    })
+    onChange(date) {
+      this.setState({ date: date })
+    }
 
     // handles change
     handleChange(e) {
@@ -42,10 +48,10 @@ class Booking extends React.Component {
       });
     }
 
-    valid = (current) => {
+    valid(current) {
       let yesterday = Datetime.moment().subtract(1, 'day');
       return current.isAfter(yesterday);
-    };
+    }
 
     // goes back to login page if stumble upon another page by accident without logging in
     componentDidMount() {
@@ -68,7 +74,7 @@ class Booking extends React.Component {
     }
 
     // view all available bookings and displays in table
-    viewAllBookings = () => {
+    viewAllBookings() {
       const self = this;
       document.getElementById('tb_AllBookings').innerHTML = '';
 
@@ -82,25 +88,25 @@ class Booking extends React.Component {
       firebase.database().ref('accounts')
         .orderByChild('email')
         .once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           var i = 0;
-          snapshot.forEach(function (child) {
+          snapshot.forEach((child) => {
             userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
             i++;
           })
         });
 
       const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
-      database.once('value', function (snapshot) {
+      database.once('value', (snapshot) => {
         if (snapshot.exists()) {
           let content = '';
           let rowCount = 0;
-          snapshot.forEach(function (data) {
+          snapshot.forEach((data) => {
             let area = data.val().area;
             let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
             let ppl = [];
 
-            if (data.val().currPassengers != "") {
+            if (data.val().currPassengers !== "") {
               ppl = data.val().currPassengers.split(',')
             }
 
@@ -143,7 +149,7 @@ class Booking extends React.Component {
     }
 
     // view the booking clicked
-    viewBooking = e => {
+    viewBooking(e) {
       document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML = null;
       document.getElementById('td_viewSelectedBooking_bookingID').innerHTML = null;
       document.getElementById('td_viewSelectedBooking_driverName').innerHTML = null;
@@ -165,25 +171,25 @@ class Booking extends React.Component {
       firebase.database().ref('accounts')
         .orderByChild('email')
         .once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           var i = 0;
-          snapshot.forEach(function (child) {
+          snapshot.forEach((child) => {
             userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
             i++;
           })
         });
 
       const database = firebase.database().ref('bookings');
-      database.once('value', function (snapshot) {
+      database.once('value', (snapshot) => {
         if (snapshot.exists()) {
-          snapshot.forEach(function (data) {
+          snapshot.forEach((data) => {
             if (data.key === bookingID) {
               let area = data.val().area;
               let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
               payMethod = data.val().payMethod;
               let ppl = [];
 
-              if (data.val().currPassengers != "") {
+              if (data.val().currPassengers !== "") {
                 ppl = data.val().currPassengers.split(', ')
               }
 
@@ -258,7 +264,7 @@ class Booking extends React.Component {
     }
 
     // join booking
-    joinBooking = () => {
+    joinBooking() {
       const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
       let currPassengers = document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML;
       console.log(currPassengers);
@@ -297,7 +303,7 @@ class Booking extends React.Component {
     }
 
     // cancel booking
-    cancelBooking = () => {
+    cancelBooking() {
       const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
       let currPassengers = document.getElementById('td_viewSelectedBooking_currPassengers').innerHTML;
       let passengers = [];
@@ -317,23 +323,23 @@ class Booking extends React.Component {
       else {
         passengers[pos] = '';
         let temppassengers = [];
-        passengers.forEach(function(p) {
-          if (p != '') {
+        passengers.forEach((p) => {
+          if (p !== '') {
             temppassengers.push(p);
           }
         });
 
         payby[pos] = '';
         let temppay = [];
-        payby.forEach(function (p) {
-          if (p != '') {
+        payby.forEach((p) => {
+          if (p !== '') {
             temppay.push(p);
           }
         });
 
         for (let p = 0; p < temppay.length; p++) {
-          if (temppay[p] != '') {
-            if (p != temppay.length - 1) {
+          if (temppay[p] !== '') {
+            if (p !== temppay.length - 1) {
               payToPush += temppay[p] + ", ";
               passengerToPush += temppassengers[p] + ", ";
             } else {
@@ -361,7 +367,7 @@ class Booking extends React.Component {
     }
 
     // delete booking
-    deleteBooking = () => {
+    deleteBooking() {
       const bookingID = document.getElementById('td_viewSelectedBooking_bookingID').innerHTML;
       const accountsRef = firebase.database().ref('bookings/' + bookingID);
       accountsRef.remove();
@@ -369,7 +375,7 @@ class Booking extends React.Component {
     }
 
     // view my bookings
-    viewMyBookings = () => {
+    viewMyBookings() {
       const self = this;
       document.getElementById('tb_myBookings').innerHTML = '';
 
@@ -383,27 +389,27 @@ class Booking extends React.Component {
       firebase.database().ref('accounts')
         .orderByChild('email')
         .once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           let i = 0;
-          snapshot.forEach(function (child) {
+          snapshot.forEach((child) => {
             userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
             i++;
           })
         });
 
       const database = firebase.database().ref('bookings').orderByChild('date');
-      database.once('value', function (snapshot) {
+      database.once('value', (snapshot) => {
         if (snapshot.exists()) {
           let content = '';
           let rowCount = 0;
-          snapshot.forEach(function (data) {
-            if (data.val().currPassengers != "") {
+          snapshot.forEach((data) => {
+            if (data.val().currPassengers !== "") {
               if (data.val().currPassengers.includes(user[2])) {
                 let area = data.val().area;
                 let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                 let ppl = [];
 
-                if (data.val().currPassengers != "") {
+                if (data.val().currPassengers !== "") {
                   ppl = data.val().currPassengers.split(',')
                 }
 
@@ -446,7 +452,7 @@ class Booking extends React.Component {
     }
 
     // view created bookings by driver
-    viewCreatedBooking = () => {
+    viewCreatedBooking() {
       const self = this;
       document.getElementById('tb_CreatedBookings').innerHTML = '';
 
@@ -461,26 +467,26 @@ class Booking extends React.Component {
       firebase.database().ref('accounts')
         .orderByChild('email')
         .once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           let i = 0;
-          snapshot.forEach(function (child) {
+          snapshot.forEach((child) => {
             userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
             i++;
           })
         });
 
       const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
-      database.once('value', function (snapshot) {
+      database.once('value', (snapshot) => {
         if (snapshot.exists()) {
           let content = '';
           let rowCount = 0;
-          snapshot.forEach(function (data) {
+          snapshot.forEach((data) => {
             if (data.val().driverID === user[9]) {
               let area = data.val().area;
               let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
               let ppl = [];
 
-              if (data.val().currPassengers != "") {
+              if (data.val().currPassengers !== "") {
                 ppl = data.val().currPassengers.split(',')
               }
 
@@ -522,7 +528,7 @@ class Booking extends React.Component {
     }
 
     // display create booking information, binds area from db
-    createBooking = () => {
+    createBooking() {
       document.getElementById('div_availBookings').style.display = "none";
       document.getElementById('div_createBooking').style.display = "block";
       document.getElementById('div_myBookings').style.display = "none";
@@ -532,11 +538,11 @@ class Booking extends React.Component {
       document.getElementById('driverID').innerHTML = user[9];
 
       const database = firebase.database().ref().child('admin/area');
-      database.once('value', function (snapshot) {
+      database.once('value', (snapshot) => {
         if (snapshot.exists()) {
           let content = '';
 
-          snapshot.forEach(function (child) {
+          snapshot.forEach((child) => {
             let newarea = [];
             newarea = child.val().split(',');
 
@@ -567,7 +573,7 @@ class Booking extends React.Component {
       // }
 
       // checks empty description field
-      if (this.state.description == null || this.state.description == "") {
+      if (this.state.description === null || this.state.description === "") {
         alert("Please enter zipcode or description of area");
       } else {
         const bookingsRef = firebase.database().ref('bookings');
@@ -600,7 +606,7 @@ class Booking extends React.Component {
       }
     }
 
-    filterChange = () => {
+    filterChange() {
       const self = this;
       let areaNames = [];
       document.getElementById('tb_AllBookings').innerHTML = '';
@@ -615,9 +621,9 @@ class Booking extends React.Component {
       firebase.database().ref('accounts')
         .orderByChild('email')
         .once('value')
-        .then(function (snapshot) {
+        .then((snapshot) => {
           var i = 0;
-          snapshot.forEach(function (child) {
+          snapshot.forEach((child) => {
             userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
             i++;
           })
@@ -625,12 +631,15 @@ class Booking extends React.Component {
 
       // get all area
       const areadatabase = firebase.database().ref().child('admin/area');
-      areadatabase.once('value', function (snapshot) {
+      areadatabase.once('value', (snapshot) => {
         if (snapshot.exists()) {
-          snapshot.forEach(function (child) {
+          snapshot.forEach((child) => {
             let newarea = [];
             newarea = child.val().split(',');
-            if (document.getElementById('ddFilterArea').value === newarea[1]) {
+            if (document.getElementById('ddFilterArea').value === "All") {
+              areaNames.push(newarea[0]);
+            }
+            else if (document.getElementById('ddFilterArea').value === newarea[1]) {
               areaNames.push(newarea[0]);
             }
           });
@@ -640,18 +649,18 @@ class Booking extends React.Component {
       console.log(areaNames);
 
       const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
-      database.once('value', function (snapshot) {
+      database.once('value', (snapshot) => {
         if (snapshot.exists()) {
           let content = '';
           let rowCount = 0;
-          snapshot.forEach(function (data) {
+          snapshot.forEach((data) => {
             for (var v = 0; v < areaNames.length; v++) {
               if (areaNames[v] === data.val().area) {
                 let area = data.val().area;
                 let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                 let ppl = [];
 
-                if (data.val().currPassengers != "") {
+                if (data.val().currPassengers !== "") {
                   ppl = data.val().currPassengers.split(',')
                 }
 
@@ -740,6 +749,7 @@ class Booking extends React.Component {
 
           <div id='div_availBookings'>
             <select id="ddFilterArea" onChange={this.filterChange} style={{width: '5em'}} required>
+              <option>All</option>
               <option>North</option>
               <option>South</option>
               <option>East</option>
