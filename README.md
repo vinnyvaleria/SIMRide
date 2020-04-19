@@ -103,3 +103,4 @@ ADMIN: Audit/log (not important) | WALLET: E-Wallet page
 -- | BACKEND: Find a datetime picker to allow datetime comparisons in database
 -- | BOOKING: Filter - by area
 -- | BOOKING: Remove area from create a booking
+-- | BOOKING: Riders enter pick up point and choose payment method
