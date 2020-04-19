@@ -79,7 +79,7 @@ WALLET: Check for wallet balance when booking ride | USERS: Edit Profile
 BOOKING: Weekly pickup scheduler (not important) | USERS: View Profile 
 BOOKING: Check for passenger joining another booking for same time and day | CHAT: Live chat, store chat, select user to chat with 
 BOOKING: Check for driver creating another booking for same time and day  | USERS: View other profiles 
-BOOKING: Choose travelling to school or from school | USERS: Update password
+-- | USERS: Update password
 BOOKING: Mark ride as done as passenger | CHAT: Stored chat history 
 BOOKING: Mark drive as done as driver | CHAT: Retrieving chats
 BOOKING: Passengers set meeting area by plotting position on map | BOOKING: Create a Booking
@@ -104,3 +104,4 @@ API: Stripe API | BOOKING: View created rides
 -- | BOOKING: Filter - by area
 -- | BOOKING: Remove area from create a booking
 -- | BOOKING: Riders enter pick up point and choose payment method
+-- | BOOKING: Choose travelling to school or from school
