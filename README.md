@@ -74,23 +74,23 @@ MAPS: Automatic route planning (fastest) | USERS: Logging into SIMRide
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
--- | BACKEND: Retrieve data from Firebase 
--- | USERS: Edit Profile 
-BOOKING: Weekly pickup scheduler (not important) | USERS: View Profile 
--- | CHAT: Live chat, store chat, select user to chat with 
--- | USERS: View other profiles 
--- | USERS: Update password
-BOOKING: Mark ride as done as passenger | CHAT: Stored chat history 
-BOOKING: Mark drive as done as driver | CHAT: Retrieving chats
-BOOKING: Passengers set meeting area by plotting position on map | BOOKING: Create a Booking
-DRIVER: When starting the drive, get all passengers pick-up point/destination | BOOKING: Display list of available Booking
--- | USERS: Apply to be driver: upload license image
-DRIVER: Get directions to and from school | USERS: Apply to be driver: add driver details
-DRIVER: Create hidden driver page to view map | BOOKING: Join booking
-USERS: Transaction/booking history | BOOKING: View My Bookings
-USERS: Rate the driver and rider (not important) | BOOKING: Cancel confirmed ride
-ADMIN: Audit/log (not important) | WALLET: E-Wallet page
-API: Stripe API | BOOKING: View created rides
+BOOKING: Weekly pickup scheduler (not important) | BACKEND: Retrieve data from Firebase 
+BOOKING: Mark ride as done as passenger | USERS: Edit Profile 
+BOOKING: Mark drive as done as driver | USERS: View Profile 
+BOOKING: Passengers set meeting area by plotting position on map | CHAT: Live chat, store chat, select user to chat with 
+DRIVER: When starting the drive, get all passengers pick-up point/destination | USERS: View other profiles 
+DRIVER: Get directions to and from school | USERS: Update password
+DRIVER: Create hidden driver page to view map | CHAT: Stored chat history 
+USERS: Transaction/booking history | CHAT: Retrieving chats
+USERS: Rate the driver and rider (not important) | BOOKING: Create a Booking
+ADMIN: Audit/log (not important) | BOOKING: Display list of available Booking
+API: Stripe API | USERS: Apply to be driver: upload license image
+-- | USERS: Apply to be driver: add driver details
+-- | BOOKING: Join booking
+-- | BOOKING: View My Bookings
+-- | BOOKING: Cancel confirmed ride
+-- | WALLET: E-Wallet page
+-- | BOOKING: View created rides
 -- | PERMISSIONS: Split users into roles, and define what each role can see
 -- | USERS: Forgot password reset email
 -- | ADMIN: review driver application
