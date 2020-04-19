@@ -77,20 +77,20 @@ WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages
 WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
 WALLET: Check for wallet balance when booking ride | USERS: Edit Profile 
 BOOKING: Weekly pickup scheduler (not important) | USERS: View Profile 
-BOOKING: Check for same passenger joining another booking for same time and day | CHAT: Live chat, store chat, select user to chat with 
-BOOKING: Passengers set meeting area by plotting position on map | USERS: View other profiles 
-DRIVER: When starting the drive, get all passengers meeting area | USERS: Update password
-DRIVER: Plot the meeting area on the map | CHAT: Stored chat history 
-DRIVER: Get directions to area and lastly to school | CHAT: Retrieving chats
-DRIVER: Create hidden driver page to view map | BOOKING: Create a Booking
-BOOKING: Mark drive as done as driver | BOOKING: Display list of available Booking
-BOOKING: Mark ride as done as passenger | USERS: Apply to be driver: upload license image
-BOOKING: Check for same driver creating another booking for same time and day | USERS: Apply to be driver: add driver details
-USERS: Rate the driver and rider (not important) | BOOKING: Join booking
+BOOKING: Check for passenger joining another booking for same time and day | CHAT: Live chat, store chat, select user to chat with 
+BOOKING: Check for driver creating another booking for same time and day  | USERS: View other profiles 
+BOOKING: Choose travelling to school or from school | USERS: Update password
+BOOKING: Mark ride as done as passenger | CHAT: Stored chat history 
+BOOKING: Mark drive as done as driver | CHAT: Retrieving chats
+BOOKING: Passengers set meeting area by plotting position on map | BOOKING: Create a Booking
+DRIVER: When starting the drive, get all passengers meeting area | BOOKING: Display list of available Booking
+DRIVER: Plot the meeting area on the map | USERS: Apply to be driver: upload license image
+DRIVER: Get directions to area and lastly to school | USERS: Apply to be driver: add driver details
+DRIVER: Create hidden driver page to view map | BOOKING: Join booking
 USERS: Transaction/booking history | BOOKING: View My Bookings
-API: Stripe API | BOOKING: Cancel confirmed ride
+USERS: Rate the driver and rider (not important) | BOOKING: Cancel confirmed ride
 ADMIN: Audit/log (not important) | WALLET: E-Wallet page
--- | BOOKING: View created rides
+API: Stripe API | BOOKING: View created rides
 -- | PERMISSIONS: Split users into roles, and define what each role can see
 -- | USERS: Forgot password reset email
 -- | ADMIN: review driver application
