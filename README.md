@@ -67,14 +67,14 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**WALLET: Check for wallet balance when booking ride [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**WALLET: Balance low reminder [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **API: Google Maps API [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 MAPS: Automatic route planning (fastest) | USERS: Logging into SIMRide 
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
-WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
+-- | BACKEND: Retrieve data from Firebase 
 -- | USERS: Edit Profile 
 BOOKING: Weekly pickup scheduler (not important) | USERS: View Profile 
 -- | CHAT: Live chat, store chat, select user to chat with 
@@ -109,3 +109,4 @@ API: Stripe API | BOOKING: View created rides
 -- | DASHBOARD: If removed from booking, will be notified on dashboard
 -- | BOOKING: Check for driver creating another booking for same time and day
 -- | BOOKING: Check for passenger joining another booking for same time and day
+-- | WALLET: Check for wallet balance when booking ride
