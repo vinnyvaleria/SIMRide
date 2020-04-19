@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BOOKING: Check for driver creating another booking for same time and day  [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BOOKING: Check for passenger joining another booking for same time and day [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **API: Google Maps API [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 MAPS: Automatic route planning (fastest) | USERS: Logging into SIMRide 
@@ -77,7 +77,7 @@ WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages
 WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
 WALLET: Check for wallet balance when booking ride | USERS: Edit Profile 
 BOOKING: Weekly pickup scheduler (not important) | USERS: View Profile 
-BOOKING: Check for passenger joining another booking for same time and day | CHAT: Live chat, store chat, select user to chat with 
+-- | CHAT: Live chat, store chat, select user to chat with 
 -- | USERS: View other profiles 
 -- | USERS: Update password
 BOOKING: Mark ride as done as passenger | CHAT: Stored chat history 
@@ -107,3 +107,4 @@ API: Stripe API | BOOKING: View created rides
 -- | BOOKING: Choose travelling to school or from school
 -- | BOOKING: Drivers able to reject riders if meeting spot not around the area
 -- | DASHBOARD: If removed from booking, will be notified on dashboard
+-- | BOOKING: Check for driver creating another booking for same time and day
