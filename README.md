@@ -77,7 +77,7 @@ WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages
 WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
 WALLET: Check for wallet balance when booking ride | USERS: Edit Profile 
 BOOKING: Weekly pickup scheduler (not important) | USERS: View Profile 
--- | CHAT: Live chat, store chat, select user to chat with 
+BOOKING: Check for same passenger joining another booking for same time and day | CHAT: Live chat, store chat, select user to chat with 
 BOOKING: Passengers set meeting area by plotting position on map | USERS: View other profiles 
 DRIVER: When starting the drive, get all passengers meeting area | USERS: Update password
 DRIVER: Plot the meeting area on the map | CHAT: Stored chat history 
@@ -85,7 +85,7 @@ DRIVER: Get directions to area and lastly to school | CHAT: Retrieving chats
 DRIVER: Create hidden driver page to view map | BOOKING: Create a Booking
 BOOKING: Mark drive as done as driver | BOOKING: Display list of available Booking
 BOOKING: Mark ride as done as passenger | USERS: Apply to be driver: upload license image
--- | USERS: Apply to be driver: add driver details
+BOOKING: Check for same driver creating another booking for same time and day | USERS: Apply to be driver: add driver details
 USERS: Rate the driver and rider (not important) | BOOKING: Join booking
 USERS: Transaction/booking history | BOOKING: View My Bookings
 API: Stripe API | BOOKING: Cancel confirmed ride
