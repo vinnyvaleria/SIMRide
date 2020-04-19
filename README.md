@@ -67,11 +67,11 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**WALLET: Top-up E-Wallet [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BOOKING: Drivers able to reject riders if meeting spot not around the area [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **API: Google Maps API [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 MAPS: Automatic route planning (fastest) | USERS: Logging into SIMRide 
--- | USERS: Logging out of SIMRide 
+WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 WALLET: Cash out for drivers | BACKEND: Made multiple tabs to act as pages 
 WALLET: Balance low reminder | BACKEND: Retrieve data from Firebase 
@@ -85,7 +85,7 @@ DRIVER: Get directions to area and lastly to school | CHAT: Retrieving chats
 DRIVER: Create hidden driver page to view map | BOOKING: Create a Booking
 BOOKING: Mark drive as done as driver | BOOKING: Display list of available Booking
 BOOKING: Mark ride as done as passenger | USERS: Apply to be driver: upload license image
-BOOKING: Drivers able to reject riders if they dont live around the area | USERS: Apply to be driver: add driver details
+-- | USERS: Apply to be driver: add driver details
 USERS: Rate the driver and rider (not important) | BOOKING: Join booking
 USERS: Transaction/booking history | BOOKING: View My Bookings
 API: Stripe API | BOOKING: Cancel confirmed ride
