@@ -53,25 +53,27 @@ class Messages extends React.Component {
       if (typeof user[3] === 'undefined') {
         firebase.auth().signOut();
       } else {
-        // loads accounts
-        firebase.database()
-          .ref('accounts')
-          .orderByChild('email')
-          .once('value')
-          .then((snapshot) => {
-            var i = 0;
-            snapshot.forEach((child) => {
-              unameArr[i] = child.val().uname;
-              i++;
-            })
-          });
+        if (user[6] !== "") {
+          // loads accounts
+          firebase.database()
+            .ref('accounts')
+            .orderByChild('email')
+            .once('value')
+            .then((snapshot) => {
+              var i = 0;
+              snapshot.forEach((child) => {
+                unameArr[i] = child.val().uname;
+                i++;
+              })
+            });
 
-        firebase.firestore().collection("chat").get().then((querySnapshot) => {
-          querySnapshot.forEach((doc) => {
-            allchats.push(doc.id);
-            chats = Array.from(new Set(allchats))
+          firebase.firestore().collection("chat").get().then((querySnapshot) => {
+            querySnapshot.forEach((doc) => {
+              allchats.push(doc.id);
+              chats = Array.from(new Set(allchats))
+            });
           });
-        });
+        }
       }
     }
 
