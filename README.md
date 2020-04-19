@@ -83,9 +83,9 @@ BOOKING: Weekly pickup scheduler (not important) | USERS: View Profile
 BOOKING: Mark ride as done as passenger | CHAT: Stored chat history 
 BOOKING: Mark drive as done as driver | CHAT: Retrieving chats
 BOOKING: Passengers set meeting area by plotting position on map | BOOKING: Create a Booking
-DRIVER: When starting the drive, get all passengers meeting area | BOOKING: Display list of available Booking
-DRIVER: Plot the meeting area on the map | USERS: Apply to be driver: upload license image
-DRIVER: Get directions to area and lastly to school | USERS: Apply to be driver: add driver details
+DRIVER: When starting the drive, get all passengers pick-up point/destination | BOOKING: Display list of available Booking
+-- | USERS: Apply to be driver: upload license image
+DRIVER: Get directions to and from school | USERS: Apply to be driver: add driver details
 DRIVER: Create hidden driver page to view map | BOOKING: Join booking
 USERS: Transaction/booking history | BOOKING: View My Bookings
 USERS: Rate the driver and rider (not important) | BOOKING: Cancel confirmed ride
