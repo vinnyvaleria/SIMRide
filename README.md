@@ -85,10 +85,10 @@ DRIVER: Get directions to area and lastly to school | CHAT: Retrieving chats
 DRIVER: Create hidden driver page to view map | BOOKING: Create a Booking
 BOOKING: Mark drive as done as driver | BOOKING: Display list of available Booking
 BOOKING: Mark ride as done as passenger | USERS: Apply to be driver: upload license image
-API: Stripe API | USERS: Apply to be driver: add driver details
+BOOKING: Drivers able to reject riders if they dont live around the area | USERS: Apply to be driver: add driver details
 USERS: Rate the driver and rider (not important) | BOOKING: Join booking
 USERS: Transaction/booking history | BOOKING: View My Bookings
--- | BOOKING: Cancel confirmed ride
+API: Stripe API | BOOKING: Cancel confirmed ride
 ADMIN: Audit/log (not important) | WALLET: E-Wallet page
 -- | BOOKING: View created rides
 -- | PERMISSIONS: Split users into roles, and define what each role can see
