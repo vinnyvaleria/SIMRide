@@ -42,10 +42,12 @@ class Wallet extends React.Component {
             firebase.auth().signOut();
         }
         else {
-            this.walletHomePage();
-            if (user[6].toLowerCase() === 'yes') {
-                document.getElementById("btnTopUpPage").style.display = "none";
-                document.getElementById("tbl_last5").style.display = "none";
+            if (user[6] !== "") {
+                this.walletHomePage();
+                if (user[6].toLowerCase() === 'yes') {
+                    document.getElementById("btnTopUpPage").style.display = "none";
+                    document.getElementById("tbl_last5").style.display = "none";
+                }
             }
         }
     }

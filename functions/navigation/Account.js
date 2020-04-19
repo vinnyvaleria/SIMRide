@@ -167,31 +167,33 @@ class Account extends React.Component {
       if (typeof user[3] === 'undefined') {
         firebase.auth().signOut();
       } else {
-        if (user[5].toString().toLowerCase() === "no") {
-          firebase.database().ref('driverDetails')
-            .once('value')
-            .then((snapshot) => {
-              var i = 0;
-              snapshot.forEach((child) => {
-                if (user[9] === child.key) {
-                  if (child.val().completed === "yes") {
-                    document.getElementById('btnApplyDriver').disabled = "true";
-                    document.getElementById('btnApplyDriver').style.display = "inline-block";
-                    document.getElementById('btnApplyDriver').innerHTML = "Application sent";
+        if (user[6] !== "") {
+          if (user[5].toString().toLowerCase() === "no") {
+            firebase.database().ref('driverDetails')
+              .once('value')
+              .then((snapshot) => {
+                var i = 0;
+                snapshot.forEach((child) => {
+                  if (user[9] === child.key) {
+                    if (child.val().completed === "yes") {
+                      document.getElementById('btnApplyDriver').disabled = "true";
+                      document.getElementById('btnApplyDriver').style.display = "inline-block";
+                      document.getElementById('btnApplyDriver').innerHTML = "Application sent";
+                    } else {
+                      document.getElementById('btnApplyDriver').style.display = "inline-block";
+                    }
+                    if (user[6].toLowerCase() === "yes") {
+                      document.getElementById('btnApplyDriver').style.display = "none";
+                    }
                   } else {
                     document.getElementById('btnApplyDriver').style.display = "inline-block";
                   }
-                  if (user[6].toLowerCase() === "yes") {
-                    document.getElementById('btnApplyDriver').style.display = "none";
-                  }
-                } else {
-                  document.getElementById('btnApplyDriver').style.display = "inline-block";
-                }
-              })
-            });
+                })
+              });
+            }
+          }
         }
       }
-    }
 
     // logout
     logout() {

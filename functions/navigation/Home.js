@@ -21,6 +21,8 @@ class Home extends React.Component {
       this.approveApplicant = this.approveApplicant.bind(this);
       this.viewCreatedBooking = this.viewCreatedBooking.bind(this);
       this.viewMyBookings = this.viewMyBookings.bind(this);
+      this.Notifications = this.Notifications.bind(this);
+      this.acknowledgeNotif = this.acknowledgeNotif.bind(this);
       this.state = {
         frontURL: '',
         backURL: ''
@@ -39,19 +41,21 @@ class Home extends React.Component {
         firebase.auth().signOut();
       }
       else{
-        if (user[6].toLowerCase() === "yes") { // admin
-          document.getElementById("adminDB").style.display = "block";
-          this.viewApplication();
-          this.viewReportedUsers();
-        }
-        else if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "yes") { // driver
-          document.getElementById("driverDB").style.display = "block";
-          this.viewCreatedBooking();
-          this.viewMyBookings('tb_DriverUpcomingRides');
-        }
-        else if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "no") { // normal users
-          document.getElementById("riderDB").style.display = "block";
-          this.viewMyBookings('tb_RiderUpcomingRides');
+        if (user[6] !== "") {
+          if (user[6].toLowerCase() === "yes") { // admin
+            document.getElementById("adminDB").style.display = "block";
+            this.viewApplication();
+            this.viewReportedUsers();
+          } else if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "yes") { // driver
+            document.getElementById("driverDB").style.display = "block";
+            this.viewCreatedBooking();
+            this.viewMyBookings('tb_DriverUpcomingRides');
+            this.Notifications('tb_DriverNotifications');
+          } else if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "no") { // normal users
+            document.getElementById("riderDB").style.display = "block";
+            this.viewMyBookings('tb_RiderUpcomingRides');
+            this.Notifications('tb_RiderNotifications');
+          }
         }
       }
     }
@@ -308,6 +312,71 @@ class Home extends React.Component {
         document.getElementById('div_ReportedUsers').style.display = "block";
     }
 
+    Notifications(tb) {
+      const self = this;
+      document.getElementById(tb).innerHTML = '';
+
+      // get all accounts
+      firebase.database().ref('accounts')
+        .orderByChild('email')
+        .once('value')
+        .then((snapshot) => {
+          let i = 0;
+          snapshot.forEach((child) => {
+            userDetails[i] = child.key + ":" + child.val().uname + ":" + child.val().fname + ":" + child.val().lname;
+            i++;
+          })
+        });
+
+      const database = firebase.database().ref('notification').orderByChild('date');
+      database.once('value', (snapshot) => {
+        if (snapshot.exists()) {
+          let content = '';
+          let rowCount = 0;
+          snapshot.forEach((data) => {
+            if (data.val().uname === user[2]) {
+              let notification = data.val().notification;
+              let reason = data.val().reason;
+              let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY");
+
+              content += '<tr id=\'' + data.key + '\'>';
+              content += '<td>' + notification + '</td>'; //column1
+              content += '<td>' + reason + '</td>'; //column2
+              content += '<td>' + date + '</td>';
+              content += '<td id=\'btnNotification' + rowCount + '\'></td>';
+              content += '</tr>';
+
+              rowCount++;
+            }
+          });
+
+          document.getElementById(tb).innerHTML += content;
+
+          for (let v = 0; v < rowCount; v++) {
+            let btn = document.createElement('input');
+            btn.setAttribute('type', 'button')
+            btn.setAttribute('value', 'Ack');
+            btn.onclick = self.acknowledgeNotif;
+            document.getElementById('btnNotification' + v).appendChild(btn);
+          }
+        }
+      });
+    }
+
+    acknowledgeNotif(e) {
+      const notifID = e.target.parentElement.parentElement.id;
+      console.log(notifID);
+      const notifRef = firebase.database().ref('notification/' + notifID);
+      notifRef.remove();
+
+      if (user[5] === 'no') {
+        this.Notifications('tb_RiderNotifications');
+      }
+      else {
+        this.Notifications('tb_DriverNotifications');
+      }
+    }
+
     viewMyBookings(tb) {
       document.getElementById(tb).innerHTML = '';
 
@@ -547,9 +616,16 @@ class Home extends React.Component {
               <button id="btnUnBanUser" onClick={ this.unBanUser }>Un-Ban User</button>
               <button onClick={ this.back }>Back</button>
             </div>
-            
           </div>
+
+
           <div id="driverDB" style={{display: 'none'}}>
+            <div id='div_DriverNotifications'>
+              <h4>Notifications</h4>
+              <table>
+                <tbody id="tb_DriverNotifications"></tbody>
+              </table>
+            </div>
             <div id='div_DriverUpcomingRides'>
               <h4>Upcoming Rides</h4>
               <table>
@@ -579,7 +655,15 @@ class Home extends React.Component {
               </table>
             </div>
           </div>
+
+
           <div id="riderDB" style={{display: 'none'}}>
+            <div id='div_RiderNotifications'>
+              <h4>Notifications</h4>
+              <table>
+                <tbody id="tb_RiderNotifications"></tbody>
+              </table>
+            </div>
             <h4>Upcoming Rides</h4>
             <div id='div_RiderUpcomingRides'>
               <table>
