@@ -85,8 +85,8 @@ USERS: Transaction/booking history | CHAT: Retrieving chats
 USERS: Rate the driver and rider (not important) | BOOKING: Create a Booking
 ADMIN: Audit/log (not important) | BOOKING: Display list of available Booking
 API: Stripe API | USERS: Apply to be driver: upload license image
--- | USERS: Apply to be driver: add driver details
--- | BOOKING: Join booking
+BACKEND: Solve Express.js issues | USERS: Apply to be driver: add driver details
+BACKEND: Deploy to firebase | BOOKING: Join booking
 -- | BOOKING: View My Bookings
 -- | BOOKING: Cancel confirmed ride
 -- | WALLET: E-Wallet page
