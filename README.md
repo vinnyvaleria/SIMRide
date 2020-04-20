@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**WALLET: Balance low reminder [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**USERS: Transaction/booking history [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **API: Google Maps API [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 MAPS: Automatic route planning (fastest) | USERS: Logging into SIMRide 
@@ -81,7 +81,7 @@ BOOKING: Passengers set meeting area by plotting position on map | CHAT: Live ch
 DRIVER: When starting the drive, get all passengers pick-up point/destination | USERS: View other profiles 
 DRIVER: Get directions to and from school | USERS: Update password
 DRIVER: Create hidden driver page to view map | CHAT: Stored chat history 
-USERS: Transaction/booking history | CHAT: Retrieving chats
+-- | CHAT: Retrieving chats
 USERS: Rate the driver and rider (not important) | BOOKING: Create a Booking
 ADMIN: Audit/log (not important) | BOOKING: Display list of available Booking
 API: Stripe API | USERS: Apply to be driver: upload license image
@@ -110,3 +110,4 @@ BACKEND: Deploy to firebase | BOOKING: Join booking
 -- | BOOKING: Check for driver creating another booking for same time and day
 -- | BOOKING: Check for passenger joining another booking for same time and day
 -- | WALLET: Check for wallet balance when booking ride
+-- | WALLET: Balance low reminder
