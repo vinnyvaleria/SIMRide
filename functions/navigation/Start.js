@@ -5,6 +5,7 @@ import Account from './Account';
 import Booking from './Booking';
 import Home from './Home';
 import Wallet from './Wallet';
+import Map from './Map';
 
 export default function Start() {
   return (
@@ -27,6 +28,9 @@ export default function Start() {
             <li>
               <Link to="/Account">Account</Link>
             </li>
+            <li>
+              <Link to="/Map">Map</Link>
+            </li>
           </ul>
         </nav>
 
@@ -44,6 +48,9 @@ export default function Start() {
           </Route>
           <Route path="/Wallet">
             <Wallet />
+          </Route>
+          <Route path="/map">
+            <Map />
           </Route>
           <Route path="/">
             <Home />
