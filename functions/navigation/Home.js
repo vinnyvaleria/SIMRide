@@ -640,7 +640,6 @@ class Home extends React.Component {
             </div>
           </div>
 
-
           <div id="driverDB" style={{display: 'none'}}>
             <div id='div_DriverNotifications'>
               <h4>Notifications</h4>
@@ -677,7 +676,6 @@ class Home extends React.Component {
               </table>
             </div>
           </div>
-
 
           <div id="riderDB" style={{display: 'none'}}>
             <div id='div_RiderNotifications'>

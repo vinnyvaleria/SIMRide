@@ -184,7 +184,8 @@ class Wallet extends React.Component {
             requester: user[2],
             requesterID: user[9],
             date: Date.now(),
-            amount: this.state.cashoutamount
+            amount: this.state.cashoutamount,
+            disbursed: 'no'
         }
 
         const accountsRef = firebase.database().ref('accounts/' + user[9]);
