@@ -47,6 +47,7 @@ class Home extends React.Component {
             document.getElementById("adminDB").style.display = "block";
             this.viewApplication();
             this.viewReportedUsers();
+            this.Notifications('tb_AdminNotifications');
           } else if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "yes") { // driver
             this.walletBalanceCheck();
             document.getElementById("driverDB").style.display = "block";
@@ -525,6 +526,10 @@ class Home extends React.Component {
           </div>
           <div id="adminDB" style={{display: 'none'}}>
             <div id="div_driverApplication">
+              <h4>Notifications</h4>
+              <table>
+                <tbody id="tb_AdminNotifications"></tbody>
+              </table>
               <h4>Driver Applicants List</h4>
               <table>
                 <thead>

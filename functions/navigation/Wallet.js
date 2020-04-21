@@ -24,6 +24,7 @@ class Wallet extends React.Component {
         this.handleChange = this.handleChange.bind(this);
         this.getLastFiveBookings = this.getLastFiveBookings.bind(this);
         this.cashOut = this.cashOut.bind(this);
+        this.submitCashOut = this.submitCashOut.bind(this);
         this.maxAmtCalc = this.maxAmtCalc.bind(this);
         this.state = {
             amount: '',
@@ -48,7 +49,7 @@ class Wallet extends React.Component {
 
     maxAmtCalc() {
         if (user[8] > 5.00) {
-            return user[8] - 5;
+            return parseFloat(user[8] - 5).toFixed(2);
         }
         else {
             return 0;
@@ -135,7 +136,7 @@ class Wallet extends React.Component {
         document.getElementById('div_WalletHistory').style.display = "none";
         document.getElementById('div_CashOut').style.display = "none";
 
-        document.getElementById('td_WalletAmount').innerHTML = "$" + user[8];
+        document.getElementById('td_WalletAmount').innerHTML = "$" + parseFloat(user[8]).toFixed(2);
     }
 
     topupWallet() {
@@ -165,6 +166,50 @@ class Wallet extends React.Component {
         document.getElementById('div_WalletTopUp').style.display = "none";
         document.getElementById('div_WalletHistory').style.display = "none";
         document.getElementById('div_CashOut').style.display = "block";
+    }
+
+    submitCashOut() {
+        const notificationRef = firebase.database().ref('notification');
+        const balance = parseFloat(user[8] - this.state.cashoutamount).toFixed(2);
+        console.log(balance);
+        const notification = {
+            uname: 'admin',
+            date: Date.now(),
+            notification: 'Cash-out',
+            reason: user[2] + ' has requested to cash-out $' + this.state.cashoutamount
+        }
+
+        const requestCheckOutRef = firebase.database().ref('cashcheckout');
+        const requestForm = {
+            requester: user[2],
+            requesterID: user[9],
+            date: Date.now(),
+            amount: this.state.cashoutamount
+        }
+
+        const accountsRef = firebase.database().ref('accounts/' + user[9]);
+        accountsRef.orderByChild('email')
+          .equalTo(user[3])
+          .once('value')
+          .then((snapshot) => {
+            snapshot.ref.update({
+              wallet: balance
+            })
+          });
+
+        notificationRef.push(notification);
+        requestCheckOutRef.push(requestForm);
+        this.state = {
+            cashoutamount: ''
+        };
+
+        user[8] = balance;
+        document.getElementById('cashOutInput').value = null;
+
+        document.getElementById('div_WalletHome').style.display = "block";
+        document.getElementById('div_WalletTopUp').style.display = "none";
+        document.getElementById('div_WalletHistory').style.display = "none";
+        document.getElementById('div_CashOut').style.display = "none";
     }
 
     // handles payment -> check firestripe for stripe cloud functiosn with firebase
@@ -230,7 +275,9 @@ render() {
             />
         </div>
         <div id='div_CashOut' style={{display: 'none'}}>
-            <input type='number' step='0.01' min='0.01' max={this.state.maxAmt} value={this.state.cashoutamount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} name='cashoutamount' />
+            <input id='cashOutInput' type='number' step='0.01' min='0.01' max={this.state.maxAmt} value={this.state.cashoutamount} onBlur={this.setTwoNumberDecimal} onChange={this.handleChange} style={{width: '8em'}} name='cashoutamount' />
+            <br/><br/>
+            <button id='btnSubmitCashOut' onClick={ this.submitCashOut }>Cash-Out</button>
         </div>
         <div id='div_WalletHistory' style={{display: 'none'}}>
           
