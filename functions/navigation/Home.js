@@ -23,6 +23,7 @@ class Home extends React.Component {
       this.viewMyBookings = this.viewMyBookings.bind(this);
       this.Notifications = this.Notifications.bind(this);
       this.acknowledgeNotif = this.acknowledgeNotif.bind(this);
+      this.walletBalanceCheck = this.walletBalanceCheck.bind(this);
       this.state = {
         frontURL: '',
         backURL: ''
@@ -46,17 +47,34 @@ class Home extends React.Component {
             document.getElementById("adminDB").style.display = "block";
             this.viewApplication();
             this.viewReportedUsers();
+            this.Notifications('tb_AdminNotifications');
           } else if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "yes") { // driver
+            this.walletBalanceCheck();
             document.getElementById("driverDB").style.display = "block";
             this.viewCreatedBooking();
             this.viewMyBookings('tb_DriverUpcomingRides');
             this.Notifications('tb_DriverNotifications');
           } else if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "no") { // normal users
+            this.walletBalanceCheck();
             document.getElementById("riderDB").style.display = "block";
             this.viewMyBookings('tb_RiderUpcomingRides');
             this.Notifications('tb_RiderNotifications');
           }
         }
+      }
+    }
+
+    walletBalanceCheck() {
+      if (user[8] < 5.00) {
+        const notificationRef = firebase.database().ref('notification');
+        const notification = {
+          uname: user[2],
+          date: Date.now(),
+          notification: 'E-Wallet balance is below $5.00. Current balance: $' + user[8] + '.',
+          reason: 'Please top-up your wallet to continue using your e-wallet.'
+        }
+
+        notificationRef.push(notification);
       }
     }
 
@@ -508,6 +526,10 @@ class Home extends React.Component {
           </div>
           <div id="adminDB" style={{display: 'none'}}>
             <div id="div_driverApplication">
+              <h4>Notifications</h4>
+              <table>
+                <tbody id="tb_AdminNotifications"></tbody>
+              </table>
               <h4>Driver Applicants List</h4>
               <table>
                 <thead>
