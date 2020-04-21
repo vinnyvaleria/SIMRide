@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**WALLET: Cash out for drivers [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**WALLET: Cash out history [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **API: Google Maps API [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 MAPS: Automatic route planning (fastest) | USERS: Logging into SIMRide 
@@ -112,3 +112,4 @@ BACKEND: Deploy to firebase | BOOKING: Join booking
 -- | WALLET: Check for wallet balance when booking ride
 -- | WALLET: Balance low reminder
 -- | USERS: Transaction/booking history
+-- | WALLET: Cash out for drivers 
