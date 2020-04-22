@@ -82,10 +82,10 @@ BOOKING: Mark drive as done as driver | USERS: View Profile
 DRIVER: Get directions to and from school | USERS: Update password
 DRIVER: Create hidden driver page to view map | CHAT: Stored chat history 
 DRIVER: When starting the drive, get all passengers pick-up point/destination | CHAT: Retrieving chats
- | BOOKING: Create a Booking
+-- | BOOKING: Create a Booking
 ADMIN: Audit/log (not important) | BOOKING: Display list of available Booking
 API: Stripe API | USERS: Apply to be driver: upload license image
- | USERS: Apply to be driver: add driver details
+-- | USERS: Apply to be driver: add driver details
 BACKEND: Deploy to firebase | BOOKING: Join booking
 -- | BOOKING: View My Bookings
 -- | BOOKING: Cancel confirmed ride
