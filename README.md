@@ -70,7 +70,7 @@ In-Progress | Done
 **BACKEND: Solve Express.js issues [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **API: Google Maps API [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
-MAPS: Automatic route planning (fastest) | USERS: Logging into SIMRide 
+-- | USERS: Logging into SIMRide 
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 USERS: Rate the driver and rider (not important) | BACKEND: Made multiple tabs to act as pages 
@@ -82,7 +82,7 @@ BOOKING: Mark drive as done as driver | USERS: View Profile
 DRIVER: Get directions to and from school | USERS: Update password
 DRIVER: Create hidden driver page to view map | CHAT: Stored chat history 
 DRIVER: When starting the drive, get all passengers pick-up point/destination | CHAT: Retrieving chats
--- | BOOKING: Create a Booking
+MAPS: Automatic route planning (fastest) | BOOKING: Create a Booking
 ADMIN: Audit/log (not important) | BOOKING: Display list of available Booking
 API: Stripe API | USERS: Apply to be driver: upload license image
 -- | USERS: Apply to be driver: add driver details
