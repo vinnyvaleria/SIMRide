@@ -42,6 +42,7 @@ class Home extends React.Component {
     }
 
     loadCashout() {
+        const self = this;
         document.getElementById('tb_NotDisbursedCashout').innerHTML = '';
 
         const database = firebase.database().ref('cashcheckout').orderByChild('date');
@@ -50,6 +51,7 @@ class Home extends React.Component {
                 let content = '';
                 let rowCount = 0;
                 snapshot.forEach((data) => {
+                    console.log(data.val().requester);
                     if (data.val().disbursed === "no") {
                         console.log('fuck money');
                         let user = data.val().requester;
@@ -62,6 +64,7 @@ class Home extends React.Component {
                         content += '<td>' + user + '</td>'; //column2
                         content += '<td>' + amount + '</td>';
                         content += '<td>' + date + '</td>';
+                        content += '<td id=\'btnUpdateRequest' + rowCount + '\'></td>';
                         content += '</tr>';
 
                         rowCount++;
@@ -80,23 +83,24 @@ class Home extends React.Component {
         });
     }
 
-    changeCheckoutStatus() {
+    changeCheckoutStatus(e) {
         var checkoutID = e.target.parentElement.parentElement.id;
-        console.log(checkoutID);
 
-        const accountsRef = firebase.database().ref('cashcheckout');
+        const accountsRef = firebase.database().ref('cashcheckout/' + checkoutID);
         accountsRef.orderByChild('requesterID')
           .equalTo(user[3])
           .once('value')
           .then((snapshot) => {
             snapshot.ref.update({
-              wallet: balance
+              disbursed: 'yes'
             })
           });
+
+        this.loadCashOut();
+        this.loadCashoutHistory();
     }
 
     loadCashoutHistory() {
-        const self = this;
         document.getElementById('tb_AllCashout').innerHTML = '';
         const database = firebase.database().ref('cashcheckout').orderByChild('date');
         database.once('value', (snapshot) => {
@@ -108,13 +112,14 @@ class Home extends React.Component {
                     let userID = data.val().requesterID;
                     let date = moment.unix(data.val().date / 1000).format("DD MMM YYYY hh:mm a");
                     let amount = data.val().amount;
+                    let disbursed = data.val().disbursed;
 
                     content += '<tr id=\'' + data.key + '\'>';
                     content += '<td>' + userID + '</td>'; //column1
                     content += '<td>' + user + '</td>'; //column2
                     content += '<td>' + amount + '</td>';
                     content += '<td>' + date + '</td>';
-                    content += '<td id=\'btnUpdateRequest' + rowCount + '\'></td>';
+                    content += '<td>' + disbursed + '</td>';
                     content += '</tr>';
                 });
                 document.getElementById('tb_AllCashout').innerHTML += content;
@@ -126,19 +131,19 @@ class Home extends React.Component {
     return (
         <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
             <div id='checkoutPage'>
-                <h4>Notifications</h4>
-                <thead>
-                    <tr>
-                        <th>Requester ID</th>
-                        <th>Requester</th>
-                        <th>Amount</th>
-                        <th>Date Applied</th>
-                    </tr>
-                </thead>
+                <h4>Checkout Requests</h4>
                 <table>
+                    <thead>
+                        <tr>
+                            <th>Requester ID</th>
+                            <th>Requester</th>
+                            <th>Amount</th>
+                            <th>Date Applied</th>
+                        </tr>
+                    </thead>
                     <tbody id="tb_NotDisbursedCashout"></tbody>
                 </table>
-                <h4>Driver Applicants List</h4>
+                <h4>Checkout History</h4>
                 <table>
                     <thead>
                     <tr>
