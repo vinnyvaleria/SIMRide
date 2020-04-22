@@ -387,11 +387,15 @@ class Home extends React.Component {
       const notifRef = firebase.database().ref('notification/' + notifID);
       notifRef.remove();
 
-      if (user[5] === 'no') {
-        this.Notifications('tb_RiderNotifications');
+      if (user[6] === 'yes') {
+        this.Notifications('tb_AdminNotifications');
       }
       else {
-        this.Notifications('tb_DriverNotifications');
+        if (user[5] === 'no') {
+          this.Notifications('tb_RiderNotifications');
+        } else {
+          this.Notifications('tb_DriverNotifications');
+        }
       }
     }
 
@@ -640,7 +644,6 @@ class Home extends React.Component {
             </div>
           </div>
 
-
           <div id="driverDB" style={{display: 'none'}}>
             <div id='div_DriverNotifications'>
               <h4>Notifications</h4>
@@ -677,7 +680,6 @@ class Home extends React.Component {
               </table>
             </div>
           </div>
-
 
           <div id="riderDB" style={{display: 'none'}}>
             <div id='div_RiderNotifications'>
