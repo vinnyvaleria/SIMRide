@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**WALLET: Cash out history [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BOOKING: Passengers set meeting area by plotting position on map [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **API: Google Maps API [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 MAPS: Automatic route planning (fastest) | USERS: Logging into SIMRide 
@@ -77,7 +77,7 @@ WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase
 BOOKING: Weekly pickup scheduler (not important) | BACKEND: Retrieve data from Firebase 
 BOOKING: Mark ride as done as passenger | USERS: Edit Profile 
 BOOKING: Mark drive as done as driver | USERS: View Profile 
-BOOKING: Passengers set meeting area by plotting position on map | CHAT: Live chat, store chat, select user to chat with 
+-- | CHAT: Live chat, store chat, select user to chat with 
 DRIVER: When starting the drive, get all passengers pick-up point/destination | USERS: View other profiles 
 DRIVER: Get directions to and from school | USERS: Update password
 DRIVER: Create hidden driver page to view map | CHAT: Stored chat history 
@@ -113,3 +113,4 @@ BACKEND: Deploy to firebase | BOOKING: Join booking
 -- | WALLET: Balance low reminder
 -- | USERS: Transaction/booking history
 -- | WALLET: Cash out for drivers 
+-- | WALLET: Cash out history
