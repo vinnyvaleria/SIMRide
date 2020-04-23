@@ -22,7 +22,7 @@ class map extends React.Component {
         let geoOptions = {
             enableHighAccuracy: true,
             timeOut: 20000,
-            maximumAge: 60 * 60 * 24
+            maximumAge: 10000
         };
         this.setState({ ready: false });
         navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoFailure, geoOptions);
@@ -46,24 +46,24 @@ class map extends React.Component {
         return (
             <View style={style.container}>
                 {!this.state.ready && (
-                    <Text>Using Geolocation in React Native</Text>
+                    <Text>Please allow location access.</Text>
                 )}
                 {this.state.error && (
                     <Text>{this.state.error}</Text>
                 )}
                 {this.state.ready && (
-                    <Text>Latitude:{this.state.where.lat}, Longitude:{this.state.where.lng}</Text>
-                )}
-                <div>
-                    <h1 align="center">WELCOME TO GOOGLE MAPS :D</h1>
-                    
-                </div>
-                <div>
-                    <Map google={this.props.google} zoom={16} initialCenter={{ lat: 1.329426, lng: 103.776571 }}>
-                        <Marker onClick={this.onMarkerClick}
-                            name={'Current location'} />  
-                    </Map>  
-                </div>              
+                    <Text>Latitude:{this.state.where.lat}, Longitude:{this.state.where.lng}
+                        <div>
+                            <h1 align="center">WELCOME TO GOOGLE MAPS</h1>
+                        </div>
+                        <div>
+                            <Map google={this.props.google} zoom={16} initialCenter={{ lat: this.state.where.lat, lng: this.state.where.lng }}>
+                                <Marker onClick={this.onMarkerClick}
+                                    name={'Current location'} />
+                            </Map>
+                        </div>
+                    </Text>
+                )}             
             </View>
         );
     }
