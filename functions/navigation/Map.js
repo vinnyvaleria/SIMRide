@@ -1,6 +1,6 @@
 import React, { Component } from 'react';
 import { Text, View, Button, StyleSheet } from 'react-native';
-import { Map, InfoWindow, Marker, GoogleApiWrapper, GoogleMap, withGoogleMap, withScriptjs } from 'google-maps-react';
+import { Map, InfoWindow, Marker, GoogleApiWrapper, GoogleMap, withGoogleMap, withScriptjs, DirectionsRenderer } from 'google-maps-react';
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
 import { Location, Permissions } from 'expo';
@@ -60,6 +60,10 @@ class map extends React.Component {
                             <Map google={this.props.google} zoom={16} initialCenter={{ lat: this.state.where.lat, lng: this.state.where.lng }}>
                                 <Marker onClick={this.onMarkerClick}
                                     name={'Current location'} />
+                                <Marker
+                                    name={'Singapore Institute of Management'}
+                                    position={{ lat: 1.329426, lng: 103.776571 }} />
+                                <Marker />
                             </Map>
                         </div>
                     </Text>
