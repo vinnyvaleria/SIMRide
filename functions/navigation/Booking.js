@@ -8,6 +8,9 @@ import 'firebase/firestore';
 import {user} from './Login';
 import * as Datetime from "react-datetime";
 var moment = require('moment');
+import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
+import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import 'react-google-places-autocomplete/dist/index.min.css';
 
 var userDetails = [];
 var payMethod;
@@ -63,7 +66,7 @@ class Booking extends React.Component {
         firebase.auth().signOut();
       } else {
         if (user[6] !== "") {
-          if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "no") { //isAdmin
+          if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "no") { //not admin, not driver
             document.getElementById('btnCreateBooking').style.display = "none";
             document.getElementById('btnViewCreatedBooking').style.display = "none";
           }
@@ -318,16 +321,16 @@ class Booking extends React.Component {
       } else {
         currPassengers += (", " + user[2]);
       }
-
-      if (PostalCode === "") {
+      if (PostalCode === "") {  
         PostalCode += this.state.postal;
       } else {
         PostalCode += (", " + this.state.postal);
       }
-
+      
       // checks for duplicate booking
       let dates = [];
       let check = false;
+      const zip = PostalCode;
 
       const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
       database.once('value', (snapshot) => {
@@ -340,15 +343,21 @@ class Booking extends React.Component {
         }
       }).then(() => {
         var i = 0;
-        while (i < dates.length) {
-          if (Date.parse(bookingDate) < moment.unix(dates[i] / 1000).add(2, 'hours') && Date.parse(bookingDate) > moment.unix(dates[i] / 1000).add(-2, 'hours')) {
-            alert("You have another booking set 2 hours before/after this time");
-            check = false;
-            break;
-          } else {
-            check = true;
+        
+        if (dates.length === 0) {
+          check = true;
+        }
+        else {
+          while (i < dates.length) {
+            if (Date.parse(bookingDate) < moment.unix(dates[i] / 1000).add(2, 'hours') && Date.parse(bookingDate) > moment.unix(dates[i] / 1000).add(-2, 'hours')) {
+              alert("You have another booking set 2 hours before/after this time");
+              check = false;
+              break;
+            } else {
+              check = true;
+            }
+            i++;
           }
-          i++;
         }
 
         if (check) {
@@ -360,9 +369,8 @@ class Booking extends React.Component {
             const bookingDetails = {
               currPassengers: currPassengers,
               payMethod: payMethod,
-              postal: PostalCode
+              postal: zip
             }
-
             accountsRef.update(bookingDetails);
             this.state = {
               currPassengers: '',
@@ -380,7 +388,6 @@ class Booking extends React.Component {
       });
 
       PostalCode = '';
-      document.getElementById('txtPostalCode').value = "";
     }
 
     // cancel booking
@@ -1042,7 +1049,14 @@ class Booking extends React.Component {
                 <tr>
                   <td>Postal Code of Meeting/Drop-Off Point:</td>
                   <td>
-                    <input id='txtPostalCode' value={this.state.postal} onChange={this.handleChange} type="number" name="postal" required />
+                    <GooglePlacesAutocomplete 
+                      id='postal' 
+                      placeholder='Search' 
+                      onSelect={({ description }) => (
+                        this.setState({ postal: description })
+                      )}
+                      required 
+                    />
                   </td>
                 </tr>
                 <tr>
@@ -1132,4 +1146,7 @@ class Booking extends React.Component {
     }
   }
 
-export default Booking;
+export default GoogleApiWrapper({
+  apiKey: "AIzaSyARHBw1DzEQDE0auV06gUQRI8iNUKmwHaY",
+  libraries: ["places"]
+})(Booking);

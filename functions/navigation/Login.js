@@ -8,6 +8,7 @@ import { Text, View, Image, Button } from 'react-native';
 import logo from '../../assets/logo.png';
 import firebase from '../../base';
 import { validate } from 'email-validator';
+import Start from './Start';
 
 let user = new Array(10); // 0fname, 1lname, 2uname, 3email, 4phone, 5isDriver, 6isAdmin, 7isBanned, 8wallet, 9id
 var countArr = new Array(1); //account
@@ -64,11 +65,12 @@ class Login extends React.Component {
             unameArr[i] = child.val().uname;
             emailArr[i] = child.val().email;
             i++;
-            console.log(countArr[0], emailArr.length);
           })
         });
 
-      console.log(emailArr, unameArr);
+      if (user[6] === "no") {
+        document.getElementById('checkOutTab').style.display = 'none';
+      }
     }
 
     // get all information from this account and stores into user

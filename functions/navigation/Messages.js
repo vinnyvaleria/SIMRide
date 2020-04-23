@@ -210,12 +210,14 @@ class Messages extends React.Component {
       document.getElementById('sendNewMessage').style.display = "none";
 
       for (var c = 0; c < chats.length; c++) {
-        var btn = document.createElement('input');
-        btn.setAttribute('type', 'button')
-        btn.setAttribute('value', chats[c].toString().replace(user[2], '').replace('-', ''));
-        btn.setAttribute('id', c);
-        btn.onclick = this.openChat;
-        document.getElementById('chatsStarted').appendChild(btn);
+        if (chats[c].includes(user[2])) {
+          var btn = document.createElement('input');
+          btn.setAttribute('type', 'button')
+          btn.setAttribute('value', chats[c].toString().replace(user[2], '').replace('-', ''));
+          btn.setAttribute('id', c);
+          btn.onclick = this.openChat;
+          document.getElementById('chatsStarted').appendChild(btn);
+        }
       }
     }
 
