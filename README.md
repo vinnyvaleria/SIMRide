@@ -116,4 +116,4 @@ BOOKING: Mark ride as done as passenger | PERMISSIONS: Split users into roles, a
 -- | WALLET: Cash out history
 -- | BOOKING: Passengers set meeting area by plotting position on map
 -- | API: Google Maps API
--- | BOOKING: Allow last minute cancellation, but allow user to report if user did not show up, admin will be able investigate
+-- | BOOKING: Allow last minute cancellation, but also allow users to report if driver/passenger did not show up, admin will be able investigate thru msgs
