@@ -73,8 +73,8 @@ In-Progress | Done
 API: Stripe API | USERS: Logging into SIMRide 
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
-USERS: Rate the driver and rider (not important) | BACKEND: Made multiple tabs to act as pages 
-USERS: GPS tracking for moving cars (not important) | BACKEND: Retrieve data from Firebase 
+-- | BACKEND: Made multiple tabs to act as pages 
+-- | BACKEND: Retrieve data from Firebase 
 BOOKING: Weekly pickup scheduler (not important) | USERS: Edit Profile 
 -- | USERS: View Profile 
 BACKEND: Deploy to firebase | CHAT: Live chat, store chat, select user to chat with 
@@ -92,8 +92,8 @@ DRIVER: When starting the drive, get all passengers pick-up point/destination | 
 DRIVER: Create hidden driver page to view map | WALLET: E-Wallet page
 BOOKING: Mark drive as done as driver | BOOKING: View created rides
 BOOKING: Mark ride as done as passenger | PERMISSIONS: Split users into roles, and define what each role can see
--- | USERS: Forgot password reset email
--- | ADMIN: review driver application
+USERS: Rate the driver and rider (not important) | USERS: Forgot password reset email
+USERS: GPS tracking for moving cars (not important) | ADMIN: review driver application
 -- | BOOKING: Cancel created booking
 -- | ADMIN: Ban user (blacklist user)
 -- | USERS: Report user
