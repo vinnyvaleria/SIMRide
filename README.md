@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BOOKING: Weekly pickup scheduler [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**USERS: Join a weekly ride [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **DRIVER: Get directions to and from school [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 API: Stripe API | USERS: Logging into SIMRide 
@@ -117,3 +117,4 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | BOOKING: Passengers set meeting area by plotting position on map
 -- | API: Google Maps API
 -- | BOOKING: Allow last minute cancellation, but also allow users to report if driver/passenger did not show up, admin will be able investigate thru msgs
+-- | DRIVER: Create recurring rides
