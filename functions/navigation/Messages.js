@@ -268,8 +268,8 @@ class Messages extends React.Component {
               fake: snapshot.val().fake += 1,
               safety: snapshot.val().safety += 0,
               vulgar: snapshot.val().vulgar += 0,
-              inappropriate: snapshot.val().inappropriate += 0
-              
+              inappropriate: snapshot.val().inappropriate += 0,
+              noshow: snapshot.val().inappropriate += 0
             });
           } else {
             const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
@@ -280,7 +280,8 @@ class Messages extends React.Component {
               fake: 1,
               safety: 0,
               vulgar: 0,
-              inappropriate: 0
+              inappropriate: 0,
+              noshow: 0
             });
           }
         });
@@ -296,7 +297,8 @@ class Messages extends React.Component {
               fake: snapshot.val().fake += 0,
               safety: snapshot.val().safety += 1,
               vulgar: snapshot.val().vulgar += 0,
-              inappropriate: snapshot.val().inappropriate += 0
+              inappropriate: snapshot.val().inappropriate += 0,
+              noshow: snapshot.val().inappropriate += 0
             });
           } 
           
@@ -309,7 +311,8 @@ class Messages extends React.Component {
               fake: 0,
               safety: 1,
               vulgar: 0,
-              inappropriate: 0
+              inappropriate: 0,
+              noshow: 0
             });
           }
         });
@@ -325,7 +328,8 @@ class Messages extends React.Component {
               fake: snapshot.val().fake += 0,
               safety: snapshot.val().safety += 0,
               vulgar: snapshot.val().vulgar += 1,
-              inappropriate: snapshot.val().inappropriate += 0
+              inappropriate: snapshot.val().inappropriate += 0,
+              noshow: snapshot.val().inappropriate += 0
             });
           } 
           
@@ -337,7 +341,8 @@ class Messages extends React.Component {
               fake: 0,
               safety: 0,
               vulgar: 1,
-              inappropriate: 0
+              inappropriate: 0,
+              noshow: 0
             });
           }
         });
@@ -354,7 +359,8 @@ class Messages extends React.Component {
               fake: snapshot.val().fake += 0,
               safety: snapshot.val().safety += 0,
               vulgar: snapshot.val().vulgar += 0,
-              inappropriate: snapshot.val().inappropriate += 1
+              inappropriate: snapshot.val().inappropriate += 1,
+              noshow: snapshot.val().inappropriate += 0
             });
           } 
           
@@ -366,7 +372,37 @@ class Messages extends React.Component {
               fake: 0,
               safety: 0,
               vulgar: 0,
-              inappropriate: 1
+              inappropriate: 1,
+              noshow: 0
+            });
+          }
+        });
+      }
+
+      else if (document.getElementById('ddReportReason').value === "noshow") {
+        const reportRef = firebase.database().ref('reportedUsers/' + clickedUserID);
+        reportRef.once('value', (snapshot) => {
+          if (snapshot.exists()) {
+            reportRef.set({
+              status: "not banned",
+              lastReportDate: today * -1,
+              username: clickedUser,
+              fake: snapshot.val().fake += 0,
+              safety: snapshot.val().safety += 0,
+              vulgar: snapshot.val().vulgar += 0,
+              inappropriate: snapshot.val().inappropriate += 0,
+              noshow: snapshot.val().inappropriate += 1
+            });
+          } else {
+            reportRef.set({
+              username: clickedUser,
+              status: "not banned",
+              lastReportDate: today * -1,
+              fake: 0,
+              safety: 0,
+              vulgar: 0,
+              inappropriate: 0,
+              noshow: 1
             });
           }
         });
@@ -478,7 +514,8 @@ class Messages extends React.Component {
               <option value="fake">I believe this is a fake profile</option>
               <option value="safety">User has threatened my physical safety</option>
               <option value="inappropriate">User has been behaving inappropriately towards me</option>
-              <option value="vulgar ">User was uncivil, rude and/or vulgar</option>
+              <option value="vulgar">User was uncivil, rude and/or vulgar</option>
+              <option value="noshow">User did not show up</option>
             </select>
             <button id='btnSubmitReport' onClick={this.submitReport} style={{display:'none'}}>Submit</button>
             <button onClick={ this.back }>Back</button>
