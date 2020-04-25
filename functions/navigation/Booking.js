@@ -35,12 +35,17 @@ class Booking extends React.Component {
       this.filterChange = this.filterChange.bind(this);
       this.removePassenger = this.removePassenger.bind(this);
       this.confirmRemovePassenger = this.confirmRemovePassenger.bind(this);
+      this.showRecurring = this.showRecurring.bind(this);
       this.state = {
         currPassengers: '',
         payMethod: '',
         date: Datetime.moment(),
         postal: '',
-        removeReason: ''
+        removeReason: '',
+        recurringWeeks: 1,
+        createArea: 'Admiralty',
+        createTowards: 'School',
+        createMaxPassengers: '1'
       }
     }
 
@@ -53,11 +58,21 @@ class Booking extends React.Component {
       this.setState({
         [e.target.name]: e.target.value
       });
+      //alert(this.state.createMaxPassengers);
     }
 
     valid(current) {
       let yesterday = Datetime.moment().subtract(1, 'day');
       return current.isAfter(yesterday);
+    }
+
+    showRecurring() {
+      if (document.getElementById('cbRecurring').checked === true){
+        document.getElementById('tr_showRecurring').style.display = 'inline-block';
+      }
+      else {
+        document.getElementById('tr_showRecurring').style.display = 'none';
+      }
     }
 
     // goes back to login page if stumble upon another page by accident without logging in
@@ -66,12 +81,12 @@ class Booking extends React.Component {
         firebase.auth().signOut();
       } else {
         if (user[6] !== "") {
-          if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "no") { //not admin, not driver
+          if (user[6] === "no" && user[5] === "no") { //not admin, not driver
             document.getElementById('btnCreateBooking').style.display = "none";
             document.getElementById('btnViewCreatedBooking').style.display = "none";
           }
 
-          if (user[6].toLowerCase() === "yes") { //isAdmin
+          if (user[6] === "yes") { //isAdmin
             document.getElementById('btnViewMyBookings').style.display = "none";
             document.getElementById('btnCreateBooking').style.display = "none";
             document.getElementById('btnViewCreatedBooking').style.display = "none";
@@ -791,7 +806,6 @@ class Booking extends React.Component {
       // checks for duplicate booking
       let dates = [];
       let check = false;
-
       const database = firebase.database().ref('bookings').orderByChild('date').startAt(Date.now());
       database.once('value', (snapshot) => {
         if (snapshot.exists()) {
@@ -803,37 +817,52 @@ class Booking extends React.Component {
         }
       }).then(() => {
         var i = 0;
-        while (i < dates.length) {
-          if (this.state.date < moment.unix(dates[i] / 1000).add(2, 'hours') && this.state.date > moment.unix(dates[i] / 1000).add(-2, 'hours')) {
-            alert("You have another booking set 2 hours before/after this time");
-            check = false;
-            break;
-          } else {
-            check = true;
-          }
-          i++;
+        if (dates.length === 0) {
+          check = true;
         }
-
-        if (check) {
-          const bookingsRef = firebase.database().ref('bookings');
-          const booking = {
-            driverID: user[9],
-            date: Date.parse((this.state.date)),
-            area: document.getElementById('ddArea').value,
-            maxPassengers: document.getElementById('ddPassengers').value,
-            currPassengers: '',
-            payMethod: '',
-            postal: '',
-            towards: document.getElementById('ddTowards').value
+        else {
+          while (i < dates.length) {
+            if (this.state.date < moment.unix(dates[i] / 1000).add(2, 'hours') && this.state.date > moment.unix(dates[i] / 1000).add(-2, 'hours')) {
+              alert("You have another booking set 2 hours before/after this time");
+              check = false;
+              break;
+            } else {
+              check = true;
+            }
+            i++;
           }
 
-          bookingsRef.push(booking);
-          this.state = {
-            currPassengers: '',
-            date: Datetime.moment()
-          };
+          if (check) {
+            const date = new Date(this.state.date);
+            const weeks = this.state.recurringWeeks;
+            let x = 0;
+            const bookingsRef = firebase.database().ref('bookings');
+            while (x < weeks) {
+              const booking = {
+                driverID: user[9],
+                date: date.setDate(date.getDate() + (7 * x)),
+                area: this.state.createArea,
+                maxPassengers: this.state.createMaxPassengers,
+                currPassengers: '',
+                payMethod: '',
+                postal: '',
+                towards: this.state.createTowards
+              }
+
+              bookingsRef.push(booking);
+              x++;
+            }
+            document.getElementById('tr_showRecurring').style.display = 'none';
+            document.getElementById('cbRecurring').checked = false;
+            this.state = {
+              date: Datetime.moment(),
+              recurringWeeks: 1
+            };
+          }
         }
       });
+
+     
 
       document.getElementById('ddArea').selectedIndex = "0";
       document.getElementById('ddPassengers').selectedIndex = "0";
@@ -1106,13 +1135,13 @@ class Booking extends React.Component {
                 <tr>
                   <td>Area</td>
                   <td>
-                    <select id="ddArea" style={{width: '13em'}} required></select>
+                    <select id="ddArea" style={{width: '13em'}} name='createArea' onChange={this.handleChange} required ></select>
                   </td>
                 </tr>
                 <tr>
                   <td>Where are you going?</td>
                   <td>
-                    <select id="ddTowards">
+                    <select id="ddTowards" name='createTowards' onChange={this.handleChange} required >
                       <option value="School">School</option>
                       <option value="Home">Home</option>
                     </select>
@@ -1121,7 +1150,7 @@ class Booking extends React.Component {
                 <tr>
                   <td>No. of Passengers</td>
                   <td>
-                    <select id="ddPassengers">
+                    <select id="ddPassengers" name='createMaxPassengers' onChange={this.handleChange} required >
                       <option value="1">1</option>
                       <option value="2">2</option>
                       <option value="3">3</option>
@@ -1130,6 +1159,22 @@ class Booking extends React.Component {
                       <option value="6">6</option>
                       <option value="7">7</option>
                     </select>
+                  </td>
+                </tr>
+                <tr>
+                  <td>Recurring?</td>
+                  <td>
+                    <input type='checkbox' id='cbRecurring' onChange={this.showRecurring} />
+                  </td>
+                </tr>
+                </tbody>
+            </table>
+            <table id='tr_showRecurring' style={{display:'none'}}>
+              <tbody>
+                <tr>
+                  <td>No. of weeks&emsp;&emsp;&emsp;&nbsp;&nbsp;</td>
+                  <td>
+                    <input type='number' id='txtRecurringWeeks' name='recurringWeeks' value={this.state.recurringWeeks} onChange={this.handleChange} required />
                   </td>
                 </tr>
               </tbody>
