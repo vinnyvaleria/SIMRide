@@ -69,7 +69,7 @@ In-Progress | Done
 ----------- | -----------
 **BOOKING: No last minute cancellation [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
-**API: Google Maps API [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
+**DRIVER: Get directions to and from school [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 -- | USERS: Logging into SIMRide 
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
@@ -79,7 +79,7 @@ BOOKING: Mark ride as done as passenger | USERS: Edit Profile
 BOOKING: Mark drive as done as driver | USERS: View Profile 
 -- | CHAT: Live chat, store chat, select user to chat with 
 BOOKING: Weekly pickup scheduler (not important)  | USERS: View other profiles 
-DRIVER: Get directions to and from school | USERS: Update password
+-- | USERS: Update password
 DRIVER: Create hidden driver page to view map | CHAT: Stored chat history 
 DRIVER: When starting the drive, get all passengers pick-up point/destination | CHAT: Retrieving chats
 MAPS: Automatic route planning (fastest) | BOOKING: Create a Booking
@@ -115,3 +115,4 @@ BACKEND: Push notification when rides are nearing | BOOKING: View My Bookings
 -- | WALLET: Cash out for drivers 
 -- | WALLET: Cash out history
 -- | BOOKING: Passengers set meeting area by plotting position on map
+-- | API: Google Maps API
