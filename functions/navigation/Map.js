@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
-import { Text, View, Button, StyleSheet } from 'react-native';
+import { Text, View, Button, StyleSheet, TextInput } from 'react-native';
 import { Map, InfoWindow, Marker, GoogleApiWrapper, GoogleMap, withGoogleMap, withScriptjs, DirectionsRenderer } from 'google-maps-react';
 import Geocode from "react-geocode";
 import Autocomplete from 'react-google-autocomplete';
 import { Location, Permissions } from 'expo';
 import Constants from 'expo-constants';
 Geocode.enableDebug();
+import getDirections from 'react-native-google-maps-directions'
 
 class map extends React.Component {
 
@@ -42,6 +43,31 @@ class map extends React.Component {
         this.setState({ error: err.message });
     }
 
+    //Testing1 This shows route, but it brings you to the actual google maps
+    handleGetDirections = () => {
+        const data = {
+            source: {
+                latitude: 1.329426,
+                longitude: 103.776571
+            },
+            destination: {
+                latitude: this.state.where.lat,
+                longitude: this.state.where.lng
+            },
+            params: [
+                {
+                    key: "travelmode",
+                    value: "driving"       // may be "walking", "bicycling" or "transit" as well
+                },
+                {
+                    key: "dir_action",
+                    value: "navigate"       // this instantly initializes navigation using the given travel mode
+                }
+            ]
+        }
+        getDirections(data)
+    }//End of Testing1
+
     render() {
         return (
             <View style={style.container}>
@@ -57,13 +83,14 @@ class map extends React.Component {
                             <h1 align="center">WELCOME TO GOOGLE MAPS</h1>
                         </div>
                         <div>
+                            <Button onPress={this.handleGetDirections} title="Get Directions" />
                             <Map google={this.props.google} zoom={16} initialCenter={{ lat: this.state.where.lat, lng: this.state.where.lng }}>
                                 <Marker onClick={this.onMarkerClick}
                                     name={'Current location'} />
                                 <Marker
                                     name={'Singapore Institute of Management'}
                                     position={{ lat: 1.329426, lng: 103.776571 }} />
-                                <Marker />
+                                
                             </Map>
                         </div>
                     </Text>
