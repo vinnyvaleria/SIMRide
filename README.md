@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BOOKING: No last minute cancellation [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BACKEND: Solve Express.js issues [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **DRIVER: Get directions to and from school [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 API: Stripe API | USERS: Logging into SIMRide 
@@ -76,7 +76,7 @@ WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase
 USERS: Rate the driver and rider (not important) | BACKEND: Made multiple tabs to act as pages 
 USERS: GPS tracking for moving cars (not important) | BACKEND: Retrieve data from Firebase 
 BOOKING: Weekly pickup scheduler (not important) | USERS: Edit Profile 
-BACKEND: Solve Express.js issues | USERS: View Profile 
+-- | USERS: View Profile 
 BACKEND: Deploy to firebase | CHAT: Live chat, store chat, select user to chat with 
 BACKEND: Push notification when rides are nearing | USERS: View other profiles 
 ADMIN: Audit/log (not important) | USERS: Update password
@@ -116,3 +116,4 @@ BOOKING: Mark ride as done as passenger | PERMISSIONS: Split users into roles, a
 -- | WALLET: Cash out history
 -- | BOOKING: Passengers set meeting area by plotting position on map
 -- | API: Google Maps API
+-- | BOOKING: Allow last minute cancellation, but allow user to report if user did not show up, admin will be able investigate
