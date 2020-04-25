@@ -74,11 +74,11 @@ In-Progress | Done
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 USERS: Rate the driver and rider (not important) | BACKEND: Made multiple tabs to act as pages 
-BOOKING: Weekly pickup scheduler (not important) | BACKEND: Retrieve data from Firebase 
+USERS: GPS tracking for moving cars (not important) | BACKEND: Retrieve data from Firebase 
 BOOKING: Mark ride as done as passenger | USERS: Edit Profile 
 BOOKING: Mark drive as done as driver | USERS: View Profile 
--- | CHAT: Live chat, store chat, select user to chat with 
---  | USERS: View other profiles 
+BOOKING: No last minute cancellation | CHAT: Live chat, store chat, select user to chat with 
+BOOKING: Weekly pickup scheduler (not important)  | USERS: View other profiles 
 DRIVER: Get directions to and from school | USERS: Update password
 DRIVER: Create hidden driver page to view map | CHAT: Stored chat history 
 DRIVER: When starting the drive, get all passengers pick-up point/destination | CHAT: Retrieving chats
@@ -87,7 +87,7 @@ ADMIN: Audit/log (not important) | BOOKING: Display list of available Booking
 API: Stripe API | USERS: Apply to be driver: upload license image
 -- | USERS: Apply to be driver: add driver details
 BACKEND: Deploy to firebase | BOOKING: Join booking
--- | BOOKING: View My Bookings
+BACKEND: Push notification when rides are nearing | BOOKING: View My Bookings
 -- | BOOKING: Cancel confirmed ride
 -- | WALLET: E-Wallet page
 -- | BOOKING: View created rides
