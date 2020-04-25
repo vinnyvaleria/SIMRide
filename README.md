@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BACKEND: Solve Express.js issues [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BOOKING: Weekly pickup scheduler [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **DRIVER: Get directions to and from school [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 API: Stripe API | USERS: Logging into SIMRide 
@@ -75,8 +75,8 @@ WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
 -- | BACKEND: Made multiple tabs to act as pages 
 -- | BACKEND: Retrieve data from Firebase 
-BOOKING: Weekly pickup scheduler (not important) | USERS: Edit Profile 
--- | USERS: View Profile 
+-- | USERS: Edit Profile 
+BACKEND: Solve Express.js issues | USERS: View Profile 
 BACKEND: Deploy to firebase | CHAT: Live chat, store chat, select user to chat with 
 BACKEND: Push notification when rides are nearing | USERS: View other profiles 
 ADMIN: Audit/log (not important) | USERS: Update password
