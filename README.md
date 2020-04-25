@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BACKEND: Solve Express.js issues [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BOOKING: No last minute cancellation [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **API: Google Maps API [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 -- | USERS: Logging into SIMRide 
@@ -77,7 +77,7 @@ USERS: Rate the driver and rider (not important) | BACKEND: Made multiple tabs t
 USERS: GPS tracking for moving cars (not important) | BACKEND: Retrieve data from Firebase 
 BOOKING: Mark ride as done as passenger | USERS: Edit Profile 
 BOOKING: Mark drive as done as driver | USERS: View Profile 
-BOOKING: No last minute cancellation | CHAT: Live chat, store chat, select user to chat with 
+-- | CHAT: Live chat, store chat, select user to chat with 
 BOOKING: Weekly pickup scheduler (not important)  | USERS: View other profiles 
 DRIVER: Get directions to and from school | USERS: Update password
 DRIVER: Create hidden driver page to view map | CHAT: Stored chat history 
@@ -85,7 +85,7 @@ DRIVER: When starting the drive, get all passengers pick-up point/destination | 
 MAPS: Automatic route planning (fastest) | BOOKING: Create a Booking
 ADMIN: Audit/log (not important) | BOOKING: Display list of available Booking
 API: Stripe API | USERS: Apply to be driver: upload license image
--- | USERS: Apply to be driver: add driver details
+BACKEND: Solve Express.js issues | USERS: Apply to be driver: add driver details
 BACKEND: Deploy to firebase | BOOKING: Join booking
 BACKEND: Push notification when rides are nearing | BOOKING: View My Bookings
 -- | BOOKING: Cancel confirmed ride
