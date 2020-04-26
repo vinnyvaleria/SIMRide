@@ -48,33 +48,59 @@ class Messages extends React.Component {
       });
     }
 
+    // checks email and signs user out if no such email found
+    checkEmail(e) {
+      const email = firebase.auth().currentUser.email;
+      user[3] = email;
+
+      const accountsRef = firebase.database().ref('accounts');
+      accountsRef.orderByChild('email')
+        .equalTo(user[3])
+        .once('value')
+        .then((snapshot) => {
+          snapshot.forEach((child) => {
+            user[0] = child.val().fname;
+            user[1] = child.val().lname;
+            user[2] = child.val().uname;
+            user[4] = child.val().phone;
+            user[5] = child.val().isDriver;
+            user[6] = child.val().isAdmin;
+            user[7] = child.val().isBanned;
+            user[8] = child.val().wallet;
+            user[9] = child.key;
+          });
+        }).then(() => {
+          if (typeof user[3] === 'undefined') {
+            firebase.auth().signOut();
+          } else {
+            if (user[6] !== "") {
+              // loads accounts
+              firebase.database()
+                .ref('accounts')
+                .orderByChild('email')
+                .once('value')
+                .then((snapshot) => {
+                  var i = 0;
+                  snapshot.forEach((child) => {
+                    unameArr[i] = child.val().uname;
+                    i++;
+                  })
+                });
+
+              firebase.firestore().collection("chat").get().then((querySnapshot) => {
+                querySnapshot.forEach((doc) => {
+                  allchats.push(doc.id);
+                  chats = Array.from(new Set(allchats))
+                });
+              });
+            }
+          }
+        });
+    }
+
     // goes back to login page if stumble upon another page by accident without logging in
     componentDidMount() {
-      if (typeof user[3] === 'undefined') {
-        firebase.auth().signOut();
-      } else {
-        if (user[6] !== "") {
-          // loads accounts
-          firebase.database()
-            .ref('accounts')
-            .orderByChild('email')
-            .once('value')
-            .then((snapshot) => {
-              var i = 0;
-              snapshot.forEach((child) => {
-                unameArr[i] = child.val().uname;
-                i++;
-              })
-            });
-
-          firebase.firestore().collection("chat").get().then((querySnapshot) => {
-            querySnapshot.forEach((doc) => {
-              allchats.push(doc.id);
-              chats = Array.from(new Set(allchats))
-            });
-          });
-        }
-      }
+      this.checkEmail();
     }
 
     // stores message in firestore
@@ -122,39 +148,31 @@ class Messages extends React.Component {
     }
 
     searchUsername(e) {
-      e.preventDefault();
-
       let i = 0;
-
       // creates chat based on usernames
-      while (i < unameArr.length + 1) {
+      while (i < unameArr.length) {
+        console.log(unameArr[i]);
         // checks if there is a valid account in the database
         if (this.state.to === unameArr[i]) {
+          console.log(this.state.to, unameArr[i]);
           document.getElementById('searchUser').style.display = "none";
           document.getElementById('sendNewMessage').style.display = "block";
+          const search = this.state.to;
 
           //creates chat based on username length
-          chatName;
-          if (user[2].length !== this.state.to.length) {
-            if (user[2].length < this.state.to.length) {
-              chatName = (user[2] + "-" + this.state.to)
+          if (user[2].length !== search.length) {
+            if (user[2].length < search.length) {
+              chatName = (user[2] + "-" + search)
             } else {
-              chatName = (this.state.to + "-" + user[2])
+              chatName = (search + "-" + user[2])
             }
           }
           // if same length compare by alphabets
           else {
-            let j = 0;
-            while (j < user[2].length) {
-              if (user[2][j] !== this.state.to[j]) {
-                if (user[2][j] < this.state.to[j]) {
-                  chatName = (user[2] + "-" + this.state.to)
-                } else {
-                  chatName = (this.state.to + "-" + user[2])
-                }
-              } else {
-                j++;
-              }
+            if (user[2] < search) {
+              chatName = (user[2] + "-" + search)
+            } else {
+              chatName = (search + "-" + user[2])
             }
           }
 
@@ -165,7 +183,7 @@ class Messages extends React.Component {
           viewOtherAcctPageUser.innerHTML = clickedUser;
           break;
         } else if (i === unameArr.length) {
-          alert("User not found.")
+          alert("User not found");
         }
         i++;
       }
@@ -195,6 +213,7 @@ class Messages extends React.Component {
 
     // new msg button
     newMsgButton() {
+      console.log(unameArr, unameArr.length)
       document.getElementById('inbox').style.display = "none";
       document.getElementById('searchUser').style.display = "block";
       document.getElementById('sendNewMessage').style.display = "none";
@@ -423,9 +442,6 @@ class Messages extends React.Component {
     return (
       <View>
         <div id='msgsPage'>
-          <div>
-            <h1>This is the messages tab</h1>
-          </div>
           <div>
             <div>
               <h1>SIMWorld Chat</h1>

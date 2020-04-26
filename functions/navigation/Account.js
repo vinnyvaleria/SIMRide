@@ -1,3 +1,4 @@
+/* eslint-disable promise/no-nesting */
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 /* eslint-disable no-alert */
@@ -7,7 +8,6 @@ import firebase from '../../base';
 import 'firebase/firestore';
 import "firebase/storage";
 import {user} from './Login';
-import { getPlaneDetection } from 'expo/build/AR';
 
 var Util = require('../../util/Util');
 
@@ -162,38 +162,77 @@ class Account extends React.Component {
       }
     }
 
-    // goes back to login page if stumble upon another page by accident without logging in
-    componentDidMount() {
+    // bind user data
+    bindUserData() {
+      const accountsRef = firebase.database().ref('accounts');
+      accountsRef.orderByChild('email')
+        .equalTo(user[3])
+        .once('value')
+        .then((snapshot) => {
+          snapshot.forEach((child) => {
+            user[0] = child.val().fname;
+            user[1] = child.val().lname;
+            user[2] = child.val().uname;
+            user[4] = child.val().phone;
+            user[5] = child.val().isDriver;
+            user[6] = child.val().isAdmin;
+            user[7] = child.val().isBanned;
+            user[8] = child.val().wallet;
+            user[9] = child.key;
+          });
+        })
+    }
+
+    checkDriverApplicationStatus() {
+      firebase.database().ref('driverDetails')
+        .once('value')
+        .then((snapshot) => {
+          var i = 0;
+          snapshot.forEach((child) => {
+            if (user[9] === child.key) {
+              if (child.val().completed === "yes") {
+                document.getElementById('btnApplyDriver').disabled = "true";
+                document.getElementById('btnApplyDriver').style.display = "inline-block";
+                document.getElementById('btnApplyDriver').innerHTML = "Application sent";
+              } else {
+                document.getElementById('btnApplyDriver').style.display = "inline-block";
+              }
+              if (user[6].toLowerCase() === "yes") {
+                document.getElementById('btnApplyDriver').style.display = "none";
+              }
+            } else {
+              document.getElementById('btnApplyDriver').style.display = "inline-block";
+            }
+          })
+        });
+    }
+
+    // checks email and signs user out if no such email found
+    checkEmail(e) {
       if (typeof user[3] === 'undefined') {
         firebase.auth().signOut();
       } else {
-        if (user[6] !== "") {
-          if (user[5].toString().toLowerCase() === "no") {
-            firebase.database().ref('driverDetails')
-              .once('value')
-              .then((snapshot) => {
-                var i = 0;
-                snapshot.forEach((child) => {
-                  if (user[9] === child.key) {
-                    if (child.val().completed === "yes") {
-                      document.getElementById('btnApplyDriver').disabled = "true";
-                      document.getElementById('btnApplyDriver').style.display = "inline-block";
-                      document.getElementById('btnApplyDriver').innerHTML = "Application sent";
-                    } else {
-                      document.getElementById('btnApplyDriver').style.display = "inline-block";
-                    }
-                    if (user[6].toLowerCase() === "yes") {
-                      document.getElementById('btnApplyDriver').style.display = "none";
-                    }
-                  } else {
-                    document.getElementById('btnApplyDriver').style.display = "inline-block";
-                  }
-                })
-              });
-            }
+        if (user[6] !== "") { 
+          document.getElementById('btnApplyDriver').style.display = "none";
+        }
+        else {
+          if (user[5] === "no") {
+            this.checkDriverApplicationStatus();
           }
         }
       }
+    }
+
+    componentWillMount() {
+      const email = firebase.auth().currentUser.email;
+      user[3] = email;
+      this.bindUserData();
+    }
+
+    // goes back to login page if stumble upon another page by accident without logging in
+    componentDidMount() {
+      this.checkEmail();
+    }
 
     // logout
     logout() {
@@ -272,8 +311,15 @@ class Account extends React.Component {
     cancelEditProfile() {
       Util.profilePageReset();
 
+      if (user[6] !== "") {
+        document.getElementById('btnApplyDriver').style.display = "none";
+      } else {
+        if (user[5] === "no") {
+          this.checkDriverApplicationStatus();
+        }
+      }
+
       document.getElementById('tblApplyDriver').style.display = 'none';
-      document.getElementById('btnApplyDriver').style.display = 'block';
       document.getElementById('cancelApplyDriverButton').style.display = 'none';
       document.getElementById('btnImgFrontUpload').style.display = 'none';
       document.getElementById('btnImgBackUpload').style.display = 'none';
@@ -332,8 +378,10 @@ class Account extends React.Component {
 
         Util.profilePageReset();
 
-        document.getElementById('editNewPassword').value = "";
-        document.getElementById('confirmNewPassword').value = "";
+        this.setState({
+          newPassword: '',
+          confirmPassword: ''
+        });
       } else {
         alert("Passwords do not match!");
       }
@@ -343,15 +391,19 @@ class Account extends React.Component {
     cancelPassword() {
       Util.profilePageReset();
 
+      if (user[6] !== "") {
+        document.getElementById('btnApplyDriver').style.display = "none";
+      } else {
+        if (user[5] === "no") {
+          this.checkDriverApplicationStatus();
+        }
+      }
+
       document.getElementById('tblApplyDriver').style.display = 'none';
-      document.getElementById('btnApplyDriver').style.display = 'block';
       document.getElementById('cancelApplyDriverButton').style.display = 'none';
       document.getElementById('btnImgFrontUpload').style.display = 'none';
       document.getElementById('btnImgBackUpload').style.display = 'none';
       document.getElementById('submitDriverDetails').style.display = 'none';
-
-      document.getElementById('editNewPassword').value = "";
-      document.getElementById('confirmNewPassword').value = "";
     }
 
     // apply to be driver button

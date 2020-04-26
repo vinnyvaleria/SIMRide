@@ -36,32 +36,57 @@ class Home extends React.Component {
       });
     }
 
-    // goes back to login page if stumble upon another page by accident without logging in
-    componentDidMount() {
-      if (typeof user[3] === 'undefined') {
-        firebase.auth().signOut();
-      }
-      else{
-        if (user[6] !== "") {
-          if (user[6].toLowerCase() === "yes") { // admin
-            document.getElementById("adminDB").style.display = "block";
-            this.viewApplication();
-            this.viewReportedUsers();
-            this.Notifications('tb_AdminNotifications');
-          } else if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "yes") { // driver
-            this.walletBalanceCheck();
-            document.getElementById("driverDB").style.display = "block";
-            this.viewCreatedBooking();
-            this.viewMyBookings('tb_DriverUpcomingRides');
-            this.Notifications('tb_DriverNotifications');
-          } else if (user[6].toLowerCase() === "no" && user[5].toLowerCase() === "no") { // normal users
-            this.walletBalanceCheck();
-            document.getElementById("riderDB").style.display = "block";
-            this.viewMyBookings('tb_RiderUpcomingRides');
-            this.Notifications('tb_RiderNotifications');
+    // checks email and signs user out if no such email found
+    checkEmail(e) {
+      const email = firebase.auth().currentUser.email;
+      user[3] = email;
+
+      const accountsRef = firebase.database().ref('accounts');
+      accountsRef.orderByChild('email')
+        .equalTo(user[3])
+        .once('value')
+        .then((snapshot) => {
+          snapshot.forEach((child) => {
+            user[0] = child.val().fname;
+            user[1] = child.val().lname;
+            user[2] = child.val().uname;
+            user[4] = child.val().phone;
+            user[5] = child.val().isDriver;
+            user[6] = child.val().isAdmin;
+            user[7] = child.val().isBanned;
+            user[8] = child.val().wallet;
+            user[9] = child.key;
+        });
+      }).then(() => {
+        if (typeof user[3] === 'undefined') {
+          firebase.auth().signOut();
+        } else {
+          if (user[6] !== "") {
+            if (user[6] === "yes") { // admin
+              document.getElementById("adminDB").style.display = "block";
+              this.viewApplication();
+              this.viewReportedUsers();
+              this.Notifications('tb_AdminNotifications');
+            } else if (user[6] === "no" && user[5] === "yes") { // driver
+              this.walletBalanceCheck();
+              document.getElementById("driverDB").style.display = "block";
+              this.viewCreatedBooking();
+              this.viewMyBookings('tb_DriverUpcomingRides');
+              this.Notifications('tb_DriverNotifications');
+            } else if (user[6] === "no" && user[5] === "no") { // normal users
+              this.walletBalanceCheck();
+              document.getElementById("riderDB").style.display = "block";
+              this.viewMyBookings('tb_RiderUpcomingRides');
+              this.Notifications('tb_RiderNotifications');
+            }
           }
         }
-      }
+      });
+    }
+
+    // goes back to login page if stumble upon another page by accident without logging in
+    componentDidMount() {
+      this.checkEmail();
     }
 
     walletBalanceCheck() {
@@ -526,7 +551,7 @@ class Home extends React.Component {
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
         <div id='homePage'>
           <div>
-            <h1>{"Welcome Home, " + user[0]}</h1>
+            <h1>{"Ready for a ride, " + user[2] + "?"}</h1>
           </div>
           <div id="adminDB" style={{display: 'none'}}>
             <div id="div_driverApplication">
