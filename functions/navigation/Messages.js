@@ -142,7 +142,6 @@ class Messages extends React.Component {
         })
 
       if (e.target.id === "submitMsgButtonNew") {
-
         this.inboxMsgButton();
       }
     }
@@ -213,7 +212,6 @@ class Messages extends React.Component {
 
     // new msg button
     newMsgButton() {
-      console.log(unameArr, unameArr.length)
       document.getElementById('inbox').style.display = "none";
       document.getElementById('searchUser').style.display = "block";
       document.getElementById('sendNewMessage').style.display = "none";

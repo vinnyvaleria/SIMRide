@@ -13,7 +13,6 @@ var userDetails = [];
 
 class Home extends React.Component {
     constructor(props) {
-
       super(props);
       this.handleChange = this.handleChange.bind(this);
       this.viewApplication = this.viewApplication.bind(this);

@@ -28,7 +28,7 @@ class Account extends React.Component {
       this.state = {
         firstName: '',
         lastName: '',
-        username: '',
+        username: user[2],
         phone: '',
         email: '',
         newPassword: '',
@@ -66,9 +66,7 @@ class Account extends React.Component {
 
     // uplaods front license pic
     handleFrontUpload() {
-      const {
-        image
-      } = this.state;
+      const {image} = this.state;
       if (image !== null) {
         const uploadTask = firebase.storage().ref().child(`license/${user[9]}/front`).put(image);
         uploadTask.on(
@@ -85,8 +83,7 @@ class Account extends React.Component {
             // Error function ...
             alert('Error: ' + error);
             console.log(error);
-          },
-          () => {
+          }, () => {
             // complete function ...
             alert('Image is uploaded!');
             document.getElementById('btnImgFrontUpload').style.display = 'none';
@@ -100,10 +97,9 @@ class Account extends React.Component {
               .then(frontURL => {
                 this.setState({
                   frontURL
-                });
               });
-          }
-        );
+            });
+          });
       } else {
         alert('Error: No file selected');
       }
@@ -117,9 +113,7 @@ class Account extends React.Component {
       var y = date.getFullYear();
       var today = new Date(y, m, d);
 
-      const {
-        image
-      } = this.state;
+      const {image} = this.state;
       if (image !== null) {
         const uploadTask = firebase.storage().ref().child(`license/${user[9]}/back`).put(image);
         uploadTask.on(
@@ -135,8 +129,7 @@ class Account extends React.Component {
           error => {
             // Error function ...
             console.log(error);
-          },
-          () => {
+          }, () => {
             // complete function ...
             alert('Image is uploaded!')
             firebase.storage()
@@ -146,8 +139,8 @@ class Account extends React.Component {
               .then(backURL => {
                 this.setState({
                   backURL
-                });
               });
+            });
 
             const driverDetails = {
               completed: "yes",
@@ -155,8 +148,7 @@ class Account extends React.Component {
             }
 
             accountsRef.update(driverDetails);
-          }
-        );
+          });
       } else {
         alert('Error: No file selected');
       }
@@ -179,8 +171,8 @@ class Account extends React.Component {
             user[7] = child.val().isBanned;
             user[8] = child.val().wallet;
             user[9] = child.key;
-          });
-        })
+        });
+      })
     }
 
     checkDriverApplicationStatus() {
@@ -203,8 +195,8 @@ class Account extends React.Component {
             } else {
               document.getElementById('btnApplyDriver').style.display = "inline-block";
             }
-          })
-        });
+        })
+      });
     }
 
     // checks email and signs user out if no such email found
@@ -236,8 +228,6 @@ class Account extends React.Component {
 
     // logout
     logout() {
-      console.log("signout " + user);
-
       user[0] = '';
       user[1] = '';
       user[2] = '';
@@ -249,7 +239,6 @@ class Account extends React.Component {
       user[8] = '';
       user[9] = '';
 
-      console.log("signin " + user);
       firebase.auth().signOut();
     }
 
@@ -495,7 +484,7 @@ render() {
     <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
       <div id='acctPage'>
         <div>
-          <h1>{user[2] + "'s Account"}</h1>
+          <h1>{this.state.username + "'s Account"}</h1>
           <table id='tblProfile'>
             <tbody>
               <tr>
