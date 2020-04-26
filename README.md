@@ -68,7 +68,7 @@ git checkout [branch_name]
 In-Progress | Done
 ----------- | -----------
 **BACKEND: Solve Express.js issues [Shafiq doing now]** | BACKEND: Connected to Firebase 
-**Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
+**FRONTEND: Design the app (UI/UX) && BACKEND: Refolder files [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **DRIVER: Get directions to and from school [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 API: Stripe API | USERS: Logging into SIMRide 
 WALLET: Top-up E-Wallet | USERS: Logging out of SIMRide 
