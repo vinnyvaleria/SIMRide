@@ -119,5 +119,5 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | BOOKING: Allow last minute cancellation, but also allow users to report if driver/passenger did not show up, admin will be able investigate thru msgs
 -- | DRIVER: Create recurring rides
 -- | BACKEND: Deploy to firebase (carpool-world-5uck5.web.app)
--- | WALLET: Top-up E-Wallet (ONLY ON UPDATES ON DB AND WEBSITE, BUT DOESNT CHARGE MONEY TO STRIPE API)
+-- | WALLET: Top-up E-Wallet (ONLY UPDATES ON DB AND WEBSITE, BUT DOESNT CHARGE MONEY TO STRIPE API)
 -- | BACKEND: Solve Express.js issues (STILL DONT UNDERSTAND HOW EXPRESS WORKS, CANT GET STRIPE API TO WORK)
