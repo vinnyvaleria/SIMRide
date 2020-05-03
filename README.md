@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**API: Get Stripe API working [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**USERS: Transaction Update && API: Get Stripe API working [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **FRONTEND: Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **DRIVER: Get directions to and from school [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 -- | USERS: Logging into SIMRide 
@@ -111,7 +111,7 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | BOOKING: Check for passenger joining another booking for same time and day
 -- | WALLET: Check for wallet balance when booking ride
 -- | WALLET: Balance low reminder
--- | USERS: Transaction/booking history
+-- | USERS: Transaction
 -- | WALLET: Cash out for drivers 
 -- | WALLET: Cash out history
 -- | BOOKING: Passengers set meeting area by plotting position on map
