@@ -77,7 +77,7 @@ WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase
 -- | BACKEND: Retrieve data from Firebase 
 -- | USERS: Edit Profile 
 -- | USERS: View Profile 
-BACKEND: Deploy to firebase | CHAT: Live chat, store chat, select user to chat with 
+-- | CHAT: Live chat, store chat, select user to chat with 
 BACKEND: Push notification when rides are nearing | USERS: View other profiles 
 ADMIN: Audit/log (not important) | USERS: Update password
 -- | CHAT: Stored chat history 
@@ -118,3 +118,4 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | API: Google Maps API
 -- | BOOKING: Allow last minute cancellation, but also allow users to report if driver/passenger did not show up, admin will be able investigate thru msgs
 -- | DRIVER: Create recurring rides
+-- | BACKEND: Deploy to firebase (carpool-world-5uck5.web.app)
