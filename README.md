@@ -119,7 +119,7 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | BOOKING: Allow last minute cancellation, but also allow users to report if driver/passenger did not show up, admin will be able investigate thru msgs
 -- | DRIVER: Create recurring rides
 -- | BACKEND: Deploy to firebase (carpool-world-5uck5.web.app)
--- | WALLET: Top-up E-Wallet (WORKS NOW, TEST PAYMENT WITH CARD: 4242 4242 4242 4242, ANY 3 DIGITS, ANY FUTURE DATE FROM TODAY)
+-- | WALLET: Top-up E-Wallet (WORKS NOW, TEST PAYMENT WITH CARD: 4242 4242 4242 4242, ANY 3 DIGITS CVC, ANY FUTURE DATE FROM TODAY)
 -- | BACKEND: Solve Express.js issues
 -- | BACKEND: Refolder files
 -- | API: Get Stripe API working
