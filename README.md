@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**USER: Show transaction history [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BACKEND: Push notification when rides are nearing [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **FRONTEND: Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **DRIVER: Get directions to and from school [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 -- | USERS: Logging into SIMRide 
@@ -78,7 +78,7 @@ WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase
 -- | USERS: Edit Profile 
 -- | USERS: View Profile 
 -- | CHAT: Live chat, store chat, select user to chat with 
-BACKEND: Push notification when rides are nearing | USERS: View other profiles 
+-- | USERS: View other profiles 
 ADMIN: Audit/log (not important) | USERS: Update password
 -- | CHAT: Stored chat history 
 -- | CHAT: Retrieving chats
@@ -124,3 +124,4 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | BACKEND: Refolder files
 -- | API: Get Stripe API working
 -- | USERS: Transaction Update
+-- | USER: Show transaction history
