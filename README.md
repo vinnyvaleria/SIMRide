@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**USERS: Transaction Update && API: Get Stripe API working [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**USER: Show transaction history [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **FRONTEND: Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **DRIVER: Get directions to and from school [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 -- | USERS: Logging into SIMRide 
@@ -119,6 +119,8 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | BOOKING: Allow last minute cancellation, but also allow users to report if driver/passenger did not show up, admin will be able investigate thru msgs
 -- | DRIVER: Create recurring rides
 -- | BACKEND: Deploy to firebase (carpool-world-5uck5.web.app)
--- | WALLET: Top-up E-Wallet (ONLY UPDATES ON DB AND WEBSITE, BUT DOESNT CHARGE MONEY TO STRIPE API)
--- | BACKEND: Solve Express.js issues (STILL DONT UNDERSTAND HOW EXPRESS WORKS, CANT GET STRIPE API TO WORK)
+-- | WALLET: Top-up E-Wallet (WORKS NOW, TEST PAYMENT WITH CARD: 4242 4242 4242 4242, ANY 3 DIGITS, ANY FUTURE DATE FROM TODAY)
+-- | BACKEND: Solve Express.js issues
 -- | BACKEND: Refolder files
+-- | API: Get Stripe API working
+-- | USERS: Transaction Update
