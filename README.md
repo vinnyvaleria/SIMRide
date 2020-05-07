@@ -69,7 +69,7 @@ In-Progress | Done
 ----------- | -----------
 **BOOKING: Mark drive as done as driver [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **FRONTEND: Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
-**??? [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
+**USERS: Rate the driver and rider [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 BACKEND: Push notification when rides are nearing | USERS: Logging into SIMRide 
 -- | USERS: Logging out of SIMRide 
 WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
@@ -92,7 +92,7 @@ ADMIN: Audit/log (not important) | USERS: Update password
 -- | WALLET: E-Wallet page
 -- | BOOKING: View created rides
 BOOKING: Mark ride as done as passenger | PERMISSIONS: Split users into roles, and define what each role can see
-USERS: Rate the driver and rider (not important) | USERS: Forgot password reset email
+-- | USERS: Forgot password reset email
 USERS: GPS tracking for moving cars (not important) | ADMIN: review driver application
 -- | BOOKING: Cancel created booking
 -- | ADMIN: Ban user (blacklist user)
@@ -126,5 +126,5 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | USERS: Transaction Update
 -- | USER: Show transaction history
 -- | DRIVER: Get directions to and from school
--- | DRIVER: When starting the drive, get all passengers pick-up point/destination
+-- | DRIVER: When starting the drive, get all passengers pick-up point/destination (bookingID currently hardcoded -- not done properly yet)
 -- | DRIVER: Create hidden driver page to view map
