@@ -89,7 +89,7 @@ ADMIN: Audit/log (not important) | USERS: Update password
 -- | BOOKING: Join booking
 -- | BOOKING: View My Bookings
 -- | BOOKING: Cancel confirmed ride
-DRIVER: Create hidden driver page to view map | WALLET: E-Wallet page
+-- | WALLET: E-Wallet page
 -- | BOOKING: View created rides
 BOOKING: Mark ride as done as passenger | PERMISSIONS: Split users into roles, and define what each role can see
 USERS: Rate the driver and rider (not important) | USERS: Forgot password reset email
@@ -127,3 +127,4 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | USER: Show transaction history
 -- | DRIVER: Get directions to and from school
 -- | DRIVER: When starting the drive, get all passengers pick-up point/destination
+-- | DRIVER: Create hidden driver page to view map
