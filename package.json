@@ -3,7 +3,8 @@
   "scripts": {
     "lint": "",
     "predeploy": "expo build:web",
-    "deploy-hosting": "npm run predeploy && firebase deploy --only functions,hosting"
+    "deploy-hosting": "npm run predeploy && firebase deploy --only functions,hosting",
+    "web": "expo start --web"
   },
   "dependencies": {
     "@stripe/react-stripe-js": "^1.1.2",

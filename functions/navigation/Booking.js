@@ -9,7 +9,7 @@ import {user} from './Login';
 import * as Datetime from "react-datetime";
 var moment = require('moment');
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
-import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
+import GooglePlacesAutocomplete, { geocodeByAddress, getLatLng } from 'react-google-places-autocomplete';
 import 'react-google-places-autocomplete/dist/index.min.css';
 
 var userDetails = [];
@@ -1105,7 +1105,16 @@ class Booking extends React.Component {
                       id='postal' 
                       placeholder='Search' 
                       onSelect={({ description }) => (
-                        this.setState({ postal: description })
+                        geocodeByAddress(description)
+                          .then(results => getLatLng(results[0]))
+                          .then(({
+                                lat,
+                                lng
+                              }) => this.setState({
+                                postal: lat+":"+lng
+                              }))
+                          .catch(error => console.error(error))
+                        
                       )}
                       required 
                     />
