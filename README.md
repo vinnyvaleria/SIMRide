@@ -125,7 +125,7 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | API: Get Stripe API working
 -- | USERS: Transaction Update
 -- | USER: Show transaction history
--- | DRIVER: Get directions to and from school
+-- | DRIVER: Get directions to and from school (MAPS WILL ONLY BE IN DRIVER POV -> IN VIEW CREATED RIDES >> START)
 -- | DRIVER: When starting the drive, get all passengers pick-up point/destination
 -- | DRIVER: Create hidden driver page to view map
 -- | DRIVER: Notify passenger that he is at pick-up point
