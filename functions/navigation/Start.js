@@ -6,8 +6,10 @@ import Booking from './Booking';
 import Home from './Home';
 import Wallet from './Wallet';
 import Map from './Map';
+import Rating from './Rating';
 import Checkout from './CashCheckout';
-import {user} from './Login';
+import { user } from './Login';
+
 
 export default function Start() {
   return (
@@ -29,6 +31,9 @@ export default function Start() {
             </li>
             <li>
                 <Link to="/Map">Map</Link>
+            </li>
+            <li>
+                <Link to="/Rating">Ratings</Link>
             </li>
             <li id='checkOutTab'>
               <Link to="/Checkout">Checkout Requests</Link>
@@ -56,6 +61,9 @@ export default function Start() {
           </Route>
           <Route path="/Map">
               <Map />
+          </Route>
+          <Route path="/Rating">
+              <Rating />
           </Route>
            <Route path="/Checkout">
               <Checkout />

@@ -2,7 +2,7 @@
 /* eslint-disable promise/always-return */
 /* eslint-disable promise/catch-or-return */
 import React, { Component } from 'react';
-import { Text, View } from 'react-native';
+import { Text, View, Button, StyleSheet, TextInput, TouchableOpacity } from 'react-native';
 import firebase from '../../base';
 import 'firebase/firestore';
 import {user} from './Login';
@@ -11,6 +11,10 @@ var moment = require('moment');
 import { Map, Marker, GoogleApiWrapper } from "google-maps-react";
 import GooglePlacesAutocomplete from 'react-google-places-autocomplete';
 import 'react-google-places-autocomplete/dist/index.min.css';
+Geocode.enableDebug();
+import Geocode from "react-geocode";
+import getDirections from 'react-native-google-maps-directions'
+import Geocoder from 'react-native-geocoding';
 
 var userDetails = [];
 var payMethod;
@@ -41,7 +45,14 @@ class Booking extends React.Component {
         date: Datetime.moment(),
         postal: '',
         removeReason: ''
-      }
+        }
+
+        //User Location
+        this.state = {
+            ready: false,
+            where: { lat: null, lng: null, latitudeDelta: 0, longitudeDelta: 0 }, //Retrieving Lat and Lng
+            error: null
+        }
     }
 
     onChange(date) {
@@ -943,6 +954,93 @@ class Booking extends React.Component {
       });
     }
 
+    //User Location 
+    componentDidMount() {
+        let geoOptions = {
+            enableHighAccuracy: true,
+            timeOut: 20000, //How long to wait before refreshing (In milliseconds)
+            maximumAge: 10000 // How long to store Lat and Lng
+        };
+        this.setState({ ready: false });
+        navigator.geolocation.getCurrentPosition(this.geoSuccess, this.geoFailure, geoOptions);
+    }
+
+    geoSuccess = (position) => {
+        console.log(position);
+        console.log(position.coords.latitude);
+        console.log(position.coords.longitude);
+        this.setState({
+            ready: true,
+            where: { lat: position.coords.latitude, lng: position.coords.longitude }
+        })
+    }
+
+    geoFailure = (err) => {
+        this.setState({ error: err.message });
+    }
+    //End User Location SY
+
+    //This shows route, but it brings you to the actual google maps
+    handleGetDirections = () => {
+        const direction = {
+            source: { //User Location          
+                latitude: 1.329426,
+                longitude: 103.776571
+            },
+            destination: { //Destination
+                latitude: this.state.where.lat,
+                longitude: this.state.where.lng 
+            },
+            params: [
+                {
+                    key: "travelmode",
+                    value: "driving"       // may be "walking", "bicycling" or "transit" as well
+                },
+                {
+                    key: "dir_action",
+                    value: "navigate"       // this instantly initializes navigation using the given travel mode
+                }
+            ]
+        }
+        getDirections(direction)
+    }//End of Show route
+
+    //Convert Address to LatLng
+    getLatLng() {
+        Geocoder.init("AIzaSyARHBw1DzEQDE0auV06gUQRI8iNUKmwHaY");
+
+        Geocoder.from(this.state.postal).then(
+            json => {
+                var location = json.results[0].geometry.location;
+                console.log(location);
+                console.log(location.lat);
+                console.log(location.lng);
+            })
+            .catch(error => console.warn(error));
+
+        //Geocoder.from(1.329426, 103.776571). then(
+        //    json => {
+        //        var address_component = json.results[0].formatted_address;
+        //        console.log(address_component);
+        //        alert(address_component);
+        //    },
+        //    error => {
+        //        alert(error);
+        //    }
+        //);
+    }//End of Convert Address
+    
+    //getValue() {
+    //    alert(this.state.postal);
+    //    latlngVal = this.state.postal;
+    //    if (latlngval = null) {
+    //        latlngVal = null;
+    //    } else {
+            
+    //        alert(latlngVal);
+    //    }      
+    //}
+
   render() {
     return (
       <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
@@ -1053,10 +1151,10 @@ class Booking extends React.Component {
                       id='postal' 
                       placeholder='Search' 
                       onSelect={({ description }) => (
-                        this.setState({ postal: description })
+                          this.setState({ postal: description })
                       )}
                       required 
-                    />
+                     />                                   
                   </td>
                 </tr>
                 <tr>
@@ -1067,6 +1165,25 @@ class Booking extends React.Component {
                       <option value="cash">Pay by cash</option>
                     </select>
                   </td>
+                </tr>
+                            <tr>
+                                <TouchableOpacity onPress={() => { this.getLatLng() }} >
+                                    <Text> Get Directions </Text>
+                                </TouchableOpacity>
+                                
+                </tr>
+                <tr>
+                                <td>
+                                    <Button onPress={this.handleGetDirections} title="View Route" />
+                                    <Map google={this.props.google} zoom={16} initialCenter={{ lat: 1.329426, lng: 103.776571 }}>
+                                        <Marker onClick={this.onMarkerClick}
+                                            name={'Current location'} />
+
+                                        <Marker onClick={this.onMarkerClick}
+                                            name={'Destination'}
+                                            position={{ lat: this.state.where.lat, lng: this.state.where.lng }} />
+                                    </Map>
+                                </td>
                 </tr>
               </tbody>
             </table>

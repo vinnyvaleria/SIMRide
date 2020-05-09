@@ -2,8 +2,9 @@
   "ExpandedNodes": [
     "",
     "\\functions",
-    "\\functions\\navigation"
+    "\\functions\\navigation",
+    "\\util"
   ],
-  "SelectedNode": "\\functions\\navigation\\Map.js",
+  "SelectedNode": "\\functions\\navigation\\Rating.js",
   "PreviewInSolutionExplorer": false
 }
