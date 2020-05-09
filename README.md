@@ -69,7 +69,7 @@ In-Progress | Done
 ----------- | -----------
 **BOOKING:USERS: Rate the driver and rider [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **FRONTEND: Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
-**USERS: Rate the driver and rider [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
+**??? [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 BACKEND: Push notification when rides are nearing | USERS: Logging into SIMRide 
 -- | USERS: Logging out of SIMRide 
 -- | BACKEND: Send data to Firebase 
