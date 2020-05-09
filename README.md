@@ -72,7 +72,7 @@ In-Progress | Done
 **USERS: Rate the driver and rider [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 BACKEND: Push notification when rides are nearing | USERS: Logging into SIMRide 
 -- | USERS: Logging out of SIMRide 
-WALLET: Remove total from E-Wallet after ride | BACKEND: Send data to Firebase 
+-- | BACKEND: Send data to Firebase 
 -- | BACKEND: Made multiple tabs to act as pages 
 -- | BACKEND: Retrieve data from Firebase 
 -- | USERS: Edit Profile 
@@ -126,5 +126,9 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | USERS: Transaction Update
 -- | USER: Show transaction history
 -- | DRIVER: Get directions to and from school
--- | DRIVER: When starting the drive, get all passengers pick-up point/destination (bookingID currently hardcoded -- not done properly yet)
+-- | DRIVER: When starting the drive, get all passengers pick-up point/destination
 -- | DRIVER: Create hidden driver page to view map
+-- | DRIVER: Notify passenger that he is at pick-up point
+-- | WALLET: Remove payment amount from passenger E-Wallet
+-- | WALLET: Add payment amount to driver E-Wallet
+-- | DRIVER : Update if passenger has boarded/did not show up
