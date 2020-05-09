@@ -1111,7 +1111,7 @@ class Booking extends React.Component {
                                 lat,
                                 lng
                               }) => this.setState({
-                                postal: lat+":"+lng
+                                postal: description+":"+lat+":"+lng
                               }))
                           .catch(error => console.error(error))
                         
