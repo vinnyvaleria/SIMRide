@@ -67,10 +67,10 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BOOKING:USERS: Rate the driver and rider [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BACKEND: Push notification when rides are nearing [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **FRONTEND: Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **??? [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
-BACKEND: Push notification when rides are nearing | USERS: Logging into SIMRide 
+-- | USERS: Logging into SIMRide 
 -- | USERS: Logging out of SIMRide 
 -- | BACKEND: Send data to Firebase 
 -- | BACKEND: Made multiple tabs to act as pages 
@@ -133,3 +133,4 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | WALLET: Add payment amount to driver E-Wallet
 -- | DRIVER : Update if passenger has boarded/did not show up
 -- | BOOKING: Mark drive as done as driver 
+-- | USERS: Rate the driver and rider
