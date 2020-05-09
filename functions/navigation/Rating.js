@@ -30,6 +30,7 @@ class rating extends React.Component {
                             <Text>How was your trip?</Text>
                         </tr>
                         <tr>
+                            <Text>The rating is: {this.state.starCount}/5</Text>
                             <StarRating
                                 disabled={false}
                                 maxStars={5}
