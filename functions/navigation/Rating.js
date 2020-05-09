@@ -27,7 +27,7 @@ class rating extends React.Component {
                 <div>          
                     <table>
                         <tr>
-                            <Text>How was your trip?</Text>
+                            <Text>How was your trip? </Text>
                         </tr>
                         <tr>
                             <Text>The rating is: {this.state.starCount}/5</Text>
