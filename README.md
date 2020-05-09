@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BOOKING: Mark ride as done as passenger [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BOOKING:USERS: Rate the driver and rider [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **FRONTEND: Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **USERS: Rate the driver and rider [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 BACKEND: Push notification when rides are nearing | USERS: Logging into SIMRide 
