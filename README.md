@@ -67,7 +67,7 @@ git checkout [branch_name]
 
 In-Progress | Done
 ----------- | -----------
-**BOOKING: Mark drive as done as driver [Shafiq doing now]** | BACKEND: Connected to Firebase 
+**BOOKING: Mark ride as done as passenger [Shafiq doing now]** | BACKEND: Connected to Firebase 
 **FRONTEND: Design the app (UI/UX) [Vinny doing now]** | BACKEND: Registration authentication to Firebase 
 **USERS: Rate the driver and rider [Seng Yang doing now]** | BACKEND: Synced database to Firebase 
 BACKEND: Push notification when rides are nearing | USERS: Logging into SIMRide 
@@ -91,7 +91,7 @@ ADMIN: Audit/log (not important) | USERS: Update password
 -- | BOOKING: Cancel confirmed ride
 -- | WALLET: E-Wallet page
 -- | BOOKING: View created rides
-BOOKING: Mark ride as done as passenger | PERMISSIONS: Split users into roles, and define what each role can see
+-- | PERMISSIONS: Split users into roles, and define what each role can see
 -- | USERS: Forgot password reset email
 USERS: GPS tracking for moving cars (not important) | ADMIN: review driver application
 -- | BOOKING: Cancel created booking
@@ -132,3 +132,4 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | WALLET: Remove payment amount from passenger E-Wallet
 -- | WALLET: Add payment amount to driver E-Wallet
 -- | DRIVER : Update if passenger has boarded/did not show up
+-- | BOOKING: Mark drive as done as driver 
