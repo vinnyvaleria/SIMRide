@@ -134,3 +134,4 @@ USERS: GPS tracking for moving cars (not important) | ADMIN: review driver appli
 -- | DRIVER : Update if passenger has boarded/did not show up
 -- | BOOKING: Mark drive as done as driver 
 -- | USERS: Rate the driver and rider
+-- | USERS: After rating the users, user will be moved to All Bookings screen and rating the same ride will be blocked
